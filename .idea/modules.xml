@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Ringer.iml" filepath="$PROJECT_DIR$/.idea/modules/Ringer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.iml" filepath="$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ringer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ringer.app.iml" />
+    </modules>
+  </component>
+</project>
