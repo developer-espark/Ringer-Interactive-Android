@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Ringer</string>
+    <string name="ringer_user_name">tim@basalsmartsolutions.com</string>
+    <string name="ringer_password">Ring##1234</string>
 </resources>

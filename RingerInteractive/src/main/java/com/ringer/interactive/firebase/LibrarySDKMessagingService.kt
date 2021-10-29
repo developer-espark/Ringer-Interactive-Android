@@ -1,4 +1,4 @@
-package com.ringer.interactive
+package com.ringer.interactive.firebase
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -16,7 +16,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.ringer.Preferences
+import com.ringer.interactive.pref.Preferences
+import com.ringer.interactive.R
+import com.ringer.interactive.activity.RingerScreen
 import java.io.UnsupportedEncodingException
 
 open class LibrarySDKMessagingService : FirebaseMessagingService() {

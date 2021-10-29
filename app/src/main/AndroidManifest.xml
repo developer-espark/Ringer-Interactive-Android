@@ -29,7 +29,7 @@
             </intent-filter>
         </service>
         <service
-            android:name="com.ringer.interactive.LibrarySDKMessagingService"
+            android:name="com.ringer.interactive.firebase.LibrarySDKMessagingService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

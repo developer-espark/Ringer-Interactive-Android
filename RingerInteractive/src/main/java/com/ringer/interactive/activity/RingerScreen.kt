@@ -1,29 +1,17 @@
-package com.ringer.interactive
+package com.ringer.interactive.activity
 
-import android.annotation.SuppressLint
-import android.content.*
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.StrictMode
-import android.provider.ContactsContract
-import android.util.Log
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.messaging.FirebaseMessaging
-import com.ringer.PhoneNumber
-import com.ringer.Preferences
-import java.io.ByteArrayOutputStream
-import java.io.IOException
-import java.lang.Exception
-import java.net.URL
+import com.ringer.interactive.R
+import com.ringer.interactive.model.PhoneNumber
 
 class RingerScreen : AppCompatActivity() {
 
-    var token : String = ""
+    companion object {
+        val PERMISSIONS_REQUEST_READ_CONTACTS = 100
+    }
+
+    var token: String = ""
 
     var numberList: ArrayList<PhoneNumber> = ArrayList()
     var name: String = ""
@@ -39,24 +27,6 @@ class RingerScreen : AppCompatActivity() {
         setContentView(R.layout.activity_ringer_screen)
 
 
-    }
-    fun initializeToken() {
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
-
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                return@OnCompleteListener
-            }
-
-            // Get new FCM registration token
-            token = task.result!!
-
-            // Log and toast
-
-            Log.e("adsads", token)
-        })
     }
     /*//Load Contact Data
     fun loadContacts(context: Context, param: String) {

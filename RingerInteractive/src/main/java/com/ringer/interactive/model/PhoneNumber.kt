@@ -1,4 +1,4 @@
-package com.ringer
+package com.ringer.interactive.model
 
 class PhoneNumber{
     var number : String = ""

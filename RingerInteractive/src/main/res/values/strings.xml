@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Ringer</string>
-    <string name="str_api_url_qa">https://www.google.co.in/</string>
+    <string name="str_api_url_qa">https://sandbox.thrio.io/</string>
     <string name="default_notification_channel_id">com.example.myapplication</string>
 </resources>

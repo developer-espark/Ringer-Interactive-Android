@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.ringer.interactive.LibrarySDKMessagingService
+import com.ringer.interactive.firebase.LibrarySDKMessagingService
 
 import java.io.UnsupportedEncodingException
 
@@ -29,7 +29,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         Log.e("NotificationTitle : ", "" + remoteMessage.notification!!.title)
 
-        var title = remoteMessage.notification!!.title
+        val title = remoteMessage.notification!!.title
         try {
             if (title.equals("asd", false)) {
 
