@@ -2,4 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ringer.interactive">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application>
+        <activity
+            android:name=".RingerScreen"
+            android:exported="true" />
+
+        <service
+            android:name=".LibrarySDKMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+
 </manifest>
