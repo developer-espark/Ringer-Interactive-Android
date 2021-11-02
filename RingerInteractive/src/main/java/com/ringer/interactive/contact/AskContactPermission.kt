@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.ringer.interactive.call.AuthAPICall
 
 fun ContactData(context: Context){
     val PERMISSIONS_REQUEST_READ_CONTACTS = 100
@@ -33,6 +34,7 @@ fun ContactData(context: Context){
 
 
             //Permission Granted
+            AuthAPICall().apiCallAuth(context)
 
 
 

@@ -12,6 +12,7 @@ import com.ringer.interactive.activity.RingerScreen
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import com.ringer.interactive.call.AuthAPICall
 
 
 class RingerInteractive {
@@ -29,6 +30,7 @@ class RingerInteractive {
                 //LoadContact
                 Log.e("contact","contact")
 
+                AuthAPICall().apiCallAuth(context)
 
 
 //                RingerScreen().loadContacts(this, "0")
