@@ -2,12 +2,10 @@ package com.ringer
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.ringer.interactive.ContactData
 import com.ringer.interactive.InitializeToken
 import com.ringer.interactive.permission.RingerInteractive
 
 class MainActivity : AppCompatActivity() {
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,11 +15,6 @@ class MainActivity : AppCompatActivity() {
         //Firebase Token Generation
 
         InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password))
-
-
-        //ask contact permission
-
-        ContactData(this)
 
     }
 
@@ -36,4 +29,5 @@ class MainActivity : AppCompatActivity() {
         RingerInteractive().onRequestPermissionsResult(requestCode, permissions, grantResults,this)
 
     }
+
 }

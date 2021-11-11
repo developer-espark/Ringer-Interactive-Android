@@ -2,7 +2,6 @@ package com.ringer.interactive
 
 import android.content.Context
 import android.os.StrictMode
-import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ringer.interactive.api.base_url
@@ -28,9 +27,11 @@ fun InitializeToken(context: Context, username: String, password: String) {
         // Get new FCM registration token
         var token = task.result!!
 
-        // Log and toast
 
-        Log.e("adsads", token)
+        //ask contact permission
+
+        ContactData(context)
+
     })
 
 }

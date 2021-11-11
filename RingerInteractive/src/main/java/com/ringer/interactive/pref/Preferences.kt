@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import androidx.core.net.toUri
 
+
 class Preferences {
     private lateinit var preferences: SharedPreferences
 
@@ -23,7 +24,7 @@ class Preferences {
     }
 
 
-    fun setEmailAddress(context: Context,email : String){
+    fun setEmailAddress(context: Context, email: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("user_email", email)
@@ -37,7 +38,7 @@ class Preferences {
 
     }
 
-    fun setPassword(context: Context,password : String){
+    fun setPassword(context: Context, password: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("user_password", password)
@@ -51,26 +52,26 @@ class Preferences {
 
     }
 
-    fun getTokenBaseUrl(context: Context) : String{
+    fun getTokenBaseUrl(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val base_url: String? = preferences.getString("base_url", "")
         return base_url.toString()
     }
 
-    fun setTokenBaseUrl(context: Context,base_url : String){
+    fun setTokenBaseUrl(context: Context, base_url: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("base_url", base_url)
         editor.commit()
     }
 
-    fun getAuthToken(context: Context) : String{
+    fun getAuthToken(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val auth_token: String? = preferences.getString("auth_token", "")
         return auth_token.toString()
     }
 
-    fun setAuthToken(context: Context,auth_token : String){
+    fun setAuthToken(context: Context, auth_token: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("auth_token", auth_token)

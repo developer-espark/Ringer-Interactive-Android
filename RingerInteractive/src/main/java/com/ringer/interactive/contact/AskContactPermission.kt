@@ -9,12 +9,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ringer.interactive.call.AuthAPICall
 
-fun ContactData(context: Context){
+fun ContactData(context: Context) {
     val PERMISSIONS_REQUEST_READ_CONTACTS = 100
 
 
+
     try {
-        if (ContextCompat.checkSelfPermission(context,
+        if (ContextCompat.checkSelfPermission(
+                context,
                 Manifest.permission.READ_CONTACTS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -32,15 +34,14 @@ fun ContactData(context: Context){
 
         } else {
 
-
             //Permission Granted
             AuthAPICall().apiCallAuth(context)
 
-
-
         }
+
+
     } catch (e: Exception) {
 
-        Log.e("errorLib",""+e.message)
+        Log.e("errorLib", "" + e.message)
     }
 }
