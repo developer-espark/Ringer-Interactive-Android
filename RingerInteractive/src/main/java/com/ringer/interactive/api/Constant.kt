@@ -10,8 +10,12 @@ const val base_url = "https://sandbox.thrio.io/"
 //urls
 const val token_with_Categories="provider/token-with-authorities"
 const val search_contact="data/api/types/contact"
+const val create_contact="data/api/types/mobileregistration"
 
 //parameters
 const val authorization="Authorization"
 const val username="username"
 const val password="password"
+const val firebaseToken="password"
+const val uuid="uuid"
+const val type="type"

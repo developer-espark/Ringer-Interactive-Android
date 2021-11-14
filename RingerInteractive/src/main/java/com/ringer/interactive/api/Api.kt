@@ -4,10 +4,7 @@ import com.google.gson.JsonObject
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface Api {
 
@@ -31,6 +28,14 @@ interface Api {
         @Header(authorization) auth: String,
         @Path("contactId") contact_id : String
     ) : Call<ResponseBody>
+
+
+    //send fcm token
+    @FormUrlEncoded
+    @POST(create_contact)
+    fun sendFCMToken(
+        @Field(firebaseToken) fcm_token : String
+    ) : Call<JsonObject>
 
 
 

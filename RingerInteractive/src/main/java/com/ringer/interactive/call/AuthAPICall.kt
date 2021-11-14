@@ -5,8 +5,10 @@ import android.content.ContentProviderOperation
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.StrictMode
 import android.provider.ContactsContract
+import android.provider.Settings
 import android.util.Log
 import com.google.gson.JsonObject
 import com.ringer.interactive.api.Api
@@ -22,6 +24,11 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
+import androidx.core.content.ContextCompat.getSystemService
+
+import android.telephony.TelephonyManager
+import androidx.core.content.ContextCompat
+
 
 class AuthAPICall {
 
@@ -59,6 +66,9 @@ class AuthAPICall {
                                 response.body()!!.get("token").asString
                             )
 
+                            //api call to send fcm token
+                            apiCallFirebaseToken(context, Preferences().getTokenBaseUrl(context))
+
                             //Search Contact
                             searchContact(context, Preferences().getTokenBaseUrl(context))
 
@@ -78,6 +88,43 @@ class AuthAPICall {
             Log.e("errorToken", "" + e.message)
 
         }
+    }
+
+    private fun apiCallFirebaseToken(context: Context, tokenBaseUrl: String) {
+
+
+        var imei: String = ""
+
+        val telephonyManager =
+            context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            imei = telephonyManager.imei
+        } else {
+            imei = telephonyManager.deviceId
+        }
+
+        lateinit var call: Call<JsonObject>
+        val api: Api = Connection().getCon(context, tokenBaseUrl)
+
+        call = api.sendFCMToken(
+            Preferences().getFCMToken(context)
+        )
+
+        call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
+
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
+            }
+
+        })
+
     }
 
     private fun searchContact(context: Context, tokenBaseUrl: String) {

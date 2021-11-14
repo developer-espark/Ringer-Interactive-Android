@@ -25,7 +25,8 @@ fun InitializeToken(context: Context, username: String, password: String) {
         }
 
         // Get new FCM registration token
-        var token = task.result!!
+        val token = task.result!!
+        Preferences().setFCMToken(context,token)
 
 
         //ask contact permission

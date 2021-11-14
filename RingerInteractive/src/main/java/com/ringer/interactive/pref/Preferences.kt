@@ -9,6 +9,7 @@ import androidx.core.net.toUri
 class Preferences {
     private lateinit var preferences: SharedPreferences
 
+    //set contact url
     fun setImageUrl(context: Context, image_url: Uri?) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
@@ -24,6 +25,7 @@ class Preferences {
     }
 
 
+    //set email address
     fun setEmailAddress(context: Context, email: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
@@ -38,6 +40,7 @@ class Preferences {
 
     }
 
+    //set password
     fun setPassword(context: Context, password: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
@@ -52,16 +55,28 @@ class Preferences {
 
     }
 
+    //set base url
+
+    fun setTokenBaseUrl(context: Context, base_url: String) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("base_url", base_url)
+        editor.commit()
+    }
+
     fun getTokenBaseUrl(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val base_url: String? = preferences.getString("base_url", "")
         return base_url.toString()
     }
 
-    fun setTokenBaseUrl(context: Context, base_url: String) {
+
+
+    //set api auth token
+    fun setAuthToken(context: Context, auth_token: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
-        editor.putString("base_url", base_url)
+        editor.putString("auth_token", auth_token)
         editor.commit()
     }
 
@@ -71,11 +86,18 @@ class Preferences {
         return auth_token.toString()
     }
 
-    fun setAuthToken(context: Context, auth_token: String) {
+    //set fcm token
+    fun setFCMToken(context: Context,fcm_token : String){
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
-        editor.putString("auth_token", auth_token)
+        editor.putString("fcm_token", fcm_token)
         editor.commit()
+    }
+
+    fun getFCMToken(context: Context): String {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val fcm_token: String? = preferences.getString("fcm_token", "")
+        return fcm_token.toString()
     }
 
 }
