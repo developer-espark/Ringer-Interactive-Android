@@ -1,12 +1,18 @@
 package com.ringer
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ringer.interactive.InitializeToken
+import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
 import com.ringer.interactive.permission.RingerInteractive
+
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val REQUEST_CODE_SDK = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,10 +20,9 @@ class MainActivity : AppCompatActivity() {
 
         //Firebase Token Generation
 
-        InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password))
+        InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password),resources.getString(R.string.app_name))
 
     }
-
 
     //Permission
     override fun onRequestPermissionsResult(
@@ -29,5 +34,33 @@ class MainActivity : AppCompatActivity() {
         RingerInteractive().onRequestPermissionsResult(requestCode, permissions, grantResults,this)
 
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        //SDK Default Dialer
+        offerReplacingDefaultDialer(this,applicationContext.packageName,REQUEST_CODE_SDK)
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_SDK){
+
+            if (resultCode == RESULT_OK){
+                InitializeToken(
+                    this,
+                    resources.getString(R.string.ringer_user_name),
+                    resources.getString(R.string.ringer_password),
+                    resources.getString(R.string.app_name)
+                )
+            }
+
+        }
+
+    }
+
+
 
 }

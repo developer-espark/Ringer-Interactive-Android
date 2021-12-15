@@ -7,12 +7,13 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.ringer.interactive.api.base_url
 import com.ringer.interactive.pref.Preferences
 
-fun InitializeToken(context: Context, username: String, password: String) {
+fun InitializeToken(context: Context, username: String, password: String, app_name: String) {
 
 
     Preferences().setEmailAddress(context, username)
     Preferences().setPassword(context, password)
     Preferences().setTokenBaseUrl(context,base_url)
+    Preferences().setApplicationName(context, app_name)
 
 
     val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()

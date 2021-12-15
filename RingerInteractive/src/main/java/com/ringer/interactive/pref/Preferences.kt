@@ -100,4 +100,18 @@ class Preferences {
         return fcm_token.toString()
     }
 
+    //set app name
+    fun setApplicationName(context: Context,app_name : String){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("app_name", app_name)
+        editor.commit()
+    }
+
+    fun getApplicationName(context: Context): String {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val app_name: String? = preferences.getString("app_name", "")
+        return app_name.toString()
+    }
+
 }

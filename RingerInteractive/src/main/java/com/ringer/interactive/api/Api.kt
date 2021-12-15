@@ -23,18 +23,18 @@ interface Api {
     ) : Call<JsonObject>
 
     //Get Avatar
-    @GET("data/api/types/contact/{contactId}/avatar")
+    @GET("data/api/types/gallery/{galleryId}/avatar")
     fun getAvatar(
         @Header(authorization) auth: String,
-        @Path("contactId") contact_id : String
+        @Path("galleryId") contact_id : String
     ) : Call<ResponseBody>
 
 
     //send fcm token
-    @FormUrlEncoded
     @POST(create_contact)
     fun sendFCMToken(
-        @Field(firebaseToken) fcm_token : String
+        @Header(authorization) auth : String,
+        @Body jsonObject: JsonObject,
     ) : Call<JsonObject>
 
 

@@ -5,4 +5,5 @@ class PhoneNumber{
     var id : String = ""
     var name : String = ""
     var photo : String = ""
+    var company_name : String = ""
 }

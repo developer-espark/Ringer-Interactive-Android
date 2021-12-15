@@ -3,18 +3,18 @@ package com.ringer.interactive.call
 import android.annotation.SuppressLint
 import android.content.ContentProviderOperation
 import android.content.Context
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.StrictMode
+import android.provider.Contacts
 import android.provider.ContactsContract
 import android.provider.Settings
+import android.telephony.TelephonyManager
 import android.util.Log
 import com.google.gson.JsonObject
-import com.ringer.interactive.api.Api
-import com.ringer.interactive.api.Connection
-import com.ringer.interactive.api.base_url
-import com.ringer.interactive.api.basic_auth
+import com.ringer.interactive.api.*
 import com.ringer.interactive.model.PhoneNumber
 import com.ringer.interactive.pref.Preferences
 import okhttp3.HttpUrl
@@ -24,16 +24,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
-import androidx.core.content.ContextCompat.getSystemService
-
-import android.telephony.TelephonyManager
-import androidx.core.content.ContextCompat
 
 
 class AuthAPICall {
 
     var numberList: ArrayList<PhoneNumber> = ArrayList()
-
+    var companyName = ""
     fun apiCallAuth(context: Context) {
 
         try {
@@ -41,9 +37,8 @@ class AuthAPICall {
             lateinit var call: Call<JsonObject>
             val api: Api = Connection().getCon(context, base_url)
 
-            val auth = basic_auth
             call = api.getTokenWithAuth(
-                auth,
+                basic_auth,
                 Preferences().getEmailAddress(context),
                 Preferences().getUserPassword(context)
             )
@@ -69,8 +64,6 @@ class AuthAPICall {
                             //api call to send fcm token
                             apiCallFirebaseToken(context, Preferences().getTokenBaseUrl(context))
 
-                            //Search Contact
-                            searchContact(context, Preferences().getTokenBaseUrl(context))
 
                         }
                     }
@@ -92,22 +85,18 @@ class AuthAPICall {
 
     private fun apiCallFirebaseToken(context: Context, tokenBaseUrl: String) {
 
-
-        var imei: String = ""
-
-        val telephonyManager =
-            context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            imei = telephonyManager.imei
-        } else {
-            imei = telephonyManager.deviceId
-        }
-
+        val deviceID = getDeviceId(context)
         lateinit var call: Call<JsonObject>
         val api: Api = Connection().getCon(context, tokenBaseUrl)
 
+        var jsonObject = JsonObject();
+        jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
+        jsonObject.addProperty(uuid, deviceID)
+        jsonObject.addProperty(os, "Android")
+
         call = api.sendFCMToken(
-            Preferences().getFCMToken(context)
+            Preferences().getAuthToken(context),
+            jsonObject,
         )
 
         call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
@@ -115,11 +104,16 @@ class AuthAPICall {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
 
+                        //Search Contact
+                        searchContact(context, Preferences().getTokenBaseUrl(context))
+
                     }
                 }
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
+                Log.e("failure", "" + t.message)
 
             }
 
@@ -138,7 +132,7 @@ class AuthAPICall {
 
         call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-
+                numberList.clear()
                 try {
 
                     if (response.isSuccessful) {
@@ -149,16 +143,17 @@ class AuthAPICall {
                             val objects = response.body()!!.get("objects").asJsonArray
                             if (objects.size() > 0) {
 
+
                                 for (i in 0 until objects.size()) {
 
-                                    if (objects.get(i).asJsonObject.has("avatar")) {
+                                    if (objects.get(i).asJsonObject.has("galleryId")) {
 
                                         contact_id_list.add(objects.get(i).asJsonObject.get("contactId").asString)
 
                                         //get image contact avatar
 
                                         val contact_id =
-                                            objects[i].asJsonObject.get("contactId").asString
+                                            objects[i].asJsonObject.get("galleryId").asString
                                         val first_name =
                                             objects[i].asJsonObject.get("firstName").asString + " " + objects[i].asJsonObject.get(
                                                 "lastName"
@@ -209,7 +204,7 @@ class AuthAPICall {
             Preferences().getAuthToken(context),
             contactIdList
         )
-
+        numberList.clear()
         call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
@@ -244,22 +239,24 @@ class AuthAPICall {
         first_name: String,
         phone: String
     ): StringBuilder {
-
         val builder = StringBuilder()
         val resolver = context.contentResolver
         val cursor = resolver.query(
             ContactsContract.Contacts.CONTENT_URI, null, null, null,
             null
         )
-
         if (cursor!!.count > 0) {
             while (cursor.moveToNext()) {
+
                 val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+
                 val name =
                     cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
                 val phoneNumber = (cursor.getString(
                     cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
                 )).toInt()
+
+
 
                 if (phoneNumber > 0) {
                     val cursorPhone = context.contentResolver.query(
@@ -269,6 +266,8 @@ class AuthAPICall {
                         arrayOf(id),
                         null
                     )
+
+
 
                     if (cursorPhone!!.count > 0) {
                         while (cursorPhone.moveToNext()) {
@@ -281,10 +280,15 @@ class AuthAPICall {
                                 .append(
                                     phoneNumValue
                                 ).append("\n\n")
-
                             val phoneNumber = PhoneNumber()
                             phoneNumber.number = phoneNumValue
                             phoneNumber.id = contactId
+                            /*if (companyName == ""){
+                                phoneNumber.company_name = ""
+                            }else{
+                                phoneNumber.company_name = companyName
+                            }*/
+
                             numberList.add(phoneNumber)
 
                         }
@@ -295,12 +299,12 @@ class AuthAPICall {
             }
 
             //checkBackground Data for update or create contact
-            backGroundCheckData(context, url, first_name, phone)
+            backGroundCheckData(context, url, first_name, phone, companyName)
 
         } else {
 
             //checkBackground Data for update or create contact
-            backGroundCheckData(context, url, first_name, phone)
+            backGroundCheckData(context, url, first_name, phone, companyName)
 
         }
 
@@ -313,24 +317,45 @@ class AuthAPICall {
         context: Context,
         url: HttpUrl,
         first_name: String,
-        phone: String
+        phone: String,
+        company_name: String
     ) {
         if (numberList.size > 0) {
 
 
             for (i in 0 until numberList.size) {
 
+                Log.e("numberList[i].number", "" + numberList[i].number)
+                Log.e("numberList[i].phone", "" + phone)
 
                 if (numberList[i].number.equals(phone, false)) {
 
-                    //editContactBackGround
-                    editContactBackGround(context, phone, numberList[i].id, first_name, url)
+                    editContactBackGround(
+                        context,
+                        phone,
+                        numberList[i].id,
+                        first_name,
+                        url,
+                        company_name
+                    )
                     break
+                   /* if (company_name.equals(numberList[i].company_name)){
+                        Log.e("numberListEdit", "Edit")
+                        //editContactBackGround
+                        editContactNameAndImage(context, phone, numberList[i].id, first_name, url,company_name)
+                        break
+                    }else{
+                        editContactBackGround(context, phone, numberList[i].id, first_name, url,company_name)
+                        break
+
+                    }
+*/
 
                 } else {
 
+                    Log.e("numberListCreate", "Create")
                     //Create Contact BackGround
-                    createContactBackGround(context, url, first_name, phone)
+                    createContactBackGround(context, url, first_name, phone, company_name)
                     break
                 }
 
@@ -339,10 +364,67 @@ class AuthAPICall {
         } else {
 
             //Create Contact BackGround
-            createContactBackGround(context, url, first_name, phone)
+            createContactBackGround(context, url, first_name, phone, company_name)
 
         }
 
+
+    }
+
+    private fun editContactNameAndImage(
+        context: Context,
+        phone: String,
+        id: String,
+        firstName: String,
+        url: HttpUrl,
+        companyName: String
+    ) {
+
+        val contentResolver = context.contentResolver
+
+        val where =
+            ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?"
+
+        val nameParams =
+            arrayOf(id, ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+        val photoParams = arrayOf(id, ContactsContract.CommonDataKinds.Photo.CONTENT_ITEM_TYPE)
+        val ops = ArrayList<ContentProviderOperation>()
+
+        val contactName = "" + firstName
+
+        //Contact Name
+        if (contactName != "") {
+            ops.add(
+                ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+                    .withSelection(where, nameParams)
+                    .withValue(
+                        ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
+                        contactName
+                    )
+                    .build()
+            )
+        }
+
+
+        // Contact Photo
+        try {
+            val url = URL(url.toString())
+            val image = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+            ops.add(
+                ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+                    .withSelection(where, photoParams)
+                    .withValue(
+                        ContactsContract.CommonDataKinds.Photo.PHOTO,
+                        bitmapToByteArray(image)
+                    )
+                    .build()
+            )
+
+        } catch (e: Exception) {
+            Log.e("errorEdit", "" + e.message)
+            e.printStackTrace()
+        }
+        contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
 
     }
 
@@ -351,7 +433,8 @@ class AuthAPICall {
         context: Context,
         url: HttpUrl,
         first_name: String,
-        phone: String
+        phone: String,
+        company_name: String
     ) {
         val DisplayName = first_name
         val MobileNumber = phone
@@ -402,6 +485,19 @@ class AuthAPICall {
                     )
                     .build()
             )
+            ops.add(
+                ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(
+                        ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
+                    )
+                    .withValue(
+                        ContactsContract.CommonDataKinds.Organization.COMPANY,
+                        Preferences().getApplicationName(context)
+                    )
+                    .build()
+            )
         }
 
         // Photo
@@ -426,6 +522,9 @@ class AuthAPICall {
             )
         }
 
+
+
+
         try {
             context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
         } catch (e: Exception) {
@@ -440,9 +539,12 @@ class AuthAPICall {
         number: String,
         id: String,
         first_name: String,
-        url: HttpUrl
+        url: HttpUrl,
+        company_name: String
     ) {
         val contentResolver = context.contentResolver
+
+        Log.e("NumberNotMatched",""+company_name)
 
         val where =
             ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?"
@@ -456,7 +558,7 @@ class AuthAPICall {
         val contactName = "" + first_name
         val contactNumber = "" + number
 
-        //Contact Name
+        /*//Contact Name
         if (contactName != "") {
             ops.add(
                 ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
@@ -477,7 +579,18 @@ class AuthAPICall {
                     .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, contactNumber)
                     .build()
             )
-        }
+            ops.add(
+                ContentProviderOperation.newUpdate(ContactsContract.Data.CONTENT_URI)
+                    .withSelection(where, nameParams)
+                    .withValue(
+                        ContactsContract.CommonDataKinds.Organization.COMPANY,
+                        Preferences().getApplicationName(context)
+                    )
+                    .build()
+            )
+        }*/
+
+
 
         // Contact Photo
         try {
@@ -506,4 +619,26 @@ class AuthAPICall {
         bitmap?.compress(Bitmap.CompressFormat.PNG, 90, stream)
         return stream.toByteArray()
     }
+
+    fun getDeviceId(context: Context): String? {
+        val deviceId: String
+        deviceId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            Settings.Secure.getString(
+                context.contentResolver,
+                Settings.Secure.ANDROID_ID
+            )
+        } else {
+            val mTelephony = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            if (mTelephony.deviceId != null) {
+                mTelephony.deviceId
+            } else {
+                Settings.Secure.getString(
+                    context.contentResolver,
+                    Settings.Secure.ANDROID_ID
+                )
+            }
+        }
+        return deviceId
+    }
+
 }

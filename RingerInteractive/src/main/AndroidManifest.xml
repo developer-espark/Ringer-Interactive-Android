@@ -13,7 +13,11 @@
         android:name=".activity.Ring">
         <activity
             android:name=".activity.RingerScreen"
+            android:screenOrientation="portrait"
             android:exported="true" />
+        <activity android:name=".sdkCall.CallActivity"
+            android:screenOrientation="portrait"
+            android:exported="true"/>
 
         <service
             android:name=".firebase.LibrarySDKMessagingService"
@@ -22,6 +26,20 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <service
+            android:name=".sdkCall.CallService"
+            android:permission="android.permission.BIND_INCALL_SERVICE"
+            android:exported="true">
+            <meta-data
+                android:name="android.telecom.IN_CALL_SERVICE_UI"
+                android:value="true" />
+
+            <intent-filter>
+                <action android:name="android.telecom.InCallService" />
+            </intent-filter>
+        </service>
+
     </application>
 
 
