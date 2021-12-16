@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import androidx.core.net.toUri
+import com.google.gson.Gson
+import com.ringer.interactive.model.CallLogDetail
+import java.lang.reflect.Type
 
 
 class Preferences {
@@ -112,6 +115,17 @@ class Preferences {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val app_name: String? = preferences.getString("app_name", "")
         return app_name.toString()
+    }
+
+
+    fun setCallLogArrayList(context: Context,callLogList : ArrayList<CallLogDetail>){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(callLogList)
+        editor.putString("call_log", json)
+        editor.commit()
+
     }
 
 }

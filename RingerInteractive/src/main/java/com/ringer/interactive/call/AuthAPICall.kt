@@ -24,12 +24,21 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
+import android.R.id
+import android.provider.CallLog
+import com.ringer.interactive.model.CallLogDetail
+import java.lang.Long
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AuthAPICall {
 
     var numberList: ArrayList<PhoneNumber> = ArrayList()
     var companyName = ""
+    var callLogList: ArrayList<CallLogDetail> = ArrayList()
+    var callLogMatchDetail : ArrayList<String> = ArrayList()
+
     fun apiCallAuth(context: Context) {
 
         try {
@@ -259,6 +268,28 @@ class AuthAPICall {
 
 
                 if (phoneNumber > 0) {
+
+
+                    val orgWhere =
+                        ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?"
+                    val orgWhereParams = arrayOf(
+                        id,
+                        ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
+                    )
+                    val orgCur: Cursor = context.contentResolver.query(
+                        ContactsContract.Data.CONTENT_URI,
+                        null, orgWhere, orgWhereParams, null
+                    )!!
+                    if (orgCur.moveToFirst()) {
+                        companyName =
+                            orgCur.getString(orgCur.getColumnIndex(ContactsContract.CommonDataKinds.Organization.DATA))
+                        val title =
+                            orgCur.getString(orgCur.getColumnIndex(ContactsContract.CommonDataKinds.Organization.TITLE))
+                    }
+                    orgCur.close()
+
+
+
                     val cursorPhone = context.contentResolver.query(
                         ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                         null,
@@ -283,11 +314,11 @@ class AuthAPICall {
                             val phoneNumber = PhoneNumber()
                             phoneNumber.number = phoneNumValue
                             phoneNumber.id = contactId
-                            /*if (companyName == ""){
+                            if (companyName == ""){
                                 phoneNumber.company_name = ""
                             }else{
                                 phoneNumber.company_name = companyName
-                            }*/
+                            }
 
                             numberList.add(phoneNumber)
 
@@ -330,7 +361,7 @@ class AuthAPICall {
 
                 if (numberList[i].number.equals(phone, false)) {
 
-                    editContactBackGround(
+                   /* editContactBackGround(
                         context,
                         phone,
                         numberList[i].id,
@@ -338,8 +369,8 @@ class AuthAPICall {
                         url,
                         company_name
                     )
-                    break
-                   /* if (company_name.equals(numberList[i].company_name)){
+                    break*/
+                    if (company_name.equals(numberList[i].company_name)){
                         Log.e("numberListEdit", "Edit")
                         //editContactBackGround
                         editContactNameAndImage(context, phone, numberList[i].id, first_name, url,company_name)
@@ -349,7 +380,6 @@ class AuthAPICall {
                         break
 
                     }
-*/
 
                 } else {
 
@@ -368,6 +398,115 @@ class AuthAPICall {
 
         }
 
+        //Get Call Detail
+       getCallDetails(context, phone,first_name)
+
+
+    }
+    fun getCallDetails(context: Context, phone: String,first_name :String) {
+        callLogList.clear()
+
+        try {
+
+
+            val sb = StringBuffer()
+            val managedCursor: Cursor? =
+                context.contentResolver.query(CallLog.Calls.CONTENT_URI, null, null, null, null)
+            val number: Int = managedCursor!!.getColumnIndex(CallLog.Calls.NUMBER)
+            val name: Int = managedCursor!!.getColumnIndex(CallLog.Calls.CACHED_NAME)
+            val type: Int = managedCursor.getColumnIndex(CallLog.Calls.TYPE)
+            val date: Int = managedCursor.getColumnIndex(CallLog.Calls.DATE)
+            val duration: Int = managedCursor.getColumnIndex(CallLog.Calls.DURATION)
+            sb.append("Call Details :")
+            if (managedCursor.count > 0) {
+
+
+                while (managedCursor.moveToNext()) {
+                    val phNumber: String = managedCursor.getString(number)
+                    val callType: String = managedCursor.getString(type)
+                    val callName: String = managedCursor.getString(type)
+                    val callDate: String = managedCursor.getString(date)
+                    val callDayTime = Date(Long.valueOf(callDate))
+                    val callDuration: String = managedCursor.getString(duration)
+                    var dir: String? = null
+                    val dircode = callType.toInt()
+                    when (dircode) {
+                        CallLog.Calls.OUTGOING_TYPE -> dir = "OUTGOING"
+                        CallLog.Calls.INCOMING_TYPE -> dir = "INCOMING"
+                        CallLog.Calls.MISSED_TYPE -> dir = "MISSED"
+                    }
+
+                    val callLogDetail = CallLogDetail()
+                    callLogDetail.callLogNumber = phNumber
+                    callLogDetail.callLogType = dir!!
+                    callLogDetail.callLogDateAndTime = callDayTime.toString()
+                    callLogDetail.callLogCallDuration = callDuration
+                    callLogDetail.callName = callName
+
+                    callLogList.add(callLogDetail)
+                    Preferences().setCallLogArrayList(context, callLogList)
+                    Log.e("callLogListSize", "" + callLogList.size)
+
+//                    sb.append("\nPhone Number:--- $phNumber \nCall Type:--- $dir \nCall Date:--- $callDayTime \nCall duration in sec :--- $callDuration")
+//                    sb.append("\n----------------------------------")
+                }
+
+
+                //match phone number for call log detail
+                matchPhoneNumberDetail(context, callLogList, phone,first_name)
+
+
+            } else {
+
+                Log.e("NoCallLogFound", "NoCallLogFound")
+
+
+            }
+            managedCursor.close()
+        } catch (e: Exception) {
+
+            Log.e("error", "" + e.message)
+
+        }
+
+
+    }
+    private fun matchPhoneNumberDetail(
+        context: Context,
+        callLogList: ArrayList<CallLogDetail>,
+        phone: String,
+        first_name : String
+    ) {
+
+        if (callLogList.size > 0) {
+            for (i in 0 until callLogList.size) {
+
+                if (callLogList[i].callLogNumber.equals(phone, false)) {
+
+                    Log.e("callLogNumber",""+callLogList[i].callLogNumber)
+                    Log.e("phone",""+phone)
+                    Log.e("first_name",""+first_name)
+
+                    val appendString = "\n" +
+                            "Phone Number:--- ${callLogList[i].callLogNumber} \n" +
+                            "Call Type:--- ${callLogList[i].callLogType} \n" +
+                            "Call Date:--- ${callLogList[i].callLogDateAndTime} \n" +
+                            "Call duration in sec :--- ${callLogList[i].callLogCallDuration} \n"+
+                            "Call Name:--- ${first_name}"
+
+
+                    Log.e("perticularNumberHistory", "" +appendString)
+                    callLogMatchDetail.add(appendString)
+
+
+
+                }
+            }
+        } else {
+            Log.e("call log", "no call log available")
+        }
+
+        Log.e("callLogMatchDetail",""+callLogMatchDetail.size)
 
     }
 

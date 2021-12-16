@@ -43,6 +43,8 @@ public class CallActivity extends AppCompatActivity {
     Button btn_mute;
     TextView callInfo;
     ImageView img_profile;
+    TextView txt_answer;
+    TextView txt_hangup;
 
     private CompositeDisposable disposables;
     private String number, contactId, name;
@@ -60,6 +62,8 @@ public class CallActivity extends AppCompatActivity {
         btn_mute = findViewById(R.id.btn_mute);
         callInfo = findViewById(R.id.callInfo);
         img_profile = findViewById(R.id.img_profile);
+        txt_answer = findViewById(R.id.txt_answer);
+        txt_hangup = findViewById(R.id.txt_hangup);
 
         ongoingCall = new OngoingCall();
         disposables = new CompositeDisposable();
@@ -142,20 +146,27 @@ public class CallActivity extends AppCompatActivity {
     private Consumer<? super Integer> updateUi(Integer state) {
 
 //        callInfo.setText(asString(state) + "\n" + number + "\n" + name);
-        callInfo.setText(asString(state) + name);
+        callInfo.setText(name);
 
         if (state != Call.STATE_RINGING) {
             answer.setVisibility(View.GONE);
-        } else answer.setVisibility(View.VISIBLE);
-
+            txt_answer.setVisibility(View.GONE);
+        } else {
+            answer.setVisibility(View.VISIBLE);
+            txt_answer.setVisibility(View.VISIBLE);
+        }
         if (CollectionsKt.listOf(new Integer[]{
                 Call.STATE_DIALING,
                 Call.STATE_RINGING,
                 Call.STATE_ACTIVE}).contains(state)) {
 
             hangup.setVisibility(View.VISIBLE);
-        } else
+            txt_hangup.setVisibility(View.VISIBLE);
+        } else{
             hangup.setVisibility(View.GONE);
+            txt_hangup.setVisibility(View.GONE);
+        }
+
 
         return null;
     }
