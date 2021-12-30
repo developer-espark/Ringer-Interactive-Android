@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -55,15 +56,19 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         val imageUrl = remoteMessage.notification!!.imageUrl
         Log.e("imageUrl",""+imageUrl.toString())
 
+        if (remoteMessage.notification!!.imageUrl == null){
+            Preferences().setImageUrl(context, Uri.parse("https://www.fedex.com/content/dam/fedex/us-united-states/shipping/images/2020/Q3/icon_delivery_purple_lg_2143296207.png"))
+        }else{
+            Preferences().setImageUrl(context, remoteMessage.notification!!.imageUrl)
+        }
 
-        Log.e("SDK Click", "SDK Click")
-
-        Preferences().setImageUrl(context, remoteMessage.notification!!.imageUrl)
 
         val intent = Intent(context, RingerScreen::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         intent.putExtra("name", notificationTitle)
         intent.putExtra("number", notificationMessage)
+        context.startActivity(intent)
+
         val contentIntent =
             PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val `when` = System.currentTimeMillis()
