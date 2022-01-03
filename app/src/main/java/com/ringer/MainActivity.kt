@@ -2,6 +2,7 @@ package com.ringer
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.CountDownTimer
 import androidx.appcompat.app.AppCompatActivity
 import com.ringer.interactive.InitializeToken
 import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
@@ -21,6 +22,17 @@ class MainActivity : AppCompatActivity() {
         //Firebase Token Generation
 
         InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password),resources.getString(R.string.app_name))
+        val timer = object: CountDownTimer(7000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {}
+
+            override fun onFinish() {
+
+                startActivity(Intent(this@MainActivity,TermsAndConditionActivity::class.java))
+                finish()
+
+            }
+        }
+        timer.start()
 
     }
 
