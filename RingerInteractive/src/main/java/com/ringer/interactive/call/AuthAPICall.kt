@@ -30,6 +30,7 @@ import com.ringer.interactive.model.CallLogDetail
 import java.lang.Long
 import java.util.*
 import kotlin.collections.ArrayList
+import android.content.ContentProviderResult
 
 
 class AuthAPICall {
@@ -37,7 +38,9 @@ class AuthAPICall {
     var numberList: ArrayList<PhoneNumber> = ArrayList()
     var companyName = ""
     var callLogList: ArrayList<CallLogDetail> = ArrayList()
-    var callLogMatchDetail : ArrayList<String> = ArrayList()
+    var callLogMatchDetail: ArrayList<String> = ArrayList()
+    var phoneMultiple: ArrayList<String> = ArrayList()
+    var position: String = ""
 
     fun apiCallAuth(context: Context) {
 
@@ -155,6 +158,7 @@ class AuthAPICall {
 
                                 for (i in 0 until objects.size()) {
 
+
                                     if (objects.get(i).asJsonObject.has("galleryId")) {
 
                                         contact_id_list.add(objects.get(i).asJsonObject.get("contactId").asString)
@@ -167,15 +171,20 @@ class AuthAPICall {
                                             objects[i].asJsonObject.get("firstName").asString + " " + objects[i].asJsonObject.get(
                                                 "lastName"
                                             ).asString
-                                        val phone = objects[i].asJsonObject.get("phone").asString
+                                        val phone = objects[i].asJsonObject.get("phone").asJsonArray
+                                        for (j in 0 until phone.size()) {
+                                            phoneMultiple.add(phone[j].asString)
 
+                                        }
+                                        Log.e("phoneMultiple", "" + phoneMultiple.size)
+                                        Log.e("first_name", "" + first_name)
                                         //Get Contact Image
                                         getContactImage(
                                             context,
                                             tokenBaseUrl,
                                             contact_id,
                                             first_name,
-                                            phone
+                                            phoneMultiple[0]
                                         )
                                     }
                                 }
@@ -231,6 +240,7 @@ class AuthAPICall {
                     Log.e("errorImage", "" + e.message)
 
                 }
+                Log.e("first_name1", "" + first_name)
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -289,7 +299,6 @@ class AuthAPICall {
                     orgCur.close()
 
 
-
                     val cursorPhone = context.contentResolver.query(
                         ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                         null,
@@ -314,9 +323,9 @@ class AuthAPICall {
                             val phoneNumber = PhoneNumber()
                             phoneNumber.number = phoneNumValue
                             phoneNumber.id = contactId
-                            if (companyName == ""){
+                            if (companyName == "") {
                                 phoneNumber.company_name = ""
-                            }else{
+                            } else {
                                 phoneNumber.company_name = companyName
                             }
 
@@ -352,42 +361,34 @@ class AuthAPICall {
         company_name: String
     ) {
         if (numberList.size > 0) {
-
-
             for (i in 0 until numberList.size) {
+                var isMatch = false
+//                for (j in 0 until phone.size) {
 
-                Log.e("numberList[i].number", "" + numberList[i].number)
-                Log.e("numberList[i].phone", "" + phone)
 
-                if (numberList[i].number.equals(phone, false)) {
+                    Log.e("numberList[i].number", "" + numberList[i].number)
+                    Log.e("numberList[i].phone", "" + phone)
 
-                   /* editContactBackGround(
-                        context,
-                        phone,
-                        numberList[i].id,
-                        first_name,
-                        url,
-                        company_name
-                    )
-                    break*/
-                    if (company_name.equals(numberList[i].company_name)){
-                        Log.e("numberListEdit", "Edit")
-                        //editContactBackGround
-                        editContactNameAndImage(context, phone, numberList[i].id, first_name, url,company_name)
+                    if (numberList[i].number.contains(phone, false)) {
+                        editContactBackGround(
+                            context,
+                            phone,
+                            numberList[i].id,
+                            first_name,
+                            url,
+                            company_name
+                        )
                         break
-                    }else{
-                        editContactBackGround(context, phone, numberList[i].id, first_name, url,company_name)
+
+                    } else {
+
+                        //Create Contact BackGround
+                        Log.e("numberListCreate", "Create")
+                        createContactBackGround(context, url, first_name, phone, company_name)
                         break
 
                     }
-
-                } else {
-
-                    Log.e("numberListCreate", "Create")
-                    //Create Contact BackGround
-                    createContactBackGround(context, url, first_name, phone, company_name)
-                    break
-                }
+//                }
 
             }
 
@@ -395,15 +396,16 @@ class AuthAPICall {
 
             //Create Contact BackGround
             createContactBackGround(context, url, first_name, phone, company_name)
-
+//            createContactBackGround(context, url, first_name, phone, company_name)
         }
 
         //Get Call Detail
-       getCallDetails(context, phone,first_name)
 
+            getCallDetails(context, phone, first_name)
 
     }
-    fun getCallDetails(context: Context, phone: String,first_name :String) {
+
+    fun getCallDetails(context: Context, phone: String, first_name: String) {
         callLogList.clear()
 
         try {
@@ -453,7 +455,7 @@ class AuthAPICall {
 
 
                 //match phone number for call log detail
-                matchPhoneNumberDetail(context, callLogList, phone,first_name)
+                matchPhoneNumberDetail(context, callLogList, phone, first_name)
 
 
             } else {
@@ -471,11 +473,12 @@ class AuthAPICall {
 
 
     }
+
     private fun matchPhoneNumberDetail(
         context: Context,
         callLogList: ArrayList<CallLogDetail>,
         phone: String,
-        first_name : String
+        first_name: String
     ) {
 
         if (callLogList.size > 0) {
@@ -483,21 +486,20 @@ class AuthAPICall {
 
                 if (callLogList[i].callLogNumber.equals(phone, false)) {
 
-                    Log.e("callLogNumber",""+callLogList[i].callLogNumber)
-                    Log.e("phone",""+phone)
-                    Log.e("first_name",""+first_name)
+                    Log.e("callLogNumber", "" + callLogList[i].callLogNumber)
+                    Log.e("phone", "" + phone)
+                    Log.e("first_name", "" + first_name)
 
                     val appendString = "\n" +
                             "Phone Number:--- ${callLogList[i].callLogNumber} \n" +
                             "Call Type:--- ${callLogList[i].callLogType} \n" +
                             "Call Date:--- ${callLogList[i].callLogDateAndTime} \n" +
-                            "Call duration in sec :--- ${callLogList[i].callLogCallDuration} \n"+
+                            "Call duration in sec :--- ${callLogList[i].callLogCallDuration} \n" +
                             "Call Name:--- ${first_name}"
 
 
-                    Log.e("perticularNumberHistory", "" +appendString)
+                    Log.e("perticularNumberHistory", "" + appendString)
                     callLogMatchDetail.add(appendString)
-
 
 
                 }
@@ -506,13 +508,13 @@ class AuthAPICall {
             Log.e("call log", "no call log available")
         }
 
-        Log.e("callLogMatchDetail",""+callLogMatchDetail.size)
+        Log.e("callLogMatchDetail", "" + callLogMatchDetail.size)
 
     }
 
     private fun editContactNameAndImage(
         context: Context,
-        phone: String,
+        phone: ArrayList<String>,
         id: String,
         firstName: String,
         url: HttpUrl,
@@ -544,6 +546,38 @@ class AuthAPICall {
             )
         }
 
+        /*// Mobile Number
+        for (i in 0 until phone.size) {
+            if (phone[i].equals("")) {
+                ops.add(
+                    ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                        .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                        .withValue(
+                            ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+                        )
+                        .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone[i])
+                        .withValue(
+                            ContactsContract.CommonDataKinds.Phone.TYPE,
+                            ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
+                        )
+                        .build()
+                )
+                ops.add(
+                    ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                        .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                        .withValue(
+                            ContactsContract.Data.MIMETYPE,
+                            ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
+                        )
+                        .withValue(
+                            ContactsContract.CommonDataKinds.Organization.COMPANY,
+                            Preferences().getApplicationName(context)
+                        )
+                        .build()
+                )
+            }
+        }*/
 
         // Contact Photo
         try {
@@ -576,7 +610,6 @@ class AuthAPICall {
         company_name: String
     ) {
         val DisplayName = first_name
-        val MobileNumber = phone
         val photo = url
 
         val ops = ArrayList<ContentProviderOperation>()
@@ -609,7 +642,9 @@ class AuthAPICall {
         }
 
         // Mobile Number
-        if (MobileNumber != null) {
+
+
+            //Mobile number will be inserted in ContactsContract.Data table
             ops.add(
                 ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
                     .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
@@ -617,27 +652,40 @@ class AuthAPICall {
                         ContactsContract.Data.MIMETYPE,
                         ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
                     )
-                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, MobileNumber)
+                    .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
                     .withValue(
                         ContactsContract.CommonDataKinds.Phone.TYPE,
                         ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
                     )
                     .build()
             )
-            ops.add(
-                ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                    .withValue(
-                        ContactsContract.Data.MIMETYPE,
-                        ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
-                    )
-                    .withValue(
-                        ContactsContract.CommonDataKinds.Organization.COMPANY,
-                        Preferences().getApplicationName(context)
-                    )
-                    .build()
-            )
-        }
+        /* ops.add(
+             ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                 .withValue(
+                     ContactsContract.Data.MIMETYPE,
+                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
+                 )
+                 .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
+                 .withValue(
+                     ContactsContract.CommonDataKinds.Phone.TYPE,
+                     ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
+                 )
+                 .build()
+         )
+         ops.add(
+             ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                 .withValue(
+                     ContactsContract.Data.MIMETYPE,
+                     ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
+                 )
+                 .withValue(
+                     ContactsContract.CommonDataKinds.Organization.COMPANY,
+                     Preferences().getApplicationName(context)
+                 )
+                 .build()
+         )*/
 
         // Photo
         if (photo != null) {
@@ -666,6 +714,12 @@ class AuthAPICall {
 
         try {
             context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
+//            val s = context.contentResolver.applyBatch(
+//                ContactsContract.AUTHORITY,
+//                ops
+//            ) //apply above data insertion into contacts list
+
+
         } catch (e: Exception) {
             Log.e("errorNew", "" + e.message)
             e.printStackTrace()
@@ -683,7 +737,7 @@ class AuthAPICall {
     ) {
         val contentResolver = context.contentResolver
 
-        Log.e("NumberNotMatched",""+company_name)
+        Log.e("NumberNotMatched", "" + company_name)
 
         val where =
             ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?"
@@ -728,7 +782,6 @@ class AuthAPICall {
                     .build()
             )
         }*/
-
 
 
         // Contact Photo

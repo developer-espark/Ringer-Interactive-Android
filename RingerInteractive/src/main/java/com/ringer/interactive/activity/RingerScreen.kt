@@ -40,13 +40,13 @@ class RingerScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ringer_screen)
 
-        if (intent.extras != null) {
+       /* if (intent.extras != null) {
             nameFromFirebase = intent.extras!!.getString("name")
             numberFromFirebase = intent.extras!!.getString("number")
 
             //Load Contact
             loadContacts(this)
-        }
+        }*/
 
     }
     //Load Contact Data
@@ -296,14 +296,14 @@ class RingerScreen : AppCompatActivity() {
 
 
     //If Application is Already Open with same Page then New Intent will be called
-    override fun onNewIntent(intent: Intent?) {
+   /* override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         if (intent!!.extras != null) {
             nameFromFirebase = intent.extras!!.getString("name")
             numberFromFirebase = intent.extras!!.getString("number")
             loadContacts(this)
         }
-    }
+    }*/
     //Convert Bitmap Image to ByteArray to Save Contact Photo
     private fun bitmapToByteArray(bitmap: Bitmap?): ByteArray {
         val stream = ByteArrayOutputStream()
