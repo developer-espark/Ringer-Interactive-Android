@@ -53,13 +53,13 @@ class RingerScreen : AppCompatActivity() {
     fun loadContacts(context: Context) {
 
             //Get Contact Detail
-            getContacts(context)
+//            getContacts(context)
         }
 
 
     //Get Contact Details
     @SuppressLint("Range")
-    fun getContacts(context: Context): StringBuilder {
+    /*fun getContacts(context: Context): StringBuilder {
         val builder = StringBuilder()
         val resolver: ContentResolver = context.contentResolver
         val cursor = resolver.query(
@@ -90,6 +90,7 @@ class RingerScreen : AppCompatActivity() {
                             val phoneNumValue = cursorPhone.getString(
                                 cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                             )
+
                             val contactId =
                                 cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID))
                             builder.append("Contact: ").append(name).append(", Phone Number: ")
@@ -116,10 +117,10 @@ class RingerScreen : AppCompatActivity() {
         }
         cursor.close()
         return builder
-    }
+    }*/
 
     //Create or Update Contact Detail in Background
-    private fun backGroundCheckData(context: Context) {
+ /*   private fun backGroundCheckData(context: Context) {
         if (numberList.size > 0) {
 
             for (i in 0 until numberList.size) {
@@ -142,7 +143,7 @@ class RingerScreen : AppCompatActivity() {
             //Create Contact In Background
             createContactBackGround(context)
         }
-    }
+    }*/
 
 
     //Create Contact In-BackGround

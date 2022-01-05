@@ -3,6 +3,7 @@ package com.ringer.interactive.pref
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.ringer.interactive.model.CallLogDetail
@@ -24,6 +25,21 @@ class Preferences {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val image_url: String? = preferences.getString("image_url", "")
         return image_url!!.toUri()
+
+    }
+
+    //set contact url
+    fun setIsCalled(context: Context, isCalled: Boolean) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putBoolean("isCalled", isCalled)
+        editor.commit()
+    }
+
+    fun getIsCalled(context: Context): Boolean? {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val isCalled: Boolean? = preferences.getBoolean("isCalled", true)
+        return isCalled
 
     }
 
