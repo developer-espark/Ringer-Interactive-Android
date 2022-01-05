@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telecom.Call;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -84,7 +85,6 @@ public class CallActivity extends AppCompatActivity {
             contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
             name = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
         } else {
-            Toast.makeText(this, "No Contact Found", Toast.LENGTH_SHORT).show();
             return; // contact not found
         }
 
@@ -98,12 +98,13 @@ public class CallActivity extends AppCompatActivity {
             photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), my_contact_Uri);
         }
 
+        Log.e("photo_stream",""+photo_stream);
         if (photo_stream != null) {
             BufferedInputStream buf = new BufferedInputStream(photo_stream);
             Bitmap my_btmp = BitmapFactory.decodeStream(buf);
             img_profile.setImageBitmap(my_btmp);
         } else {
-            img_profile.setImageResource(R.drawable.dummy);
+            img_profile.setImageResource(R.drawable.download);
         }
 
         cursor.close();
@@ -145,8 +146,8 @@ public class CallActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private Consumer<? super Integer> updateUi(Integer state) {
 
-//        callInfo.setText(asString(state) + "\n" + number + "\n" + name);
-        callInfo.setText(name);
+        callInfo.setText(asString(state) + "\n" + number + "\n" + name);
+//        callInfo.setText(name + "\n" + number);
 
         if (state != Call.STATE_RINGING) {
             answer.setVisibility(View.GONE);
