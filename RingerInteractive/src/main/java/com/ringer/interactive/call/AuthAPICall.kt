@@ -32,6 +32,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 import android.content.ContentProviderResult
 import com.google.gson.Gson
+import com.ringer.interactive.model.CallLogMatchDetail
 import com.ringer.interactive.model.StoreContact
 
 
@@ -44,6 +45,7 @@ class AuthAPICall {
     var contact_id = ""
     var contactList: ArrayList<StoreContact> = ArrayList()
     var isCalled = false
+    var callLogMatchListDetail: ArrayList<CallLogMatchDetail> = ArrayList()
 
 
     fun apiCallAuth(context: Context) {
@@ -461,11 +463,11 @@ class AuthAPICall {
 
         //Get Call Detail
 
-//            getCallDetails(context, phone, first_name)
+        getCallDetails(context, storeContact)
 
     }
 
-    fun getCallDetails(context: Context, phone: String, first_name: String) {
+    fun getCallDetails(context: Context, storeContact: StoreContact) {
         callLogList.clear()
 
         try {
@@ -505,6 +507,7 @@ class AuthAPICall {
                     callLogDetail.callLogCallDuration = callDuration
                     callLogDetail.callName = callName
 
+
                     callLogList.add(callLogDetail)
                     Preferences().setCallLogArrayList(context, callLogList)
                     Log.e("callLogListSize", "" + callLogList.size)
@@ -515,7 +518,7 @@ class AuthAPICall {
 
 
                 //match phone number for call log detail
-                matchPhoneNumberDetail(context, callLogList, phone, first_name)
+                matchPhoneNumberDetail(context, callLogList, storeContact)
 
 
             } else {
@@ -537,39 +540,82 @@ class AuthAPICall {
     private fun matchPhoneNumberDetail(
         context: Context,
         callLogList: ArrayList<CallLogDetail>,
-        phone: String,
-        first_name: String
+        storeContact: StoreContact
     ) {
 
-        if (callLogList.size > 0) {
-            for (i in 0 until callLogList.size) {
-
-                if (callLogList[i].callLogNumber.equals(phone, false)) {
-
-                    Log.e("callLogNumber", "" + callLogList[i].callLogNumber)
-                    Log.e("phone", "" + phone)
-                    Log.e("first_name", "" + first_name)
-
-                    val appendString = "\n" +
-                            "Phone Number:--- ${callLogList[i].callLogNumber} \n" +
-                            "Call Type:--- ${callLogList[i].callLogType} \n" +
-                            "Call Date:--- ${callLogList[i].callLogDateAndTime} \n" +
-                            "Call duration in sec :--- ${callLogList[i].callLogCallDuration} \n" +
-                            "Call Name:--- ${first_name}"
+        try {
 
 
-                    Log.e("perticularNumberHistory", "" + appendString)
-                    callLogMatchDetail.add(appendString)
+            if (callLogList.size > 0) {
+                for (i in 0 until callLogList.size) {
 
+                    for (j in 0 until storeContact.phoneList.size)
+                        if (callLogList[i].callLogNumber.equals(storeContact.phoneList[j], false)) {
+
+                            Log.e("callLogNumber", "" + callLogList[i].callLogNumber)
+                            Log.e("phone", "" + storeContact.phoneList[j])
+                            Log.e("first_name", "" + storeContact.userName)
+
+                            val appendString = "\n" +
+                                    "Phone Number:--- ${callLogList[i].callLogNumber} \n" +
+                                    "Call Type:--- ${callLogList[i].callLogType} \n" +
+                                    "Call Date:--- ${callLogList[i].callLogDateAndTime} \n" +
+                                    "Call duration in sec :--- ${callLogList[i].callLogCallDuration} \n" +
+                                    "Call Name:--- ${storeContact.userName}"
+
+                            var callLogMatchDetail = CallLogMatchDetail()
+                            callLogMatchDetail.fromAddress = ""
+                            callLogMatchDetail.toAddress = callLogList[i].callLogNumber
+                            callLogMatchDetail.callType = callLogList[i].callLogType
+                            callLogMatchDetail.duration = callLogList[i].callLogCallDuration
+                            callLogMatchDetail.createdAt = callLogList[i].callLogDateAndTime
+
+
+                            Log.e("perticularNumberHistory", "" + appendString)
+//                    callLogMatchDetail.add(appendString)
+                            callLogMatchListDetail.add(callLogMatchDetail)
+
+
+                        }
+                }
+            } else {
+                Log.e("call log", "no call log available")
+            }
+
+            Log.e("callLogMatchDetail", "" + callLogMatchDetail.size)
+
+            apiCallMobileCalls(context, callLogMatchListDetail)
+        } catch (e: Exception) {
+
+        }
+    }
+
+    private fun apiCallMobileCalls(
+        context: Context,
+        callLogMatchListDetail: ArrayList<CallLogMatchDetail>
+    ) {
+        try {
+
+
+            lateinit var call: Call<JsonObject>
+            val api: Api = Connection().getCon(context, Preferences().getTokenBaseUrl(context))
+
+            call = api.sendMobileCallLog(
+                Preferences().getAuthToken(context),
+                callLogMatchListDetail
+            )
+            call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
 
                 }
-            }
-        } else {
-            Log.e("call log", "no call log available")
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                }
+
+            })
+        } catch (e: Exception) {
+
         }
-
-        Log.e("callLogMatchDetail", "" + callLogMatchDetail.size)
-
     }
 
     private fun editContactNameAndImage(

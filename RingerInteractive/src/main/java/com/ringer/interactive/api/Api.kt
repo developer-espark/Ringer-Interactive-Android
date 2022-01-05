@@ -1,6 +1,7 @@
 package com.ringer.interactive.api
 
 import com.google.gson.JsonObject
+import com.ringer.interactive.model.CallLogMatchDetail
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,6 +38,11 @@ interface Api {
         @Body jsonObject: JsonObject,
     ) : Call<JsonObject>
 
-
+    //mobileCAlls
+    @POST(mobile_calls)
+    fun sendMobileCallLog(
+        @Header(authorization) auth: String,
+        @Body list: ArrayList<CallLogMatchDetail>
+    ) : Call<JsonObject>
 
 }
