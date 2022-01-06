@@ -246,40 +246,48 @@ class AuthAPICall {
         tokenBaseUrl: String,
         storeContact: StoreContact
     ) {
+        try {
 
-        lateinit var call: Call<ResponseBody>
-        val api: Api = Connection().getCon(context, tokenBaseUrl)
 
-        call = api.getAvatar(
-            Preferences().getAuthToken(context),
-            storeContact.galleryId
-        )
-        numberList.clear()
-        call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+            lateinit var call: Call<ResponseBody>
+            val api: Api = Connection().getCon(context, tokenBaseUrl)
 
-                try {
+            call = api.getAvatar(
+                Preferences().getAuthToken(context),
+                storeContact.galleryId
+            )
+            numberList.clear()
+            call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
 
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
+                    try {
 
-                            getContactList(context, response.raw().request.url, storeContact)
+                        if (response.isSuccessful) {
+                            if (response.body() != null) {
 
+                                getContactList(context, response.raw().request.url, storeContact)
+
+                            }
                         }
-                    }
-                } catch (e: Exception) {
+                    } catch (e: Exception) {
 
-                    Log.e("errorImage", "" + e.message)
+                        Log.e("errorImage", "" + e.message)
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                    Log.e("failure", "" + t.message)
 
                 }
-            }
+            })
+        } catch (e: Exception) {
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                Log.e("failure", "" + t.message)
-
-            }
-        })
+        }
     }
 
     @SuppressLint("Range")
@@ -389,53 +397,56 @@ class AuthAPICall {
         storeContact: StoreContact,
         company_name: String
     ) {
-        Log.e("numberListSize", "" + numberList.size)
-        Log.e("numberListSize123", "" + Gson().toJson(numberList))
-        if (numberList.size > 0) {
-            for (i in 0 until numberList.size) {
-                var isMatch = false
-                for (j in 0 until storeContact.phoneList.size) {
+        try {
 
 
-                    Log.e("numberList[i].number", "" + numberList[i].number[i])
-                    Log.e("numberList[i].phone", "" + storeContact.phoneList[j])
+            Log.e("numberListSize", "" + numberList.size)
+            Log.e("numberListSize123", "" + Gson().toJson(numberList))
+            if (numberList.size > 0) {
+                for (i in 0 until numberList.size) {
+                    var isMatch = false
+                    for (j in 0 until storeContact.phoneList.size) {
 
-                    if (numberList[i].number.equals(storeContact.phoneList[j], false)) {
+
+                        Log.e("numberList[i].number", "" + numberList[i].number[i])
+                        Log.e("numberList[i].phone", "" + storeContact.phoneList[j])
+
+                        if (numberList[i].number.equals(storeContact.phoneList[j], false)) {
 
 //                        isMatch = true
 
-                        editContactBackGround(
-                            context,
-                            storeContact.phoneList,
-                            numberList[i].id,
-                            storeContact.userName,
-                            url,
-                            company_name
-                        )
-                    } else {
-                        createContactBackGround(context, url, storeContact, company_name)
+                            editContactBackGround(
+                                context,
+                                storeContact.phoneList,
+                                numberList[i].id,
+                                storeContact.userName,
+                                url,
+                                company_name
+                            )
+                        } else {
+                            createContactBackGround(context, url, storeContact, company_name)
+                        }
+
+                        /*if (numberList[i].number.contains(phone[j], false)) {
+                            editContactBackGround(
+                                context,
+                                phone,
+                                numberList[i].id,
+                                first_name,
+                                url,
+                                company_name
+                            )
+                            break
+
+                        } else {
+
+                            //Create Contact BackGround
+                            Log.e("numberListCreate", "Create")
+                            createContactBackGround(context, url, first_name, phone, company_name)
+                            break
+
+                        }*/
                     }
-
-                    /*if (numberList[i].number.contains(phone[j], false)) {
-                        editContactBackGround(
-                            context,
-                            phone,
-                            numberList[i].id,
-                            first_name,
-                            url,
-                            company_name
-                        )
-                        break
-
-                    } else {
-
-                        //Create Contact BackGround
-                        Log.e("numberListCreate", "Create")
-                        createContactBackGround(context, url, first_name, phone, company_name)
-                        break
-
-                    }*/
-                }
 //                if (isMatch == true) {
 //
 //                    editContactBackGround(
@@ -451,20 +462,22 @@ class AuthAPICall {
 //                    createContactBackGround(context, url, first_name, phone, company_name)
 //                }
 
-            }
+                }
 
-        } else {
+            } else {
 
-            //Create Contact BackGround
-            createContactBackGround(context, url, storeContact, company_name)
+                //Create Contact BackGround
+                createContactBackGround(context, url, storeContact, company_name)
 //            createContactBackGround(context, url, first_name, phone, company_name)
+            }
+            Preferences().setIsCalled(context, true)
+
+            //Get Call Detail
+
+            getCallDetails(context, storeContact)
+        } catch (e: Exception) {
+
         }
-        Preferences().setIsCalled(context, true)
-
-        //Get Call Detail
-
-        getCallDetails(context, storeContact)
-
     }
 
     fun getCallDetails(context: Context, storeContact: StoreContact) {

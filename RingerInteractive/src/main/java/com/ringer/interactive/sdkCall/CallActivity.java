@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -46,9 +47,12 @@ public class CallActivity extends AppCompatActivity {
     ImageView img_profile;
     TextView txt_answer;
     TextView txt_hangup;
+    TextView callNumber;
+    TextView callstate;
+
 
     private CompositeDisposable disposables;
-    private String number, contactId, name;
+    private String number, contactId, name="";
     private OngoingCall ongoingCall;
     InputStream photo_stream;
 
@@ -65,6 +69,8 @@ public class CallActivity extends AppCompatActivity {
         img_profile = findViewById(R.id.img_profile);
         txt_answer = findViewById(R.id.txt_answer);
         txt_hangup = findViewById(R.id.txt_hangup);
+        callNumber = findViewById(R.id.callNumber);
+        callstate = findViewById(R.id.callstate);
 
         ongoingCall = new OngoingCall();
         disposables = new CompositeDisposable();
@@ -146,7 +152,20 @@ public class CallActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private Consumer<? super Integer> updateUi(Integer state) {
 
-        callInfo.setText(asString(state) + "\n" + number + "\n" + name);
+        callInfo.setText(name);
+
+        callNumber.setText(number);
+        callstate.setText(asString(state));
+        if (name.equals("")){
+            callInfo.setVisibility(View.GONE);
+            callNumber.setTextSize(25f);
+            callNumber.setTypeface(Typeface.DEFAULT_BOLD);
+        }else {
+            callInfo.setVisibility(View.VISIBLE);
+            callNumber.setTextSize(18f);
+            callNumber.setTypeface(Typeface.DEFAULT);
+        }
+//        callInfo.setText(name + "\n" +number +"\n"+asString(state));
 //        callInfo.setText(name + "\n" + number);
 
         if (state != Call.STATE_RINGING) {
