@@ -423,8 +423,10 @@ class AuthAPICall {
                                 url,
                                 company_name
                             )
+                            break
                         } else {
                             createContactBackGround(context, url, storeContact, company_name)
+                            break
                         }
 
                         /*if (numberList[i].number.contains(phone[j], false)) {
@@ -758,6 +760,18 @@ class AuthAPICall {
                         DisplayName
                     ).build()
             )
+            ops.add(
+                ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                    .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                    .withValue(
+                        ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
+                    )
+                    .withValue(
+                        ContactsContract.CommonDataKinds.Organization.COMPANY,
+                        Preferences().getApplicationName(context)
+                    ).build()
+            )
         }
 
         // Mobile Number
@@ -815,6 +829,7 @@ class AuthAPICall {
          )*/
 
         // Photo
+
         if (photo != null) {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)

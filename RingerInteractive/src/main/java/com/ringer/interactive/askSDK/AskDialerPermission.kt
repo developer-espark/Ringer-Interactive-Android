@@ -35,6 +35,7 @@ fun offerReplacingDefaultDialer(
     //Below Android Below 10
     else {
 
+        Log.e("below10","below10")
         val telecomManager =
             context.getSystemService(AppCompatActivity.TELECOM_SERVICE) as TelecomManager
         if (packageName != telecomManager.defaultDialerPackage) {
