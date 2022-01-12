@@ -32,10 +32,22 @@ class MainActivity : AppCompatActivity() {
             )
 
         }
+        val timer = object: CountDownTimer(7000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {}
+
+            override fun onFinish() {
+
+                startActivity(Intent(this@MainActivity,TermsAndConditionActivity::class.java))
+                finish()
+
+            }
+        }
+        timer.start()
+
 
 
     }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+/*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE_SDK){
@@ -53,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-    }
+    }*/
 
 
 

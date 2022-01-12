@@ -19,8 +19,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -48,22 +50,18 @@ import kotlin.collections.CollectionsKt;
 public class CallActivity extends AppCompatActivity {
 
     private static CallService callService1;
-    Button answer;
-    Button hangup;
-    ImageButton btn_mute;
-    ImageButton btn_speaker;
-    TextView callInfo;
+    private static Call call1;
+    Button answer,hangup;
+    ImageButton btn_mute,btn_speaker,btn_hold;
     ImageView img_profile;
-    TextView txt_answer;
-    TextView txt_hangup;
-    TextView callNumber;
-    TextView callstate;
-    LinearLayout lin_call_accept;
+    TextView callInfo,txt_answer,txt_hangup,callNumber,callstate;
+
+    LinearLayout lin_call_accept,lin_call_Data,lin_call_on;
     EditText edt_keypade_number;
 
+    Boolean isHold = false;
     Boolean isMuted = false;
     Boolean isSpeaker = false;
-    LinearLayout lin_call_on;
 
     private CompositeDisposable disposables;
     private String number, contactId, name = "";
@@ -80,6 +78,7 @@ public class CallActivity extends AppCompatActivity {
         hangup = findViewById(R.id.hangup);
         btn_mute = findViewById(R.id.btn_mute);
         btn_speaker = findViewById(R.id.btn_speaker);
+        btn_hold = findViewById(R.id.btn_hold);
         callInfo = findViewById(R.id.callInfo);
         img_profile = findViewById(R.id.img_profile);
         txt_answer = findViewById(R.id.txt_answer);
@@ -89,9 +88,25 @@ public class CallActivity extends AppCompatActivity {
         lin_call_on = findViewById(R.id.lin_call_on);
         lin_call_accept = findViewById(R.id.lin_call_accept);
         edt_keypade_number = findViewById(R.id.edt_keypade_number);
+        lin_call_Data = findViewById(R.id.lin_call_Data);
 
         ongoingCall = new OngoingCall();
         disposables = new CompositeDisposable();
+
+        edt_keypade_number.setOnEditorActionListener(new EditText.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
+                if(actionId == EditorInfo.IME_ACTION_DONE){
+                    edt_keypade_number.setVisibility(View.GONE);
+                    edt_keypade_number.clearFocus();
+                    lin_call_Data.setVisibility(View.VISIBLE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(edt_keypade_number.getWindowToken(), 0);
+                    return true;
+                }
+                return false;
+            }
+        });
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
@@ -204,7 +219,8 @@ public class CallActivity extends AppCompatActivity {
         if (CollectionsKt.listOf(new Integer[]{
                 Call.STATE_DIALING,
                 Call.STATE_RINGING,
-                Call.STATE_ACTIVE}).contains(state)) {
+                Call.STATE_ACTIVE,
+        Call.STATE_HOLDING}).contains(state)) {
 
             hangup.setVisibility(View.VISIBLE);
             txt_hangup.setVisibility(View.VISIBLE);
@@ -214,13 +230,31 @@ public class CallActivity extends AppCompatActivity {
             hangup.setVisibility(View.GONE);
             txt_hangup.setVisibility(View.GONE);
         }
-        if (state == Call.STATE_ACTIVE) {
+        if ((state == Call.STATE_ACTIVE)||(state == Call.STATE_HOLDING)) {
             img_profile.setAlpha(0.3f);
             lin_call_on.setVisibility(View.VISIBLE);
         } else {
             img_profile.setAlpha(1f);
             lin_call_on.setVisibility(View.GONE);
         }
+
+        Log.e("state",""+state);
+
+        /*if (state == Call.STATE_HOLDING){
+
+            hangup.setVisibility(View.VISIBLE);
+            txt_hangup.setVisibility(View.VISIBLE);
+            lin_call_on.setVisibility(View.VISIBLE);
+            img_profile.setAlpha(0.3f);
+
+        }else {
+
+            hangup.setVisibility(View.GONE);
+            txt_hangup.setVisibility(View.GONE);
+            lin_call_on.setVisibility(View.GONE);
+            img_profile.setAlpha(0.3f);
+
+        }*/
 
 
         return null;
@@ -238,6 +272,7 @@ public class CallActivity extends AppCompatActivity {
                 .setData(call.getDetails().getHandle());
         context.startActivity(intent);
         callService1 = callService;
+        call1 = call;
     }
 
     public void onAnswerClicked(View view) {
@@ -300,6 +335,7 @@ public class CallActivity extends AppCompatActivity {
         if (!edt_keypade_number.hasFocus()) {
             edt_keypade_number.setVisibility(View.VISIBLE);
             edt_keypade_number.requestFocus();
+            lin_call_Data.setVisibility(View.GONE);
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.toggleSoftInputFromWindow(
@@ -310,10 +346,23 @@ public class CallActivity extends AppCompatActivity {
 
             edt_keypade_number.setVisibility(View.GONE);
             edt_keypade_number.clearFocus();
+            lin_call_Data.setVisibility(View.VISIBLE);
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
 
 
+    }
+
+    public void onHolded(View view) {
+        if (!isHold){
+            call1.hold();
+            btn_hold.setImageResource(R.drawable.ic_icn_unhold);
+            isHold = true;
+        }else {
+            call1.unhold();
+            btn_hold.setImageResource(R.drawable.ic_icn_hold);
+            isHold = false;
+        }
     }
 }

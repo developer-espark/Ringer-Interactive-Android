@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.ringer.interactive.InitializeToken
+import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
 
 class ThankYouScreen : AppCompatActivity() {
     companion object {
@@ -72,7 +73,7 @@ class ThankYouScreen : AppCompatActivity() {
         RingerInteractive().onRequestPermissionsResult(requestCode, permissions, grantResults,this)
 
     }*/
-   /* override fun onStart() {
+    override fun onStart() {
         super.onStart()
 
         //SDK Default Dialer
@@ -80,7 +81,7 @@ class ThankYouScreen : AppCompatActivity() {
             REQUEST_CODE_SDK
         )
 
-    }*/
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

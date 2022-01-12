@@ -10,6 +10,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:visibility="gone"
         android:background="@color/bg_color">
 
         <ImageView
@@ -60,7 +61,7 @@
                 android:text="@string/accept_the_terms_and_conditions"
                 android:textColor="@color/bg_color"
                 android:textSize="14sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textStyle="normal" />
 
 
@@ -70,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/bg_color"
                 android:text="@string/_continue"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="14sp"
