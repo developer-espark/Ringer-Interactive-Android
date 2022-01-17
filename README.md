@@ -16,15 +16,9 @@ Add below function in the FirebaseMessagingService
 
 ```onMessageReceived
 
-try {
-            if (title.equals("asd", false)) {
-
+        try {
                 LibrarySDKMessagingService().sendNotification(this,remoteMessage)
-
-            }else{
-                sendNotification(remoteMessage)
-            }
-
+                
         } catch (e: Exception) {
             e.printStackTrace()
 
@@ -35,15 +29,15 @@ try {
 If you are not using firebase than use below code
 
 ```gradle
-implementation(project(":RingerInteractive")){
-        transitive = true
+implementation ('com.ringer.interactive.version_name'){
+           transitive = true
         // Use the consuming application's FireBase module, so exclude it
         // from the dependency. (not totally necessary if you use compileOnly
         // when declaring the dependency in the library project).
         exclude group: 'com.google.firebase'
         // Exclude the "plain java" json module to fix build warnings.
         exclude group: 'org.json', module: 'json'
-    }
+ }
     implementation("com.google.firebase:firebase-messaging:22.0.0") {
         // Exclude the "plain java" json module to fix build warnings.
         exclude group: 'org.json', module: 'json'
@@ -52,6 +46,7 @@ implementation(project(":RingerInteractive")){
 
 ##Step 2.1
 In the Manifest File add below code
+To Continue to get notified
 
 ```Manifest
 
@@ -82,16 +77,18 @@ After adding this credentials you can have access of the SDK , now follow Step 2
 ## Step 2.3
 
 In your MainActivity call below function to continue
+This is required to use the SDK
 
 ```YourActivity
 
-   InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password))
+   InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password),"YOUR APP NAME")
 
 ```
 
 ## Step 2.4
 
 Final Step to finish SDK Setup
+This step is for the permission you need to granted.
 
 ```YourActivity
 
