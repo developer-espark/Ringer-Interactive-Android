@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telecom.Call;
@@ -39,6 +40,7 @@ import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -59,6 +61,7 @@ public class CallActivity extends AppCompatActivity {
     LinearLayout lin_call_accept,lin_call_Data,lin_call_on;
     EditText edt_keypade_number;
 
+    Boolean isMerge = false;
     Boolean isHold = false;
     Boolean isMuted = false;
     Boolean isSpeaker = false;
@@ -363,6 +366,20 @@ public class CallActivity extends AppCompatActivity {
             call1.unhold();
             btn_hold.setImageResource(R.drawable.ic_icn_hold);
             isHold = false;
+        }
+    }
+
+    public void onAddCall(View view) {
+
+        if (!isMerge) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
+            startActivity(intent);
+            isMerge = true;
+        }else {
+//            call1.conference(call1);
+
+            call1.mergeConference();
+            isMerge = false;
         }
     }
 }

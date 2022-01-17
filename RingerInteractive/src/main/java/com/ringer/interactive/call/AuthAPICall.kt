@@ -976,25 +976,34 @@ class AuthAPICall {
         return stream.toByteArray()
     }
 
+    @SuppressLint("HardwareIds")
     fun getDeviceId(context: Context): String? {
         val deviceId: String
-        deviceId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            Settings.Secure.getString(
-                context.contentResolver,
-                Settings.Secure.ANDROID_ID
-            )
-        } else {
-            val mTelephony = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            if (mTelephony.deviceId != null) {
-                mTelephony.deviceId
-            } else {
+        try {
+
+
+            deviceId = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 Settings.Secure.getString(
                     context.contentResolver,
                     Settings.Secure.ANDROID_ID
                 )
+            } else {
+                val mTelephony =
+                    context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+                if (mTelephony.deviceId != null) {
+                    mTelephony.deviceId
+                } else {
+                    Settings.Secure.getString(
+                        context.contentResolver,
+                        Settings.Secure.ANDROID_ID
+                    )
+                }
             }
+            return deviceId
+        } catch (e: Exception) {
+            return ""
         }
-        return deviceId
+
     }
 
 }
