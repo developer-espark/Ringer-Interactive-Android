@@ -10,7 +10,7 @@ Go to the [Releases](https://github.com/developer-espark/Ringer-Interactive-Andr
 ### Here is the SDK instruction how to use
 ### Minimum SDK Version Supported is 7 Nouget
 
-#Step 1
+# Step 1
 If you already using the firebase than use below code
 
 Add below function in the FirebaseMessagingService
@@ -26,7 +26,7 @@ Add below function in the FirebaseMessagingService
         }
 ```
 
-#Step 2
+# Step 2
 If you are not using firebase than use below code
 
 ```gradle
@@ -45,7 +45,7 @@ implementation ('com.ringer.interactive.version_name'){
     }
 ```
 
-#Step 2.1
+# Step 2.1
 In the Manifest File add below code
 To Continue to get notified
 
@@ -63,9 +63,9 @@ To Continue to get notified
         </service>
 ```
 
-###Now Setup is done now you have to Add Credential in order to use this SDK
+### Now Setup is done now you have to Add Credential in order to use this SDK
 
-#Step 2.2
+# Step 2.2
 ### Add username and password in a ###string.xml### file in your project
 
 ```string.xml
