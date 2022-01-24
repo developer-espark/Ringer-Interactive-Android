@@ -26,4 +26,11 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="privacy_policy_terms_of_service">Privacy Policy \n Terms of Service</string>
+    <string name="copyright_2022_flash_app_llc">Copyright 2022 Flash App LLC</string>
+    <string name="allow_notifications">Allow Notifications</string>
+    <string name="notifications">Notifications</string>
+    <string name="accept_terms">Accept Terms</string>
+    <string name="access_to_contacts">Access to Contacts</string>
+    <string name="ringer_interactive">Ringer Interactive</string>
 </resources>

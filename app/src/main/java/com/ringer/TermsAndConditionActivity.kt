@@ -10,34 +10,30 @@ import android.widget.Toast
 
 class TermsAndConditionActivity : AppCompatActivity() {
 
-    lateinit var cb_terms : CheckBox
-    lateinit var btn_continue : Button
-    lateinit var img_back : ImageView
+    lateinit var btn_allow_terms : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_terms_and_condition)
 
-        cb_terms = findViewById(R.id.cb_terms)
-        btn_continue = findViewById(R.id.btn_continue)
-        img_back = findViewById(R.id.img_back)
+        initialize()
 
-        btn_continue.setOnClickListener {
+        onClick()
 
-            if (cb_terms.isChecked){
+    }
 
-                startActivity(Intent(this@TermsAndConditionActivity,ThankYouScreen::class.java))
-                finish()
+    private fun onClick() {
+        btn_allow_terms.setOnClickListener {
 
-            }else{
-                Toast.makeText(this@TermsAndConditionActivity,"Please Select Terms and Condition to continue",Toast.LENGTH_LONG).show()
-            }
-
-        }
-        img_back.setOnClickListener {
+            PreferencesApp().setTermsAndCondition(this,false)
+            startActivity(Intent(this@TermsAndConditionActivity,AccessContactActivity::class.java))
             finish()
+
+
         }
+    }
 
-
+    private fun initialize() {
+        btn_allow_terms = findViewById(R.id.btn_allow_terms)
     }
 }

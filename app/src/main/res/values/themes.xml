@@ -36,4 +36,13 @@
     <style name="Theme.Ringer.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Ringer.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
+
+        <item name="colorControlActivated">@color/light_blue</item>
+
+        <item name="colorSwitchThumbNormal">#f1f1f1</item>
+
+        <item name="android:colorForeground">#42221f1f</item>
+    </style>
 </resources>

@@ -423,9 +423,11 @@ class AuthAPICall {
                                 url,
                                 company_name
                             )
+//                            getContactList(context, url, storeContact)
                             break
                         } else {
                             createContactBackGround(context, url, storeContact, company_name)
+//                            getContactList(context, url, storeContact)
                             break
                         }
 

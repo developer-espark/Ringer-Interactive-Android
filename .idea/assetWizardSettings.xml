@@ -35,8 +35,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="bcb8b8" />
-                            <entry key="outputName" value="ic_icn_unhold" />
-                            <entry key="sourceFile" value="C:\Users\hp\Downloads\icn_unhold.svg" />
+                            <entry key="outputName" value="ic_notification" />
+                            <entry key="sourceFile" value="C:\Users\hp\Downloads\SVG\notification.svg" />
                           </map>
                         </option>
                       </PersistentState>

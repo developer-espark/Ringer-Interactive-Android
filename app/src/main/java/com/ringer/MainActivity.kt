@@ -12,7 +12,8 @@ import com.ringer.interactive.permission.RingerInteractive
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var btn_continue : Button
+    lateinit var btn_continue: Button
+
     companion object {
         val REQUEST_CODE_SDK = 2
     }
@@ -27,23 +28,23 @@ class MainActivity : AppCompatActivity() {
         btn_continue.setOnClickListener {
 
             //SDK Default Dialer
-            offerReplacingDefaultDialer(this,applicationContext.packageName,
+            offerReplacingDefaultDialer(
+                this, applicationContext.packageName,
                 REQUEST_CODE_SDK
             )
 
         }
-        val timer = object: CountDownTimer(7000, 1000) {
+        val timer = object : CountDownTimer(7000, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
 
             override fun onFinish() {
 
-                startActivity(Intent(this@MainActivity,TermsAndConditionActivity::class.java))
+                startActivity(Intent(this@MainActivity,NotificationActivity::class.java))
                 finish()
 
             }
         }
         timer.start()
-
 
 
     }
@@ -66,7 +67,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }*/
-
 
 
 }
