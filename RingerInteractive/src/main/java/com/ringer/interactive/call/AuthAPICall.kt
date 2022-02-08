@@ -81,7 +81,7 @@ class AuthAPICall {
 
                             //api call to send fcm token
                             Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
-                            if (Preferences().getIsCalled(context)!!) {
+                            if (!Preferences().getIsCalled(context)!!) {
                                 apiCallFirebaseToken(
                                     context,
                                     Preferences().getTokenBaseUrl(context)
@@ -254,7 +254,8 @@ class AuthAPICall {
 
             call = api.getAvatar(
                 Preferences().getAuthToken(context),
-                storeContact.galleryId
+                storeContact.galleryId,
+                storeContact.phoneList[0]
             )
             numberList.clear()
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {

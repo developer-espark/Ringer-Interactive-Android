@@ -27,7 +27,8 @@ interface Api {
     @GET("data/api/types/gallery/{galleryId}/avatar")
     fun getAvatar(
         @Header(authorization) auth: String,
-        @Path("galleryId") contact_id : String
+        @Path("galleryId") contact_id : String,
+        @Query("phone") phone_number : String
     ) : Call<ResponseBody>
 
 

@@ -5,6 +5,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import com.ringer.interactive.InitializeToken
+import com.ringer.interactive.permission.RingerInteractive
 
 class EditScreenActivity : AppCompatActivity() {
 
@@ -18,6 +19,7 @@ class EditScreenActivity : AppCompatActivity() {
 
         initialize()
         InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password),resources.getString(R.string.app_name))
+
     }
 
     private fun initialize() {
