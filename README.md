@@ -26,12 +26,14 @@ Add the function below in the FirebaseMessagingService
 # Step 2
 Now add below line in your project level build
 
-```	allprojects {
+```
+	allprojects {
+
    		repositories {
    			...
    			maven { url 'https://jitpack.io' }
    		}
-   	}
+   }
 ```
 
 # Step 3
