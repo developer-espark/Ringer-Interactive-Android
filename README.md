@@ -7,7 +7,7 @@ Ringer is an Android SDK that allows the mobile app to save and update contacts 
 ## Download SDK
 Please visit the [Releases](https://github.com/developer-espark/Ringer-Interactive-Android) to get latest package.
 
-### Here are the instructions to implement this SDK within your own mobile application. 
+### Here are the instructions to implement this SDK within your own mobile application.
 ### Minimum SDK Version Supported is 7 Nouget
 
 # Step 1
@@ -17,11 +17,9 @@ Add the function below in the FirebaseMessagingService
 ```onMessageReceived
 
         try {
-                LibrarySDKMessagingService().sendNotification(this,remoteMessage)
-                
+            LibrarySDKMessagingService().sendNotification(this,remoteMessage)
         } catch (e: Exception) {
             e.printStackTrace()
-
         }
 ```
 
@@ -30,7 +28,7 @@ If you are not using Firebase, please use the following code.
 
 ```gradle
 implementation ('com.ringer.interactive.version_name'){
-           transitive = true
+        transitive = true
         // Use the consuming application's FireBase module, so exclude it
         // from the dependency. (not totally necessary if you use compileOnly
         // when declaring the dependency in the library project).

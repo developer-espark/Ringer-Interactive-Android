@@ -3,6 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/EsparkWFH/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_main.xml" value="0.4205298013245033" />
+        <entry key="..\:/EsparkWFH/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_terms_and_condition.xml" value="0.20416666666666666" />
+        <entry key="..\:/EsparkWFH/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_thank_you_screen.xml" value="0.20416666666666666" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable/ic_icn_unhold.xml" value="0.17592592592592593" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable/ic_icn_unmute.xml" value="0.19722222222222222" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable/ic_mute.xml" value="0.19722222222222222" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable/ic_round_gray.xml" value="0.19722222222222222" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/activity_call.xml" value="0.2" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/drawable/_background_blue_round_corner.xml" value="0.2203125" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.2064814814814815" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/drawable/rounded_get_started.xml" value="0.18333333333333332" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_access_contact.xml" value="0.19010416666666666" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_all_detail_screen.xml" value="0.22" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_edit_screen.xml" value="0.22" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_main.xml" value="0.18" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_notification.xml" value="0.22" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_terms_and_condition.xml" value="0.21" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/activity_thank_you_screen.xml" value="0.3277777777777778" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/layout/content_thank_you.xml" value="0.20102564102564102" />
+        <entry key="..\:/EsparkWFH/RingerZala/Ringer/Ringer-Interactive-Android/app/src/main/res/menu/navigation_menu.xml" value="0.20102564102564102" />
         <entry key="RingerInteractive/src/main/res/layout/activity_ringer_screen.xml" value="0.3203125" />
         <entry key="RingerInteractive/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.33645833333333336" />
         <entry key="RingerInteractive/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.33645833333333336" />

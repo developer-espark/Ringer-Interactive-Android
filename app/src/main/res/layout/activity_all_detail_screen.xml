@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".AllDetailScreenActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/bg_color">
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_baseline_arrow_back_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_centerInParent="true"
+            android:text="Terms of Service &amp; Privacy"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Privacy Policy"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:gravity="center|start"
+        android:textStyle="normal"
+        android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
+        android:textColor="@color/black"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BCB8B8"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Terms of Services"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:gravity="center|start"
+        android:textStyle="normal"
+        android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
+        android:textColor="@color/black"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BCB8B8"/>
+
+    <TextView
+        android:id="@+id/txt_license"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="License Agreement"
+        android:textSize="14sp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:gravity="center|start"
+        android:textStyle="normal"
+        android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
+        android:textColor="@color/black"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BCB8B8"/>
+
+
+    </LinearLayout>
+</LinearLayout>

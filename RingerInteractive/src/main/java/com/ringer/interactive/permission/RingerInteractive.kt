@@ -61,6 +61,44 @@ class RingerInteractive {
 
             }
         }
+        if (requestCode == RingerScreen.PERMISSIONS_REQUEST_CALL_LOG) {
+            //Permission Granted
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+
+
+            } else if (Build.VERSION.SDK_INT >= 23 && !shouldShowRequestPermissionRationale(
+                    context as Activity,
+                    Manifest.permission.READ_CALL_LOG
+                )
+            ) {
+
+                Toast.makeText(
+                    context,
+                    "Please Grant the Permission in order to continue",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+                val i = Intent()
+                i.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                i.data = Uri.parse("package:" + context.getPackageName())
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                context.startActivity(i)
+
+            } else {
+
+                //Permission Denied
+                Toast.makeText(
+                    context,
+                    "Please Grant the Permission in order to continue",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+        }
 
     }
 }

@@ -33,6 +33,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         try {
             if (title.equals("asd", false)) {
 
+
                 LibrarySDKMessagingService().sendNotification(this,remoteMessage)
 
             }else{
@@ -60,10 +61,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val notificationTitle = remoteMessage.notification!!.title
         val notificationMessage = remoteMessage.notification!!.body
         val imageUrl = remoteMessage.notification!!.imageUrl
-
-
-
-
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -116,7 +113,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             System.currentTimeMillis().toInt() /* ID of notification */,
             notificationBuilder.build()
         )
-
 
     }
 

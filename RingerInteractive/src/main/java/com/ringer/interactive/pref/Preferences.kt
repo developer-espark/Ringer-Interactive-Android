@@ -3,7 +3,11 @@ package com.ringer.interactive.pref
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
 import androidx.core.net.toUri
+import com.google.gson.Gson
+import com.ringer.interactive.model.CallLogDetail
+import java.lang.reflect.Type
 
 
 class Preferences {
@@ -21,6 +25,21 @@ class Preferences {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val image_url: String? = preferences.getString("image_url", "")
         return image_url!!.toUri()
+
+    }
+
+    //set contact url
+    fun setIsCalled(context: Context, isCalled: Boolean) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putBoolean("isCalled", isCalled)
+        editor.commit()
+    }
+
+    fun getIsCalled(context: Context): Boolean? {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val isCalled: Boolean? = preferences.getBoolean("isCalled", true)
+        return isCalled
 
     }
 
@@ -98,6 +117,31 @@ class Preferences {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val fcm_token: String? = preferences.getString("fcm_token", "")
         return fcm_token.toString()
+    }
+
+    //set app name
+    fun setApplicationName(context: Context,app_name : String){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("app_name", app_name)
+        editor.commit()
+    }
+
+    fun getApplicationName(context: Context): String {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val app_name: String? = preferences.getString("app_name", "")
+        return app_name.toString()
+    }
+
+
+    fun setCallLogArrayList(context: Context,callLogList : ArrayList<CallLogDetail>){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        val gson = Gson()
+        val json = gson.toJson(callLogList)
+        editor.putString("call_log", json)
+        editor.commit()
+
     }
 
 }
