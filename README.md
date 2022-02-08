@@ -24,6 +24,17 @@ Add the function below in the FirebaseMessagingService
 ```
 
 # Step 2
+Now add below line in your project level build
+
+```	allprojects {
+   		repositories {
+   			...
+   			maven { url 'https://jitpack.io' }
+   		}
+   	}
+```
+
+# Step 3
 If you are not using Firebase, please use the following code.
 
 ```gradle
@@ -42,7 +53,7 @@ implementation ('com.ringer.interactive.version_name'){
     }
 ```
 
-# Step 2.1
+# Step 3.1
 In the Manifest File add the following code.
 To continue to get notified
 
@@ -62,7 +73,7 @@ To continue to get notified
 
 ### Now Setup is complete. The next step iis to Add Credentials in order to use this SDK.
 
-# Step 2.2
+# Step 3.2
 ### Add username and password in a ###string.xml### file in your project
 
 ```string.xml
@@ -72,7 +83,7 @@ To continue to get notified
 
 After adding these credentials you will have access to the SDK.
 
-# Step 2.3
+# Step 3.3
 
 In your MainActivity, call the following function to continue.
 This is required to use the SDK.
@@ -83,7 +94,7 @@ This is required to use the SDK.
 
 ```
 
-# Step 2.4
+# Step 3.4
 
 Final Step to Complete the SDK Setup
 This step is for the permissions you need granted.
