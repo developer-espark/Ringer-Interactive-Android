@@ -33,7 +33,8 @@ Now add below line in your project level build
    			...
    			maven { url 'https://jitpack.io' }
    		}
-   }
+     }
+
 ```
 
 # Step 3
