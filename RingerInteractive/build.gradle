@@ -87,7 +87,7 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 groupId = 'com.ringer.interactive'
                 artifactId = 'RingerInteractive'
-                version = '1.0'
+                version = '1.0.1'
             }
         }
     }
