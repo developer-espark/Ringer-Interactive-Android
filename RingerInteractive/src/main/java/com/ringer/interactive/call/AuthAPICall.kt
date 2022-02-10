@@ -81,7 +81,7 @@ class AuthAPICall {
 
                             //api call to send fcm token
                             Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
-                            if (!Preferences().getIsCalled(context)!!) {
+                            if (Preferences().getIsCalled(context)!!) {
                                 apiCallFirebaseToken(
                                     context,
                                     Preferences().getTokenBaseUrl(context)

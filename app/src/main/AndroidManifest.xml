@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ringer">
         <activity
+            android:name=".AppearOnTopActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DefaultPhoneActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditScreenActivity"
             android:exported="true" />
         <activity

@@ -26,5 +26,12 @@ class EditScreenActivity : AppCompatActivity() {
         btn_allow_setting = findViewById(R.id.btn_allow_setting)
         switch_noti = findViewById(R.id.switch_noti)
         switch_contact = findViewById(R.id.switch_contact)
+
+        PreferencesApp().setNotification(this,false)
+        PreferencesApp().setContact(this,false)
+        PreferencesApp().setDefaultApp(this,false)
+        PreferencesApp().setAppearOnTop(this,false)
+
+
     }
 }

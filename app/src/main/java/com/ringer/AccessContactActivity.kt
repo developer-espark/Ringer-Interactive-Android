@@ -1,18 +1,19 @@
 package com.ringer
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import com.ringer.interactive.InitializeToken
 import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
 
 class AccessContactActivity : AppCompatActivity() {
 
     lateinit var btn_allow_contact : Button
-    companion object {
-        val REQUEST_CODE_SDK = 2
-    }
+    lateinit var txt_privacy : TextView
+    lateinit var txt_terms : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,34 +27,35 @@ class AccessContactActivity : AppCompatActivity() {
     private fun onClick() {
         btn_allow_contact.setOnClickListener {
 
-            offerReplacingDefaultDialer(this,applicationContext.packageName,
-                REQUEST_CODE_SDK
+            startActivity(
+                Intent(
+                    this@AccessContactActivity,
+                    EditScreenActivity::class.java
+                )
             )
+            finish()
 
+
+    }
+        txt_terms.setOnClickListener {
+
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
+            startActivity(browserIntent)
+
+        }
+        txt_privacy.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
+            startActivity(browserIntent)
         }
     }
 
     private fun initialize() {
         btn_allow_contact = findViewById(R.id.btn_allow_contact)
+        txt_privacy = findViewById(R.id.txt_privacy)
+        txt_terms = findViewById(R.id.txt_terms)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_SDK){
 
-            if (resultCode == RESULT_OK){
-                /*InitializeToken(
-                    this,
-                    resources.getString(R.string.ringer_user_name),
-                    resources.getString(R.string.ringer_password),
-                    resources.getString(R.string.app_name)
-                )*/
-                startActivity(Intent(this@AccessContactActivity,EditScreenActivity::class.java))
-                finish()
-            }
-
-        }
-    }
     /*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

@@ -39,9 +39,13 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFinish() {
 
-                startActivity(Intent(this@MainActivity,NotificationActivity::class.java))
-                finish()
-
+                if (PreferencesApp().getAppearOnTop(this@MainActivity) == false){
+                    startActivity(Intent(this@MainActivity,EditScreenActivity::class.java))
+                    finish()
+                }else{
+                    startActivity(Intent(this@MainActivity,DefaultPhoneActivity::class.java))
+                    finish()
+                }
             }
         }
         timer.start()
