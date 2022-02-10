@@ -20,6 +20,8 @@ import com.google.firebase.messaging.RemoteMessage
 import com.ringer.interactive.pref.Preferences
 import com.ringer.interactive.R
 import com.ringer.interactive.activity.RingerScreen
+import com.ringer.interactive.call.AuthAPICall
+import com.ringer.interactive.notification.Notifications
 import java.io.UnsupportedEncodingException
 
 open class LibrarySDKMessagingService : FirebaseMessagingService() {
@@ -51,22 +53,16 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
 
-        val notificationTitle = remoteMessage.notification!!.title
-        val notificationMessage = remoteMessage.notification!!.body
-        val imageUrl = remoteMessage.notification!!.imageUrl
-        Log.e("imageUrl",""+imageUrl.toString())
-
-        if (remoteMessage.notification!!.imageUrl == null){
-            Preferences().setImageUrl(context, Uri.parse("https://www.fedex.com/content/dam/fedex/us-united-states/shipping/images/2020/Q3/icon_delivery_purple_lg_2143296207.png"))
-        }else{
-            Preferences().setImageUrl(context, remoteMessage.notification!!.imageUrl)
+        try {
+            Notifications().searchContact(context,Preferences().getTokenBaseUrl(context))
+//            AuthAPICall().searchContact(context,Preferences().getTokenBaseUrl(context),"1")
+        }catch (e : Exception){
+            Log.e("ErrorToken",""+e.message)
         }
 
 
-        val intent = Intent(context, RingerScreen::class.java)
+        /*val intent = Intent(context, RingerScreen::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        intent.putExtra("name", notificationTitle)
-        intent.putExtra("number", notificationMessage)
         context.startActivity(intent)
 
         val contentIntent =
@@ -115,9 +111,9 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         notificationBuilder.setDefaults(NotificationCompat.DEFAULT_ALL)
         notificationBuilder.priority = NotificationCompat.PRIORITY_HIGH
         notificationManager.notify(
-            System.currentTimeMillis().toInt() /* ID of notification */,
+            System.currentTimeMillis().toInt() *//* ID of notification *//*,
             notificationBuilder.build()
-        )
+        )*/
 
     }
 

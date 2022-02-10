@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.ContentProviderOperation
 import android.content.ContentResolver
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -13,6 +12,7 @@ import android.provider.ContactsContract
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.ringer.interactive.R
+import com.ringer.interactive.call.AuthAPICall
 import com.ringer.interactive.model.PhoneNumber
 import com.ringer.interactive.pref.Preferences
 import java.io.ByteArrayOutputStream

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.nirwannursabda:expandable-navigation:0.1.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/92e3b2e5d1ad7d03b94ee3c352e706fe/transformed/jetified-expandable-navigation-0.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/92e3b2e5d1ad7d03b94ee3c352e706fe/transformed/jetified-expandable-navigation-0.1.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/92e3b2e5d1ad7d03b94ee3c352e706fe/transformed/jetified-expandable-navigation-0.1.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

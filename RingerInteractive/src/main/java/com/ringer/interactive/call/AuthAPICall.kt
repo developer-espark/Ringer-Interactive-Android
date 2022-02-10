@@ -970,6 +970,7 @@ class AuthAPICall {
             e.printStackTrace()
         }
         contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
+//        contentResolver.applyBatch(ContactsContract.Data.CONTENT_URI,)
     }
 
     //Bitmap to ByteArray

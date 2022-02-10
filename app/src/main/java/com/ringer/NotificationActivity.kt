@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 class NotificationActivity : AppCompatActivity() {
 
     lateinit var btn_allow_notifications: Button
-    lateinit var txt_privacy : TextView
-    lateinit var txt_terms : TextView
+    lateinit var txt_privacy1 : TextView
+    lateinit var txt_terms_condition : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +33,13 @@ class NotificationActivity : AppCompatActivity() {
                 )
                 finish()
         }
-        txt_terms.setOnClickListener {
+        txt_terms_condition.setOnClickListener {
 
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
             startActivity(browserIntent)
 
         }
-        txt_privacy.setOnClickListener {
+        txt_privacy1.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
             startActivity(browserIntent)
         }
@@ -47,7 +47,7 @@ class NotificationActivity : AppCompatActivity() {
 
     private fun initialize() {
         btn_allow_notifications = findViewById(R.id.btn_allow_notifications)
-        txt_privacy = findViewById(R.id.txt_privacy)
-        txt_terms = findViewById(R.id.txt_terms)
+        txt_privacy1 = findViewById(R.id.txt_privacy1)
+        txt_terms_condition = findViewById(R.id.txt_terms_condition)
     }
 }

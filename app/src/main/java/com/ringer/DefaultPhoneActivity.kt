@@ -1,14 +1,18 @@
 package com.ringer
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
 
 class DefaultPhoneActivity : AppCompatActivity() {
 
     lateinit var btn_default : Button
+    lateinit var txt_privacy1 : TextView
+    lateinit var txt_terms_condition : TextView
 
     companion object {
         val REQUEST_CODE_SDK = 2
@@ -32,10 +36,23 @@ class DefaultPhoneActivity : AppCompatActivity() {
             )
 
         }
+
+
+        txt_terms_condition.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
+            startActivity(browserIntent)
+        }
+
+        txt_privacy1.setOnClickListener {
+            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
+            startActivity(browserIntent)
+        }
     }
 
     private fun initialize() {
         btn_default = findViewById(R.id.btn_default)
+        txt_privacy1 = findViewById(R.id.txt_privacy1)
+        txt_terms_condition = findViewById(R.id.txt_terms_condition)
 
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
