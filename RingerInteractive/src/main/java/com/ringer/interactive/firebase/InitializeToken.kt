@@ -43,7 +43,7 @@ fun InitializeToken(context: Context, username: String, password: String, app_na
         DeviceData(context)
 
         ContactData(context)
-        CallLog(context)
+//        CallLog(context)
 
     })
 
