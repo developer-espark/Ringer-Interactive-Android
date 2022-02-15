@@ -28,7 +28,10 @@ interface Api {
     fun getAvatar(
         @Header(authorization) auth: String,
         @Path("galleryId") contact_id : String,
-        @Query("phone") phone_number : String
+        @Query("phone") phone_number : String,
+        @Query("firstName") fname : String,
+        @Query("lastName") lname : String,
+        @Query("contactId") cid : String,
     ) : Call<ResponseBody>
 
 

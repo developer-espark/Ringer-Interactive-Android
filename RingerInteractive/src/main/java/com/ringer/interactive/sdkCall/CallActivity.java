@@ -30,6 +30,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +72,8 @@ public class CallActivity extends AppCompatActivity {
     private OngoingCall ongoingCall;
     InputStream photo_stream;
 
+    RelativeLayout relative_data;
+
     @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,7 @@ public class CallActivity extends AppCompatActivity {
         lin_call_accept = findViewById(R.id.lin_call_accept);
         edt_keypade_number = findViewById(R.id.edt_keypade_number);
         lin_call_Data = findViewById(R.id.lin_call_Data);
+        relative_data = findViewById(R.id.relative_data);
 
         ongoingCall = new OngoingCall();
         disposables = new CompositeDisposable();
@@ -149,6 +153,15 @@ public class CallActivity extends AppCompatActivity {
                 Bitmap my_btmp = BitmapFactory.decodeStream(buf);
                 img_profile.setImageBitmap(my_btmp);
             } else {
+
+                RelativeLayout.LayoutParams layoutParams =
+                        (RelativeLayout.LayoutParams)img_profile.getLayoutParams();
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                img_profile.setLayoutParams(layoutParams);
+
+                img_profile.getLayoutParams().height = 100;
+                img_profile.getLayoutParams().width = 100;
+                layoutParams.addRule(RelativeLayout.BELOW,R.id.lin_call_Data);
                 img_profile.setImageResource(R.drawable.download);
             }
 
@@ -233,10 +246,19 @@ public class CallActivity extends AppCompatActivity {
             hangup.setVisibility(View.GONE);
             txt_hangup.setVisibility(View.GONE);
         }
+
         if ((state == Call.STATE_ACTIVE)||(state == Call.STATE_HOLDING)) {
-            img_profile.setAlpha(0.3f);
+            Log.e("state",""+state);
+            if (photo_stream != null){
+                img_profile.setAlpha(0.3f);
+            }else {
+
+                img_profile.setAlpha(1f);
+            }
             lin_call_on.setVisibility(View.VISIBLE);
+
         } else {
+            Log.e("state1",""+state);
             img_profile.setAlpha(1f);
             lin_call_on.setVisibility(View.GONE);
         }

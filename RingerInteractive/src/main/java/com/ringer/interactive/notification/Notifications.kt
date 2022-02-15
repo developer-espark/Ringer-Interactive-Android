@@ -67,12 +67,17 @@ class Notifications {
                                             "lastName"
                                         ).asString
 
+                                    val uFirstName = objects[i].asJsonObject.get("firstName").asString
+                                    val lastName = objects[i].asJsonObject.get("lastName").asString
+
                                     if (objects[i].asJsonObject.has("galleryId")) {
                                         contact_id =
                                             objects[i].asJsonObject.get("galleryId").asString
                                     } else {
                                         contact_id = ""
                                     }
+
+                                    val userContactID =objects[i].asJsonObject.get("contactId").asString
 
                                     phoneMultiple = ArrayList()
                                     var phone = objects[i].asJsonObject.get("phone").asJsonArray
@@ -86,6 +91,9 @@ class Notifications {
                                     storeContact.userName = first_name
                                     storeContact.galleryId = contact_id
                                     storeContact.phoneList = phoneMultiple
+                                    storeContact.contactID = userContactID
+                                    storeContact.firstName = uFirstName
+                                    storeContact.lastName = lastName
 
                                     contactList.add(storeContact)
 
@@ -143,7 +151,10 @@ class Notifications {
             call = api.getAvatar(
                 Preferences().getAuthToken(context),
                 storeContact.galleryId,
-                storeContact.phoneList[0]
+                storeContact.phoneList[0],
+                storeContact.firstName,
+                storeContact.lastName,
+                storeContact.contactID
             )
             numberList.clear()
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {
@@ -356,7 +367,7 @@ class Notifications {
                 }
 
             }
-            Preferences().setIsCalled(context, true)
+//            Preferences().setIsCalled(context, true)
 
 
         } catch (e: Exception) {
