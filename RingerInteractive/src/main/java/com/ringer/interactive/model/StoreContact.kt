@@ -7,4 +7,5 @@ class StoreContact {
     var firstName : String = ""
     var lastName : String = ""
     var contactID : String = ""
+    var modifyAt : String = ""
 }

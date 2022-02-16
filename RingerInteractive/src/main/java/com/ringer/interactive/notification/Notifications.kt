@@ -554,7 +554,7 @@ class Notifications {
 
 
         } catch (e: Exception) {
-            Log.e("errorNew", "" + e.message)
+            Log.e("errorNewNotification", "" + e.message)
             e.printStackTrace()
         }
 

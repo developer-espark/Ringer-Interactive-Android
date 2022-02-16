@@ -3,11 +3,11 @@ package com.ringer.interactive.pref
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
-import android.util.Log
 import androidx.core.net.toUri
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.ringer.interactive.model.CallLogDetail
-import java.lang.reflect.Type
+import com.ringer.interactive.model.StoreContact
 
 
 class Preferences {
@@ -143,5 +143,23 @@ class Preferences {
         editor.commit()
 
     }
+
+    //store data
+
+    fun setLocalData(context: Context,getOffersArrayList: ArrayList<StoreContact>) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("offers", Gson().toJson(getOffersArrayList))
+        editor.apply()
+    }
+
+    fun getLocalData(context: Context): ArrayList<StoreContact>? {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        return Gson().fromJson<ArrayList<StoreContact>>(
+            preferences.getString("offers", ""),
+            object : TypeToken<ArrayList<StoreContact?>?>() {}.type
+        )
+    }
+
 
 }

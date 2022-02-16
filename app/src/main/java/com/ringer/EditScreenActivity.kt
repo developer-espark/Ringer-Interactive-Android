@@ -3,6 +3,7 @@ package com.ringer
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Button
 import android.widget.ExpandableListView.OnChildClickListener
 import android.widget.ExpandableListView.OnGroupClickListener
@@ -76,6 +77,14 @@ class EditScreenActivity : AppCompatActivity() {
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
             }
+
+        }
+        btn_allow_setting.setOnClickListener {
+
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            intent.data = Uri.parse("package:" + packageName)
+            startActivity(intent)
+
 
         }
     }

@@ -5,20 +5,28 @@ import static android.telecom.CallAudioState.ROUTE_EARPIECE;
 import static android.telecom.CallAudioState.ROUTE_SPEAKER;
 import static com.ringer.interactive.sdkCall.Constants.asString;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.AudioManager;
+import android.media.session.MediaSession;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telecom.Call;
+import android.telecom.PhoneAccount;
+import android.telecom.PhoneAccountHandle;
+import android.telecom.TelecomManager;
+import android.telephony.SmsManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -32,15 +40,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.ringer.interactive.R;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -54,12 +65,12 @@ public class CallActivity extends AppCompatActivity {
 
     private static CallService callService1;
     private static Call call1;
-    Button answer,hangup;
-    ImageButton btn_mute,btn_speaker,btn_hold;
+    Button answer, hangup;
+    ImageButton btn_mute, btn_speaker, btn_hold;
     ImageView img_profile;
-    TextView callInfo,txt_answer,txt_hangup,callNumber,callstate;
+    TextView callInfo, txt_answer, txt_hangup, callNumber, callstate;
 
-    LinearLayout lin_call_accept,lin_call_Data,lin_call_on;
+    LinearLayout lin_call_accept, lin_call_Data, lin_call_on;
     EditText edt_keypade_number;
 
     Boolean isMerge = false;
@@ -102,8 +113,8 @@ public class CallActivity extends AppCompatActivity {
 
         edt_keypade_number.setOnEditorActionListener(new EditText.OnEditorActionListener() {
             @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event){
-                if(actionId == EditorInfo.IME_ACTION_DONE){
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
                     edt_keypade_number.setVisibility(View.GONE);
                     edt_keypade_number.clearFocus();
                     lin_call_Data.setVisibility(View.VISIBLE);
@@ -155,13 +166,13 @@ public class CallActivity extends AppCompatActivity {
             } else {
 
                 RelativeLayout.LayoutParams layoutParams =
-                        (RelativeLayout.LayoutParams)img_profile.getLayoutParams();
+                        (RelativeLayout.LayoutParams) img_profile.getLayoutParams();
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                 img_profile.setLayoutParams(layoutParams);
 
                 img_profile.getLayoutParams().height = 100;
                 img_profile.getLayoutParams().width = 100;
-                layoutParams.addRule(RelativeLayout.BELOW,R.id.lin_call_Data);
+                layoutParams.addRule(RelativeLayout.BELOW, R.id.lin_call_Data);
                 img_profile.setImageResource(R.drawable.download);
             }
 
@@ -236,6 +247,7 @@ public class CallActivity extends AppCompatActivity {
                 Call.STATE_DIALING,
                 Call.STATE_RINGING,
                 Call.STATE_ACTIVE,
+                Call.STATE_SELECT_PHONE_ACCOUNT,
         Call.STATE_HOLDING}).contains(state)) {
 
             hangup.setVisibility(View.VISIBLE);
@@ -291,14 +303,28 @@ public class CallActivity extends AppCompatActivity {
         disposables.clear();
     }
 
-    public static void start(Context context, Call call,CallService callService) {
-        Intent intent = new Intent(context, CallActivity.class)
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                .setData(call.getDetails().getHandle());
-        context.startActivity(intent);
-        callService1 = callService;
-        call1 = call;
+    public static void start(Context context, Call call,CallService callService,String data) {
+        if (data.equals("1")){
+
+            Log.e("alwaysAsk","alwaysAsk");
+            Intent intent = new Intent(TelecomManager.ACTION_CONFIGURE_PHONE_ACCOUNT);
+            intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, context.getPackageName());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+
+            callService1 = callService;
+            call1 = call;
+        }else {
+            Intent intent = new Intent(context, CallActivity.class)
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    .setData(call.getDetails().getHandle());
+            context.startActivity(intent);
+            callService1 = callService;
+            call1 = call;
+        }
+
     }
+
 
     public void onAnswerClicked(View view) {
         ongoingCall.answer();
@@ -402,6 +428,17 @@ public class CallActivity extends AppCompatActivity {
 
             call1.mergeConference();
             isMerge = false;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+
+            Log.e("alwaysAsk","alwaysAskDone");
+            new OngoingCall().setCall(call1);
+            CallActivity.start(this, call1,callService1,"0");
         }
     }
 }
