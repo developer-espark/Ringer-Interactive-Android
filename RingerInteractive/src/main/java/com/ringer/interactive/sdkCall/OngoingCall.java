@@ -11,6 +11,7 @@ public class OngoingCall {
 
     public static BehaviorSubject<Integer> state = BehaviorSubject.create();
     private static Call call;
+    private static Call anotherCall;
 
 
     private Object callback = new Call.Callback() {
@@ -42,5 +43,11 @@ public class OngoingCall {
     public void hangup() {
         assert call != null;
         call.disconnect();
+    }
+
+    public void mergeCall(){
+        assert call != null;
+        call.mergeConference();
+
     }
 }

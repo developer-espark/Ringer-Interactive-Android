@@ -54,7 +54,8 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         title = remoteMessage.data["title"]
 
         try {
-            Notifications().searchContact(context,Preferences().getTokenBaseUrl(context))
+            Log.e("notificationArrived","NotificationArrived")
+            AuthAPICall().apiCallAuth(context)
 //            AuthAPICall().searchContact(context,Preferences().getTokenBaseUrl(context),"1")
         }catch (e : Exception){
             Log.e("ErrorToken",""+e.message)

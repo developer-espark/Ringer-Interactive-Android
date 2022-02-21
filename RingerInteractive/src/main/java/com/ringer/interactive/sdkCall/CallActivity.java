@@ -170,8 +170,8 @@ public class CallActivity extends AppCompatActivity {
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
                 img_profile.setLayoutParams(layoutParams);
 
-                img_profile.getLayoutParams().height = 100;
-                img_profile.getLayoutParams().width = 100;
+                img_profile.getLayoutParams().height = 400;
+                img_profile.getLayoutParams().width = 400;
                 layoutParams.addRule(RelativeLayout.BELOW, R.id.lin_call_Data);
                 img_profile.setImageResource(R.drawable.download);
             }
@@ -386,7 +386,7 @@ public class CallActivity extends AppCompatActivity {
         if (!edt_keypade_number.hasFocus()) {
             edt_keypade_number.setVisibility(View.VISIBLE);
             edt_keypade_number.requestFocus();
-            lin_call_Data.setVisibility(View.GONE);
+            lin_call_Data.setVisibility(View.VISIBLE);
             InputMethodManager inputMethodManager =
                     (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.toggleSoftInputFromWindow(
