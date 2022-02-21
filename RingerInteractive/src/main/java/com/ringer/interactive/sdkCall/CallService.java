@@ -2,12 +2,14 @@ package com.ringer.interactive.sdkCall;
 
 import static android.telecom.CallAudioState.ROUTE_SPEAKER;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.telecom.Call;
 import android.telecom.ConnectionService;
 import android.telecom.InCallService;
 import android.telecom.TelecomManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +26,9 @@ public class CallService extends InCallService {
 
             Log.e("CallService","CallService1");
             CallActivity.start(this, call,CallService.this,"1");
+
+//            Toast.makeText(this, "Please Select One Sim Card to call", Toast.LENGTH_SHORT).show();
+
            /* Intent intent1 = new Intent(this,CallActivity.class);
             intent1.putExtra("callState",""+call.getState());
             startActivity(intent1);*/

@@ -1,28 +1,23 @@
 package com.ringer.interactive.firebase
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
 import android.media.RingtoneManager
-import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.ringer.interactive.pref.Preferences
 import com.ringer.interactive.R
-import com.ringer.interactive.activity.RingerScreen
 import com.ringer.interactive.call.AuthAPICall
-import com.ringer.interactive.notification.Notifications
 import java.io.UnsupportedEncodingException
+import java.util.prefs.Preferences
 
 open class LibrarySDKMessagingService : FirebaseMessagingService() {
 
@@ -35,34 +30,34 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         Log.e("NotificationTitle : ", "" + remoteMessage.notification!!.title)
 
         try {
-            sendNotification(this,remoteMessage)
+            sendNotification(this, remoteMessage)
         } catch (e: Exception) {
-            Log.e("errorLib",""+e.message)
+            Log.e("errorLib", "" + e.message)
             e.printStackTrace()
 
         }
     }
 
     @Throws(UnsupportedEncodingException::class)
-    open fun sendNotification(context: Context,remoteMessage: RemoteMessage) {
+    open fun sendNotification(context: Context, remoteMessage: RemoteMessage) {
         var defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder: NotificationCompat.Builder
         val notificationManager: NotificationManager
-        val title: String?
-        val message: String?
+        var title: String?
+        var message: String?
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
 
-        try {
-            Log.e("notificationArrived","NotificationArrived")
-            AuthAPICall().apiCallAuth(context)
-//            AuthAPICall().searchContact(context,Preferences().getTokenBaseUrl(context),"1")
-        }catch (e : Exception){
-            Log.e("ErrorToken",""+e.message)
+        if (message.isNullOrEmpty()){
+            message = remoteMessage.notification!!.body.toString()
         }
+        if (title.isNullOrEmpty()){
+            title = remoteMessage.notification!!.title.toString()
+        }
+        Log.e("messageNotification",""+message)
+        Log.e("titleNotification",""+title)
 
-
-        /*val intent = Intent(context, RingerScreen::class.java)
+        val intent = Intent()
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
 
@@ -78,7 +73,7 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
             ).setSmallIcon(iconL)
                 .setContentTitle(title).setContentText(message).setAutoCancel(true)
                 .setWhen(`when`).setSound(defaultSoundUri)
-                .setColor(ContextCompat.getColor(context, R.color.purple_200)).setLargeIcon(
+                .setColor(ContextCompat.getColor(context, R.color.purple_700)).setLargeIcon(
                     BitmapFactory.decodeResource(
                         context.resources,
                         R.mipmap.ic_launcher
@@ -112,9 +107,9 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         notificationBuilder.setDefaults(NotificationCompat.DEFAULT_ALL)
         notificationBuilder.priority = NotificationCompat.PRIORITY_HIGH
         notificationManager.notify(
-            System.currentTimeMillis().toInt() *//* ID of notification *//*,
+            System.currentTimeMillis().toInt() ,
             notificationBuilder.build()
-        )*/
+        )
 
     }
 

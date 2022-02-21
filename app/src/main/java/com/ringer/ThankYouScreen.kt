@@ -73,30 +73,5 @@ class ThankYouScreen : AppCompatActivity() {
         RingerInteractive().onRequestPermissionsResult(requestCode, permissions, grantResults,this)
 
     }*/
-    override fun onStart() {
-        super.onStart()
 
-        //SDK Default Dialer
-        offerReplacingDefaultDialer(this,applicationContext.packageName,
-            REQUEST_CODE_SDK
-        )
-
-    }
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE_SDK){
-
-            if (resultCode == RESULT_OK){
-                InitializeToken(
-                    this,
-                    resources.getString(R.string.ringer_user_name),
-                    resources.getString(R.string.ringer_password),
-                    resources.getString(R.string.app_name)
-                )
-            }
-
-        }
-
-    }
 }

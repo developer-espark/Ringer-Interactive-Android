@@ -115,6 +115,9 @@ class AuthAPICall {
         lateinit var call: Call<JsonObject>
         val api: Api = Connection().getCon(context, tokenBaseUrl)
 
+
+        Log.e("FToKEN",""+Preferences().getFCMToken(context))
+
         var jsonObject = JsonObject();
         jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
         jsonObject.addProperty(uuid, deviceID)

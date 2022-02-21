@@ -40,6 +40,8 @@ class RingerScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ringer_screen)
 
+
+
        /* if (intent.extras != null) {
             nameFromFirebase = intent.extras!!.getString("name")
             numberFromFirebase = intent.extras!!.getString("number")

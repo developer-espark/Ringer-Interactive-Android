@@ -32,6 +32,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e("herere","herere")
             sendNotification(remoteMessage)
 
         }
@@ -48,6 +49,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val message: String?
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
+
+        Log.e("NORMAL","NORMAL")
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP

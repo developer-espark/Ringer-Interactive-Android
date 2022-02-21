@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.ringer.interactive.InitializeToken
 import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
 import com.ringer.interactive.permission.RingerInteractive
@@ -21,6 +22,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//
+
 
         btn_continue = findViewById(R.id.btn_continue)
 

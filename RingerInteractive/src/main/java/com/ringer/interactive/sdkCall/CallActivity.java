@@ -7,6 +7,7 @@ import static com.ringer.interactive.sdkCall.Constants.asString;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,9 @@ import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.session.MediaSession;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.telecom.PhoneAccount;
@@ -248,7 +251,7 @@ public class CallActivity extends AppCompatActivity {
                 Call.STATE_RINGING,
                 Call.STATE_ACTIVE,
                 Call.STATE_SELECT_PHONE_ACCOUNT,
-        Call.STATE_HOLDING}).contains(state)) {
+                Call.STATE_HOLDING}).contains(state)) {
 
             hangup.setVisibility(View.VISIBLE);
             txt_hangup.setVisibility(View.VISIBLE);
@@ -259,23 +262,23 @@ public class CallActivity extends AppCompatActivity {
             txt_hangup.setVisibility(View.GONE);
         }
 
-        if ((state == Call.STATE_ACTIVE)||(state == Call.STATE_HOLDING)) {
-            Log.e("state",""+state);
-            if (photo_stream != null){
+        if ((state == Call.STATE_ACTIVE) || (state == Call.STATE_HOLDING)) {
+            Log.e("state", "" + state);
+            if (photo_stream != null) {
                 img_profile.setAlpha(0.3f);
-            }else {
+            } else {
 
                 img_profile.setAlpha(1f);
             }
             lin_call_on.setVisibility(View.VISIBLE);
 
         } else {
-            Log.e("state1",""+state);
+            Log.e("state1", "" + state);
             img_profile.setAlpha(1f);
             lin_call_on.setVisibility(View.GONE);
         }
 
-        Log.e("state",""+state);
+        Log.e("state", "" + state);
 
         /*if (state == Call.STATE_HOLDING){
 
@@ -303,18 +306,27 @@ public class CallActivity extends AppCompatActivity {
         disposables.clear();
     }
 
-    public static void start(Context context, Call call,CallService callService,String data) {
-        if (data.equals("1")){
+    public static void start(Context context, Call call, CallService callService, String data) {
+        if (data.equals("1")) {
 
-            Log.e("alwaysAsk","alwaysAsk");
-            Intent intent = new Intent(TelecomManager.ACTION_CONFIGURE_PHONE_ACCOUNT);
+            Log.e("alwaysAsk", "alwaysAsk");
+    /*        Intent intent = new Intent(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE);*/
+            Intent intent = new Intent(TelecomManager.ACTION_CHANGE_PHONE_ACCOUNTS);
             intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, context.getPackageName());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 
-            callService1 = callService;
-            call1 = call;
-        }else {
+
+//            dataPopup(context);
+//            callService1 = callService;
+//            call1 = call;
+            /*TelecomManager telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
+            if (telecomManager != null) {
+                telecomManager.getSimCallManager();
+            }*/
+
+
+        } else {
             Intent intent = new Intent(context, CallActivity.class)
                     .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     .setData(call.getDetails().getHandle());
@@ -322,6 +334,19 @@ public class CallActivity extends AppCompatActivity {
             callService1 = callService;
             call1 = call;
         }
+
+    }
+
+    private static void dataPopup(Context context) {
+        Intent intent = new Intent(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE);
+        intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, context.getPackageName());
+        ((Activity) context).startActivity(intent);
+
+
+
+
+
+
 
     }
 
@@ -366,7 +391,6 @@ public class CallActivity extends AppCompatActivity {
         Log.e("getSpeaker", "" + audioManager.isSpeakerphoneOn());*/
 
 
-
         if (!isSpeaker) {
 
             callService1.setAudioRoute(ROUTE_SPEAKER);
@@ -406,11 +430,11 @@ public class CallActivity extends AppCompatActivity {
     }
 
     public void onHolded(View view) {
-        if (!isHold){
+        if (!isHold) {
             call1.hold();
             btn_hold.setImageResource(R.drawable.ic_icn_unhold);
             isHold = true;
-        }else {
+        } else {
             call1.unhold();
             btn_hold.setImageResource(R.drawable.ic_icn_hold);
             isHold = false;
@@ -423,7 +447,7 @@ public class CallActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, ContactsContract.Contacts.CONTENT_URI);
             startActivity(intent);
             isMerge = true;
-        }else {
+        } else {
 //            call1.conference(call1);
 
             call1.mergeConference();
@@ -431,14 +455,4 @@ public class CallActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK){
-
-            Log.e("alwaysAsk","alwaysAskDone");
-            new OngoingCall().setCall(call1);
-            CallActivity.start(this, call1,callService1,"0");
-        }
-    }
 }
