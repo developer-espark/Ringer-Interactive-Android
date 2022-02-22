@@ -3,6 +3,7 @@ package com.ringer.interactive.call
 import android.annotation.SuppressLint
 import android.content.ContentProviderOperation
 import android.content.Context
+import android.content.Context.TELEPHONY_SERVICE
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -14,6 +15,7 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
+import androidx.core.content.ContextCompat.getSystemService
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.ringer.interactive.api.*
@@ -27,14 +29,6 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.util.*
-import kotlin.ByteArray
-import kotlin.Exception
-import kotlin.Int
-import kotlin.String
-import kotlin.Throwable
-import kotlin.arrayOf
-import kotlin.collections.ArrayList
-import kotlin.toString
 
 
 class AuthAPICall {
@@ -109,6 +103,7 @@ class AuthAPICall {
         }
     }
 
+    @SuppressLint("MissingPermission")
     private fun apiCallFirebaseToken(context: Context, tokenBaseUrl: String) {
         Preferences().setIsCalled(context, false)
         val deviceID = getDeviceId(context)
@@ -117,11 +112,16 @@ class AuthAPICall {
 
 
         Log.e("FToKEN", "" + Preferences().getFCMToken(context))
+        val tpm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager?
+        val number = tpm!!.line1Number
+        Log.e("DeviceNumber", "" + number)
+
 
         var jsonObject = JsonObject();
         jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
         jsonObject.addProperty(uuid, deviceID)
         jsonObject.addProperty(os, "Android")
+        jsonObject.addProperty(phone,number)
 
         call = api.sendFCMToken(
             Preferences().getAuthToken(context),
@@ -299,8 +299,6 @@ class AuthAPICall {
                                             )
                                         }
                                     } else {
-
-                                        Log.e("modified1", "modified2")
 
                                         if (!contactList[k].galleryId.equals("")) {
                                             getContactImage(
