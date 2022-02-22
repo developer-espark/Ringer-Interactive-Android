@@ -322,6 +322,12 @@ public class CallActivity extends AppCompatActivity {
             img_profile.setAlpha(0.3f);
 
         }*/
+        if (callService1.getCallAudioState().getRoute() == ROUTE_BLUETOOTH){
+            btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_on);
+        }else {
+            btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_off);
+        }
+
 
 
         return null;
