@@ -116,7 +116,7 @@ class AuthAPICall {
         val api: Api = Connection().getCon(context, tokenBaseUrl)
 
 
-        Log.e("FToKEN",""+Preferences().getFCMToken(context))
+        Log.e("FToKEN", "" + Preferences().getFCMToken(context))
 
         var jsonObject = JsonObject();
         jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
@@ -235,15 +235,6 @@ class AuthAPICall {
                                     contactList.add(storeContact)
 
 
-//                                    if (!contact_id.equals("")) {
-//                                        getContactImage(
-//                                            context,
-//                                            tokenBaseUrl,
-//
-//                                        )
-//                                    }
-
-
                                 }
 
                             }
@@ -308,17 +299,16 @@ class AuthAPICall {
                                             )
                                         }
                                     } else {
-                                        if (contactList.size > storeLocalDataArrayList.size) {
-                                            Log.e("modified1", "modified2")
 
-                                            if (!contactList[k].galleryId.equals("")) {
-                                                getContactImage(
-                                                    context,
-                                                    tokenBaseUrl,
-                                                    contactList.get(k),
-                                                    contactList
-                                                )
-                                            }
+                                        Log.e("modified1", "modified2")
+
+                                        if (!contactList[k].galleryId.equals("")) {
+                                            getContactImage(
+                                                context,
+                                                tokenBaseUrl,
+                                                contactList.get(k),
+                                                contactList
+                                            )
                                         }
                                     }
 

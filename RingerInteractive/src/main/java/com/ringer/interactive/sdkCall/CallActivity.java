@@ -1,6 +1,7 @@
 package com.ringer.interactive.sdkCall;
 
 
+import static android.telecom.CallAudioState.ROUTE_BLUETOOTH;
 import static android.telecom.CallAudioState.ROUTE_EARPIECE;
 import static android.telecom.CallAudioState.ROUTE_SPEAKER;
 import static com.ringer.interactive.sdkCall.Constants.asString;
@@ -49,6 +50,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import com.ringer.interactive.R;
 
 import java.io.BufferedInputStream;
@@ -69,17 +73,20 @@ public class CallActivity extends AppCompatActivity {
     private static CallService callService1;
     private static Call call1;
     Button answer, hangup;
-    ImageButton btn_mute, btn_speaker, btn_hold;
+    ImageButton btn_mute, btn_speaker, btn_hold,btn_bluetooth;
     ImageView img_profile;
     TextView callInfo, txt_answer, txt_hangup, callNumber, callstate;
 
     LinearLayout lin_call_accept, lin_call_Data, lin_call_on;
     EditText edt_keypade_number;
+    int countryCode = 0;
+    String nationalNumber = "";
 
     Boolean isMerge = false;
     Boolean isHold = false;
     Boolean isMuted = false;
     Boolean isSpeaker = false;
+    Boolean isBluetooth = false;
 
     private CompositeDisposable disposables;
     private String number, contactId, name = "";
@@ -99,6 +106,7 @@ public class CallActivity extends AppCompatActivity {
         btn_mute = findViewById(R.id.btn_mute);
         btn_speaker = findViewById(R.id.btn_speaker);
         btn_hold = findViewById(R.id.btn_hold);
+        btn_bluetooth = findViewById(R.id.btn_bluetooth);
         callInfo = findViewById(R.id.callInfo);
         img_profile = findViewById(R.id.img_profile);
         txt_answer = findViewById(R.id.txt_answer);
@@ -222,7 +230,26 @@ public class CallActivity extends AppCompatActivity {
 
         callInfo.setText(name);
 
-        callNumber.setText(number);
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber numberProto = null;
+        try {
+            numberProto = phoneUtil.parse(number, "");
+            countryCode = numberProto.getCountryCode();
+            nationalNumber  = String.valueOf(numberProto.getNationalNumber());
+            Log.e("countryCode",""+countryCode);
+            Log.e("nationalNumber",""+nationalNumber);
+            String maskFirst = "("+nationalNumber.substring(0,3)+")"+nationalNumber.substring(3,6)+"-"+nationalNumber.substring(6,nationalNumber.length());
+            Log.e("maskFirst",""+maskFirst);
+            callNumber.setText(""+maskFirst);
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+            String maskFirst = "("+number.substring(0,3)+")"+number.substring(3,6)+"-"+number.substring(6,number.length());
+            callNumber.setText(""+maskFirst);
+        }
+
+
+
+
         callstate.setText(asString(state));
         if (name.equals("")) {
             callInfo.setVisibility(View.GONE);
@@ -342,12 +369,6 @@ public class CallActivity extends AppCompatActivity {
         intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, context.getPackageName());
         ((Activity) context).startActivity(intent);
 
-
-
-
-
-
-
     }
 
 
@@ -367,6 +388,7 @@ public class CallActivity extends AppCompatActivity {
             Log.e("AudioMode", "" + audioManager.getMode());
             if ((audioManager.getMode() == AudioManager.MODE_IN_CALL) || (audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION)) {
                 audioManager.setMicrophoneMute(true);
+                callService1.setMuted(true);
                 btn_mute.setImageResource(R.drawable.ic_icn_unmute);
                 Log.e("getMicrophone", "" + audioManager.isMicrophoneMute());
             }
@@ -377,6 +399,7 @@ public class CallActivity extends AppCompatActivity {
             Log.e("AudioMode1", "" + audioManager.getMode());
             if ((audioManager.getMode() == AudioManager.MODE_IN_CALL) || (audioManager.getMode() == AudioManager.MODE_IN_COMMUNICATION)) {
                 audioManager.setMicrophoneMute(false);
+                callService1.setMuted(false);
                 btn_mute.setImageResource(R.drawable.ic_unmute);
                 Log.e("getMicrophone1", "" + audioManager.isMicrophoneMute());
             }
@@ -455,4 +478,16 @@ public class CallActivity extends AppCompatActivity {
         }
     }
 
+    public void onBluetoothConnect(View view) {
+        if (!isBluetooth){
+            callService1.setAudioRoute(ROUTE_BLUETOOTH);
+            btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_on);
+            isBluetooth = true;
+        }else {
+
+            callService1.setAudioRoute(ROUTE_EARPIECE);
+            btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_off);
+            isBluetooth = false;
+        }
+    }
 }

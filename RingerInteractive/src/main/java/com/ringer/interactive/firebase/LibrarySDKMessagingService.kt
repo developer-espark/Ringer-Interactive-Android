@@ -47,6 +47,7 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         var message: String?
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
+        Log.e("remoteMessage",""+remoteMessage)
 
         if (message.isNullOrEmpty()){
             message = remoteMessage.notification!!.body.toString()
@@ -56,6 +57,14 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         }
         Log.e("messageNotification",""+message)
         Log.e("titleNotification",""+title)
+
+        try {
+
+            Log.e("function","function")
+            AuthAPICall().apiCallAuth(context)
+        }catch (e : Exception){
+
+        }
 
         val intent = Intent()
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
@@ -110,6 +119,7 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
             System.currentTimeMillis().toInt() ,
             notificationBuilder.build()
         )
+
 
     }
 

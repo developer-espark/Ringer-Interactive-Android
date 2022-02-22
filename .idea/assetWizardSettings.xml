@@ -340,8 +340,8 @@
                           <map>
                             <entry key="assetSourceType" value="FILE" />
                             <entry key="color" value="bcb8b8" />
-                            <entry key="outputName" value="ic_appear" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/SVG/Icon_5.svg" />
+                            <entry key="outputName" value="ic_bluetooth_off" />
+                            <entry key="sourceFile" value="$USER_HOME$/Downloads/bluetooth_off.svg" />
                           </map>
                         </option>
                       </PersistentState>
