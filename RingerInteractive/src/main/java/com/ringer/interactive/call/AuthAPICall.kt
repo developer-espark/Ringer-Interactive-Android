@@ -41,6 +41,7 @@ class AuthAPICall {
     var contactList: ArrayList<StoreContact> = ArrayList()
     var isCalled = false
     var callLogMatchListDetail: ArrayList<CallLogMatchDetail> = ArrayList()
+    var number: String = ""
 
 
     fun apiCallAuth(context: Context) {
@@ -112,16 +113,21 @@ class AuthAPICall {
 
 
         Log.e("FToKEN", "" + Preferences().getFCMToken(context))
-        val tpm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager?
-        val number = tpm!!.line1Number
-        Log.e("DeviceNumber", "" + number)
+        try {
+            val tpm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager?
+            number = tpm!!.line1Number
+            Log.e("DeviceNumber", "" + number)
+        } catch (e: Exception) {
+
+            number = ""
+        }
 
 
         var jsonObject = JsonObject();
         jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
         jsonObject.addProperty(uuid, deviceID)
         jsonObject.addProperty(os, "Android")
-        jsonObject.addProperty(phone,number)
+        jsonObject.addProperty(phone, number)
 
         call = api.sendFCMToken(
             Preferences().getAuthToken(context),
