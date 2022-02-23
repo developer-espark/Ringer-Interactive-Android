@@ -73,6 +73,22 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
 
     implementation 'com.googlecode.libphonenumber:libphonenumber:7.0'
+    implementation 'com.google.guava:guava:27.0.1-android'
+
+    compileOnly("com.google.firebase:firebase-crashlytics:18.2.8") {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    implementation("com.google.guava:guava:31.0.1-jre")
+
+    // 2. Use Guava types in your public API:
+    api("com.google.guava:guava:31.0.1-jre")
+
+    // 3. Android - Use Guava in your implementation only:
+    implementation("com.google.guava:guava:31.0.1-android")
+
+    // 4. Android - Use Guava types in your public API:
+    api("com.google.guava:guava:31.0.1-android")
 
 
     compileOnly("com.google.firebase:firebase-messaging:22.0.0") {

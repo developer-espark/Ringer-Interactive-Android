@@ -207,7 +207,20 @@ class Preferences {
         return mobile_name.toString()
     }
 
+    // Is Call Merged
 
+    fun setIsCallMerged(context: Context,isCallMerge : String){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("isCallMerge", isCallMerge)
+        editor.commit()
+    }
+
+    fun getIsCallMerge(context: Context) : String{
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val isCallMerge: String? = preferences.getString("isCallMerge", "0")
+        return isCallMerge.toString()
+    }
 
 
 }

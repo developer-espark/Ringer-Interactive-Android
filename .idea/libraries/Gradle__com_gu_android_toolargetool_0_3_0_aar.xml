@@ -1,8 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.gu.android:toolargetool:0.3.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e40f7b8e45da75a587c32f432189e268/transformed/jetified-toolargetool-0.3.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e40f7b8e45da75a587c32f432189e268/transformed/jetified-toolargetool-0.3.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fa7af8d2030fa48dc3108c0c877e1fac/transformed/jetified-toolargetool-0.3.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e40f7b8e45da75a587c32f432189e268/transformed/jetified-toolargetool-0.3.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e40f7b8e45da75a587c32f432189e268/transformed/jetified-toolargetool-0.3.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>

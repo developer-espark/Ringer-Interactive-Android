@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.gu.toolargetool.TooLargeTool
+import com.ringer.interactive.pref.Preferences
 
 
 class Ring : Application() {
@@ -17,6 +18,8 @@ class Ring : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         createNotificationChannel()
+
+        Preferences().setIsCallMerged(applicationContext,"0")
 //        startService(Intent(baseContext, OnClearFromRecentService::class.java))
 
 //        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

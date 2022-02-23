@@ -306,13 +306,16 @@ class AuthAPICall {
                                         }
                                     } else {
 
-                                        if (!contactList[k].galleryId.equals("")) {
-                                            getContactImage(
-                                                context,
-                                                tokenBaseUrl,
-                                                contactList.get(k),
-                                                contactList
-                                            )
+                                        if (contactList.size > storeLocalDataArrayList.size) {
+
+                                            if (!contactList[k].galleryId.equals("")) {
+                                                getContactImage(
+                                                    context,
+                                                    tokenBaseUrl,
+                                                    contactList.get(k),
+                                                    contactList
+                                                )
+                                            }
                                         }
                                     }
 

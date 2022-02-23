@@ -56,12 +56,12 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Predicate;
 import kotlin.collections.CollectionsKt;
 
-public class CallActivity extends AppCompatActivity {
+public class CallActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static CallService callService1;
     private static Call call1;
     Button answer, hangup;
-    ImageButton btn_mute, btn_speaker, btn_hold, btn_bluetooth;
+    ImageButton btn_mute, btn_speaker, btn_hold, btn_bluetooth, btn_conference;
     ImageView img_profile;
     TextView callInfo, txt_answer, txt_hangup, callNumber, callstate;
 
@@ -87,6 +87,9 @@ public class CallActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_call);
 
         answer = findViewById(R.id.answer);
@@ -106,6 +109,9 @@ public class CallActivity extends AppCompatActivity {
         edt_keypade_number = findViewById(R.id.edt_keypade_number);
         lin_call_Data = findViewById(R.id.lin_call_Data);
         relative_data = findViewById(R.id.relative_data);
+        btn_conference = findViewById(R.id.btn_conference);
+        btn_conference.setOnClickListener(this);
+        hangup.setOnClickListener(this);
 
         ongoingCall = new OngoingCall();
         disposables = new CompositeDisposable();
@@ -125,75 +131,94 @@ public class CallActivity extends AppCompatActivity {
             }
         });
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
-                | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
-                | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-                | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")){
+
+        }else {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                    | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                    | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        }
+
+
 
         try {
 
+            if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")) {
 
-            String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID};
-            number = Objects.requireNonNull(getIntent().getData()).getSchemeSpecificPart();
-            Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-            Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
-
-            assert cursor != null;
-            if (cursor.moveToFirst()) {
-                // Get values from contacts database:
-                contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
-                name = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
-
-                new Preferences().setPhoneName(getApplicationContext(),name);
-            } else {
-                return; // contact not found
-            }
-
-
-            int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-            if (currentApiVersion >= 14) {
-                Uri my_contact_Uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
-                photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), my_contact_Uri, true);
-            } else {
-                Uri my_contact_Uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
-                photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), my_contact_Uri);
-            }
-
-            Log.e("photo_stream", "" + photo_stream);
-            if (photo_stream != null) {
-                BufferedInputStream buf = new BufferedInputStream(photo_stream);
-                Bitmap my_btmp = BitmapFactory.decodeStream(buf);
-
-                img_profile.setImageBitmap(my_btmp);
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                my_btmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] b = baos.toByteArray();
-                String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-
-                new Preferences().setImageUser(getApplicationContext(),encodedImage);
-
-                Log.e("setGetImage","123:-"+new Preferences().getImageUser(getApplicationContext()));
-
-
-
-
-            } else {
-
-                RelativeLayout.LayoutParams layoutParams =
-                        (RelativeLayout.LayoutParams) img_profile.getLayoutParams();
-                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-                img_profile.setLayoutParams(layoutParams);
-
-                img_profile.getLayoutParams().height = 400;
-                img_profile.getLayoutParams().width = 400;
-                layoutParams.addRule(RelativeLayout.BELOW, R.id.lin_call_Data);
+                callNumber.setText("Merged");
                 img_profile.setImageResource(R.drawable.download);
-            }
+                img_profile.setAlpha(1f);
 
-            cursor.close();
+                callInfo.setVisibility(View.VISIBLE);
+                callNumber.setTextSize(18f);
+                callInfo.setText("Conference Call");
+                callNumber.setTypeface(Typeface.DEFAULT);
+                lin_call_accept.setVisibility(View.GONE);
+
+
+            } else {
+
+                String[] projection = new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.PhoneLookup._ID};
+                number = Objects.requireNonNull(getIntent().getData()).getSchemeSpecificPart();
+                Uri contactUri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+                Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
+
+                assert cursor != null;
+                if (cursor.moveToFirst()) {
+                    // Get values from contacts database:
+                    contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
+                    name = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+
+                    new Preferences().setPhoneName(getApplicationContext(), name);
+                } else {
+                    return; // contact not found
+                }
+
+
+                int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+                if (currentApiVersion >= 14) {
+                    Uri my_contact_Uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
+                    photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), my_contact_Uri, true);
+                } else {
+                    Uri my_contact_Uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, Long.parseLong(contactId));
+                    photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(getContentResolver(), my_contact_Uri);
+                }
+
+                Log.e("photo_stream", "" + photo_stream);
+                if (photo_stream != null) {
+                    BufferedInputStream buf = new BufferedInputStream(photo_stream);
+                    Bitmap my_btmp = BitmapFactory.decodeStream(buf);
+
+                    img_profile.setImageBitmap(my_btmp);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    my_btmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] b = baos.toByteArray();
+                    String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+                    new Preferences().setImageUser(getApplicationContext(), encodedImage);
+
+                    Log.e("setGetImage", "123:-" + new Preferences().getImageUser(getApplicationContext()));
+
+
+                } else {
+
+                    RelativeLayout.LayoutParams layoutParams =
+                            (RelativeLayout.LayoutParams) img_profile.getLayoutParams();
+                    layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+                    img_profile.setLayoutParams(layoutParams);
+
+                    img_profile.getLayoutParams().height = 400;
+                    img_profile.getLayoutParams().width = 400;
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.lin_call_Data);
+                    img_profile.setImageResource(R.drawable.download);
+                }
+
+                cursor.close();
+            }
         } catch (Exception e) {
 
-            Log.e("ImageException",""+e.getMessage());
+            Log.e("ImageException", "" + e.getMessage());
 
         }
     }
@@ -207,7 +232,25 @@ public class CallActivity extends AppCompatActivity {
                         .subscribe(new Consumer<Integer>() {
                             @Override
                             public void accept(Integer integer) throws Exception {
-                                updateUi(integer);
+
+                                Log.e("storeIsMerge", "" + new Preferences().getIsCallMerge(getApplicationContext()));
+
+
+                                if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")) {
+                                    callNumber.setText("Merged");
+                                    img_profile.setImageResource(R.drawable.download);
+                                    img_profile.setAlpha(1f);
+
+                                    callInfo.setVisibility(View.VISIBLE);
+                                    callNumber.setTextSize(18f);
+                                    callInfo.setText("Conference Call");
+                                    callNumber.setTypeface(Typeface.DEFAULT);
+                                    lin_call_accept.setVisibility(View.GONE);
+                                } else {
+                                    updateUi(integer);
+                                }
+
+
                             }
                         }));
 
@@ -225,9 +268,16 @@ public class CallActivity extends AppCompatActivity {
                         .subscribe(new Consumer<Integer>() {
                             @Override
                             public void accept(Integer integer) throws Exception {
-                                Intent serviceIntent = new Intent(getApplicationContext(), MyForegroundService.class);
-                                stopService(serviceIntent);
-                                finish();
+                                if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")){
+
+                                }else {
+                                    Intent serviceIntent = new Intent(getApplicationContext(), MyForegroundService.class);
+                                    stopService(serviceIntent);
+                                    finish();
+                                    new Preferences().setIsCallMerged(getApplicationContext(),"0");
+                                }
+
+
                             }
                         }));
     }
@@ -235,10 +285,10 @@ public class CallActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private Consumer<? super Integer> updateUi(Integer state) {
 
+
+        new Preferences().setIsCallMerged(getApplicationContext(), "0");
+
         callInfo.setText(name);
-
-
-
 
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
@@ -264,7 +314,6 @@ public class CallActivity extends AppCompatActivity {
             callNumber.setText("" + maskFirst);
 
 
-
         } catch (NumberParseException e) {
             e.printStackTrace();
             try {
@@ -277,26 +326,26 @@ public class CallActivity extends AppCompatActivity {
                 Log.e("ErrorHere", "" + e1.getMessage());
                 callNumber.setText(new Preferences().getPhoneNumber(getApplicationContext()));
                 String imageUser = new Preferences().getImageUser(getApplicationContext());
-                Log.e("imageUser","132:->"+imageUser);
-                if (!imageUser.equals("")){
+                Log.e("imageUser", "132:->" + imageUser);
+                if (!imageUser.equals("")) {
                     byte[] b = Base64.decode(imageUser, Base64.DEFAULT);
                     Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
                     img_profile.setImageBitmap(bitmap);
                     img_profile.setAlpha(0.3f);
-                }else {
+                } else {
                     img_profile.setImageResource(R.drawable.download);
                     img_profile.setAlpha(1f);
                 }
 
 
                 String userName = new Preferences().getPhoneName(getApplicationContext());
-                Log.e("UserName","1324:->"+userName);
-                if (!userName.equals("")){
+                Log.e("UserName", "1324:->" + userName);
+                if (!userName.equals("")) {
                     callInfo.setVisibility(View.VISIBLE);
                     callNumber.setTextSize(18f);
                     callInfo.setText(userName);
                     callNumber.setTypeface(Typeface.DEFAULT);
-                }else {
+                } else {
                     callInfo.setVisibility(View.GONE);
                     callNumber.setTextSize(25f);
                     callNumber.setTypeface(Typeface.DEFAULT_BOLD);
@@ -360,6 +409,12 @@ public class CallActivity extends AppCompatActivity {
             }
             lin_call_on.setVisibility(View.VISIBLE);
 
+            if (new Preferences().getImageUser(getApplicationContext()).equals("")) {
+                img_profile.setAlpha(1f);
+            } else {
+                img_profile.setAlpha(0.3f);
+            }
+
         } else {
             Log.e("state1", "" + state);
             img_profile.setAlpha(1f);
@@ -383,7 +438,6 @@ public class CallActivity extends AppCompatActivity {
             img_profile.setAlpha(0.3f);
 
         }*/
-
 
         return null;
     }
@@ -415,12 +469,18 @@ public class CallActivity extends AppCompatActivity {
 
 
         } else {
-            Intent intent = new Intent(context, CallActivity.class)
-                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    .setData(call.getDetails().getHandle());
-            context.startActivity(intent);
-            callService1 = callService;
-            call1 = call;
+            if (new Preferences().getIsCallMerge(context).equals("1")) {
+
+            } else {
+                Intent intent = new Intent(context, CallActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        .setData(call.getDetails().getHandle());
+                context.startActivity(intent);
+                callService1 = callService;
+                call1 = call;
+            }
+
+
         }
 
     }
@@ -441,6 +501,7 @@ public class CallActivity extends AppCompatActivity {
         ongoingCall.hangup();
         Intent serviceIntent = new Intent(this, MyForegroundService.class);
         stopService(serviceIntent);
+        CallList.getInstance().onCallRemoved(call1);
 
     }
 
@@ -537,7 +598,7 @@ public class CallActivity extends AppCompatActivity {
         } else {
 //            call1.conference(call1);
 
-            call1.mergeConference();
+//            call1.mergeConference();
             isMerge = false;
         }
     }
@@ -552,6 +613,44 @@ public class CallActivity extends AppCompatActivity {
             callService1.setAudioRoute(ROUTE_EARPIECE);
             btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_off);
             isBluetooth = false;
+        }
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.btn_conference) {
+            final CallList calls = CallList.getInstance();
+            CallHelper activeCall = calls.getActiveCall();
+
+            if (activeCall != null) {
+
+                final boolean canMerge = activeCall.can(
+                        android.telecom.Call.Details.CAPABILITY_MERGE_CONFERENCE);
+                final boolean canSwap = activeCall.can(
+                        android.telecom.Call.Details.CAPABILITY_SWAP_CONFERENCE);
+                // (2) Attempt actions on conference calls
+                if (canMerge) {
+
+
+                    Log.e("callMerge", "callMerged");
+
+                    TelecomAdapter.getInstance().merge(activeCall.getId());
+                    new Preferences().setIsCallMerged(getApplicationContext(), "1");
+
+
+                } else if (canSwap) {
+                    Log.e("callSwap", "callSwap");
+                    TelecomAdapter.getInstance().swap(activeCall.getId());
+                }
+            }
+        }
+        if (v.getId() == R.id.hangup){
+            ongoingCall.hangup();
+            Intent serviceIntent = new Intent(this, MyForegroundService.class);
+            stopService(serviceIntent);
+            CallList.getInstance().onCallRemoved(call1);
+            new Preferences().setIsCallMerged(getApplicationContext(),"0");
         }
     }
 }

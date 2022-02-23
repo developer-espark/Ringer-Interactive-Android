@@ -118,7 +118,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/img_call_red"
-                android:onClick="onHangupClicked" />
+                 />
 
             <TextView
                 android:id="@+id/txt_hangup"
@@ -317,6 +317,69 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/btn_add"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/ic_round_gray"
+                    android:onClick="onAddCall"
+                    android:src="@drawable/ic_icn_hold"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="normal"
+                    android:visibility="visible"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Add"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btn_conference"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/ic_round_gray"
+                android:src="@drawable/ic_icn_hold"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:visibility="visible"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Conference"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
