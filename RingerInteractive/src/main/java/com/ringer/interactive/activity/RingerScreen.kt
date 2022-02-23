@@ -25,6 +25,7 @@ class RingerScreen : AppCompatActivity() {
         val PERMISSIONS_REQUEST_CALL_LOG = 101
     }
 
+
     var token: String = ""
 
     var name: String = ""
@@ -39,6 +40,7 @@ class RingerScreen : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ringer_screen)
+
 
 
 

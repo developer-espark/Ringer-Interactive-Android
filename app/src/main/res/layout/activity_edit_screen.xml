@@ -382,7 +382,8 @@
         android:id="@+id/nv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        app:menu="@menu/navigation_menu">
 
         <com.techatmosphere.expandablenavigation.view.ExpandableNavigationListView
             android:id="@+id/expandable_navigation"
@@ -392,6 +393,7 @@
             android:nestedScrollingEnabled="true"
             android:groupIndicator="@null"
             android:divider="@null"
+            android:visibility="gone"
             tools:ignore="MissingClass" />
 
 

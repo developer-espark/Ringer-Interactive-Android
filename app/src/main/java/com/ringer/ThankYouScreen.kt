@@ -46,18 +46,6 @@ class ThankYouScreen : AppCompatActivity() {
         }
 
 
-        nv.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
-            val id = item.itemId
-            when (id) {
-                R.id.privacy_policy -> {
-                    startActivity(Intent(this@ThankYouScreen,AllDetailScreenActivity::class.java))
-                    drawer_layout.closeDrawers()
-                }
-
-                else -> return@OnNavigationItemSelectedListener true
-            }
-            true
-        })
 
         //Firebase Token Generation
 

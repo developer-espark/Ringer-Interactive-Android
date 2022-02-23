@@ -649,8 +649,12 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             ongoingCall.hangup();
             Intent serviceIntent = new Intent(this, MyForegroundService.class);
             stopService(serviceIntent);
+            new CallService().onCallRemoved(call1);
             CallList.getInstance().onCallRemoved(call1);
             new Preferences().setIsCallMerged(getApplicationContext(),"0");
+            finish();
+
         }
     }
+
 }
