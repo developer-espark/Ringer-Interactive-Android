@@ -6,31 +6,22 @@ import static android.telecom.CallAudioState.ROUTE_EARPIECE;
 import static android.telecom.CallAudioState.ROUTE_SPEAKER;
 import static com.ringer.interactive.sdkCall.Constants.asString;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.media.AudioManager;
-import android.media.session.MediaSession;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.provider.ContactsContract;
 import android.telecom.Call;
-import android.telecom.PhoneAccount;
-import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
-import android.telephony.SmsManager;
-import android.telephony.SubscriptionInfo;
-import android.telephony.SubscriptionManager;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -44,22 +35,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.ringer.interactive.R;
+import com.ringer.interactive.pref.Preferences;
+import com.ringer.interactive.service.MyForegroundService;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -73,7 +61,7 @@ public class CallActivity extends AppCompatActivity {
     private static CallService callService1;
     private static Call call1;
     Button answer, hangup;
-    ImageButton btn_mute, btn_speaker, btn_hold,btn_bluetooth;
+    ImageButton btn_mute, btn_speaker, btn_hold, btn_bluetooth;
     ImageView img_profile;
     TextView callInfo, txt_answer, txt_hangup, callNumber, callstate;
 
@@ -95,7 +83,7 @@ public class CallActivity extends AppCompatActivity {
 
     RelativeLayout relative_data;
 
-    @SuppressLint("Range")
+    @SuppressLint({"Range", "WrongThread"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,6 +143,8 @@ public class CallActivity extends AppCompatActivity {
                 // Get values from contacts database:
                 contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup._ID));
                 name = cursor.getString(cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+
+                new Preferences().setPhoneName(getApplicationContext(),name);
             } else {
                 return; // contact not found
             }
@@ -173,7 +163,20 @@ public class CallActivity extends AppCompatActivity {
             if (photo_stream != null) {
                 BufferedInputStream buf = new BufferedInputStream(photo_stream);
                 Bitmap my_btmp = BitmapFactory.decodeStream(buf);
+
                 img_profile.setImageBitmap(my_btmp);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                my_btmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                byte[] b = baos.toByteArray();
+                String encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
+
+                new Preferences().setImageUser(getApplicationContext(),encodedImage);
+
+                Log.e("setGetImage","123:-"+new Preferences().getImageUser(getApplicationContext()));
+
+
+
+
             } else {
 
                 RelativeLayout.LayoutParams layoutParams =
@@ -189,6 +192,8 @@ public class CallActivity extends AppCompatActivity {
 
             cursor.close();
         } catch (Exception e) {
+
+            Log.e("ImageException",""+e.getMessage());
 
         }
     }
@@ -220,6 +225,8 @@ public class CallActivity extends AppCompatActivity {
                         .subscribe(new Consumer<Integer>() {
                             @Override
                             public void accept(Integer integer) throws Exception {
+                                Intent serviceIntent = new Intent(getApplicationContext(), MyForegroundService.class);
+                                stopService(serviceIntent);
                                 finish();
                             }
                         }));
@@ -230,27 +237,13 @@ public class CallActivity extends AppCompatActivity {
 
         callInfo.setText(name);
 
+
+
+
+
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
         Phonenumber.PhoneNumber numberProto = null;
-        try {
-            numberProto = phoneUtil.parse(number, "");
-            countryCode = numberProto.getCountryCode();
-            nationalNumber  = String.valueOf(numberProto.getNationalNumber());
-            Log.e("countryCode",""+countryCode);
-            Log.e("nationalNumber",""+nationalNumber);
-            String maskFirst = "("+nationalNumber.substring(0,3)+")"+nationalNumber.substring(3,6)+"-"+nationalNumber.substring(6,nationalNumber.length());
-            Log.e("maskFirst",""+maskFirst);
-            callNumber.setText(""+maskFirst);
-        } catch (NumberParseException e) {
-            e.printStackTrace();
-            String maskFirst = "("+number.substring(0,3)+")"+number.substring(3,6)+"-"+number.substring(6,number.length());
-            callNumber.setText(""+maskFirst);
-        }
 
-
-
-
-        callstate.setText(asString(state));
         if (name.equals("")) {
             callInfo.setVisibility(View.GONE);
             callNumber.setTextSize(25f);
@@ -260,6 +253,74 @@ public class CallActivity extends AppCompatActivity {
             callNumber.setTextSize(18f);
             callNumber.setTypeface(Typeface.DEFAULT);
         }
+        try {
+            numberProto = phoneUtil.parse(number, "");
+            countryCode = numberProto.getCountryCode();
+            nationalNumber = String.valueOf(numberProto.getNationalNumber());
+            Log.e("countryCode", "" + countryCode);
+            Log.e("nationalNumber", "" + nationalNumber);
+            String maskFirst = "(" + nationalNumber.substring(0, 3) + ")" + nationalNumber.substring(3, 6) + "-" + nationalNumber.substring(6, nationalNumber.length());
+            Log.e("maskFirst", "" + maskFirst);
+            callNumber.setText("" + maskFirst);
+
+
+
+        } catch (NumberParseException e) {
+            e.printStackTrace();
+            try {
+
+
+                String maskFirst = "(" + number.substring(0, 3) + ")" + number.substring(3, 6) + "-" + number.substring(6, number.length());
+                callNumber.setText("" + maskFirst);
+
+            } catch (Exception e1) {
+                Log.e("ErrorHere", "" + e1.getMessage());
+                callNumber.setText(new Preferences().getPhoneNumber(getApplicationContext()));
+                String imageUser = new Preferences().getImageUser(getApplicationContext());
+                Log.e("imageUser","132:->"+imageUser);
+                if (!imageUser.equals("")){
+                    byte[] b = Base64.decode(imageUser, Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
+                    img_profile.setImageBitmap(bitmap);
+                    img_profile.setAlpha(0.3f);
+                }else {
+                    img_profile.setImageResource(R.drawable.download);
+                    img_profile.setAlpha(1f);
+                }
+
+
+                String userName = new Preferences().getPhoneName(getApplicationContext());
+                Log.e("UserName","1324:->"+userName);
+                if (!userName.equals("")){
+                    callInfo.setVisibility(View.VISIBLE);
+                    callNumber.setTextSize(18f);
+                    callInfo.setText(userName);
+                    callNumber.setTypeface(Typeface.DEFAULT);
+                }else {
+                    callInfo.setVisibility(View.GONE);
+                    callNumber.setTextSize(25f);
+                    callNumber.setTypeface(Typeface.DEFAULT_BOLD);
+                }
+
+
+            }
+
+        }
+
+
+        new Preferences().setPhoneNumber(getApplicationContext(), callNumber.getText().toString());
+
+
+        callstate.setText(asString(state));
+        /*if (name.equals("")) {
+            callInfo.setVisibility(View.GONE);
+            callNumber.setTextSize(25f);
+            callNumber.setTypeface(Typeface.DEFAULT_BOLD);
+        } else {
+            callInfo.setVisibility(View.VISIBLE);
+            callNumber.setTextSize(18f);
+            callNumber.setTypeface(Typeface.DEFAULT);
+        }*/
 //        callInfo.setText(name + "\n" +number +"\n"+asString(state));
 //        callInfo.setText(name + "\n" + number);
 
@@ -322,12 +383,6 @@ public class CallActivity extends AppCompatActivity {
             img_profile.setAlpha(0.3f);
 
         }*/
-        if (callService1.getCallAudioState().getRoute() == ROUTE_BLUETOOTH){
-            btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_on);
-        }else {
-            btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_off);
-        }
-
 
 
         return null;
@@ -343,7 +398,7 @@ public class CallActivity extends AppCompatActivity {
         if (data.equals("1")) {
 
             Log.e("alwaysAsk", "alwaysAsk");
-    /*        Intent intent = new Intent(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE);*/
+            /*        Intent intent = new Intent(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE);*/
             Intent intent = new Intent(TelecomManager.ACTION_CHANGE_PHONE_ACCOUNTS);
             intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, context.getPackageName());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -384,6 +439,9 @@ public class CallActivity extends AppCompatActivity {
 
     public void onHangupClicked(View view) {
         ongoingCall.hangup();
+        Intent serviceIntent = new Intent(this, MyForegroundService.class);
+        stopService(serviceIntent);
+
     }
 
     public void onMuted(View view) {
@@ -485,11 +543,11 @@ public class CallActivity extends AppCompatActivity {
     }
 
     public void onBluetoothConnect(View view) {
-        if (!isBluetooth){
+        if (!isBluetooth) {
             callService1.setAudioRoute(ROUTE_BLUETOOTH);
             btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_on);
             isBluetooth = true;
-        }else {
+        } else {
 
             callService1.setAudioRoute(ROUTE_EARPIECE);
             btn_bluetooth.setImageResource(R.drawable.ic_bluetooth_off);

@@ -162,4 +162,52 @@ class Preferences {
     }
 
 
+    //Store Number
+
+    fun setPhoneNumber(context: Context,mobile_number : String){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("mobile_number", mobile_number)
+        editor.commit()
+    }
+
+    fun getPhoneNumber(context: Context) : String{
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val mobile_number: String? = preferences.getString("mobile_number", "")
+        return mobile_number.toString()
+    }
+
+    // Store Image
+
+    fun setImageUser(context: Context,imageUser : String){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("image_user", imageUser)
+        editor.commit()
+    }
+    fun getImageUser(context: Context) : String{
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val image_user: String? = preferences.getString("image_user", "")
+        return image_user.toString()
+    }
+
+
+    //Store Name
+
+    fun setPhoneName(context: Context,mobile_name : String){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("mobile_name", mobile_name)
+        editor.commit()
+    }
+
+    fun getPhoneName(context: Context) : String{
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val mobile_name: String? = preferences.getString("mobile_name", "")
+        return mobile_name.toString()
+    }
+
+
+
+
 }

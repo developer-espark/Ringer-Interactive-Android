@@ -4,6 +4,7 @@ import static android.telecom.CallAudioState.ROUTE_SPEAKER;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.telecom.Call;
 import android.telecom.ConnectionService;
 import android.telecom.InCallService;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.ringer.interactive.service.MyForegroundService;
 
 public class CallService extends InCallService {
 
@@ -39,6 +42,11 @@ public class CallService extends InCallService {
             Log.e("CallService","CallService2");
             new OngoingCall().setCall(call);
             CallActivity.start(this, call,CallService.this,"0");
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(new Intent(this, MyForegroundService.class));
+            }
+
+
         }
 
     }
