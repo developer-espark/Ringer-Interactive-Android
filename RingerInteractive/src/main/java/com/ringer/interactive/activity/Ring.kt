@@ -3,10 +3,12 @@ package com.ringer.interactive.activity
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.gu.toolargetool.TooLargeTool
 import com.ringer.interactive.pref.Preferences
+import com.ringer.interactive.service.OnClearFromRecentService
 
 
 class Ring : Application() {
@@ -18,6 +20,9 @@ class Ring : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         createNotificationChannel()
+
+//        startService(Intent(applicationContext, OnClearFromRecentService::class.java))
+
 
         Preferences().setIsCallMerged(applicationContext,"0")
 //        startService(Intent(baseContext, OnClearFromRecentService::class.java))

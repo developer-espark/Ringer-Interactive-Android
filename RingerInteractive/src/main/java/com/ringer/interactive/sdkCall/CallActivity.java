@@ -6,11 +6,13 @@ import static android.telecom.CallAudioState.ROUTE_EARPIECE;
 import static android.telecom.CallAudioState.ROUTE_SPEAKER;
 import static com.ringer.interactive.sdkCall.Constants.asString;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +23,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telecom.Call;
 import android.telecom.TelecomManager;
+import android.telephony.TelephonyManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -37,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
@@ -48,6 +52,7 @@ import com.ringer.interactive.service.MyForegroundService;
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -87,7 +92,6 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         setContentView(R.layout.activity_call);
@@ -131,15 +135,14 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")){
+        if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")) {
 
-        }else {
+        } else {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                     | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                     | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
                     | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
-
 
 
         try {
@@ -268,13 +271,13 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                         .subscribe(new Consumer<Integer>() {
                             @Override
                             public void accept(Integer integer) throws Exception {
-                                if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")){
+                                if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")) {
 
-                                }else {
+                                } else {
                                     Intent serviceIntent = new Intent(getApplicationContext(), MyForegroundService.class);
                                     stopService(serviceIntent);
                                     finish();
-                                    new Preferences().setIsCallMerged(getApplicationContext(),"0");
+                                    new Preferences().setIsCallMerged(getApplicationContext(), "0");
                                 }
 
 
@@ -645,7 +648,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         }
-        if (v.getId() == R.id.hangup){
+        if (v.getId() == R.id.hangup) {
             ongoingCall.hangup();
             Intent serviceIntent = new Intent(this, MyForegroundService.class);
             stopService(serviceIntent);

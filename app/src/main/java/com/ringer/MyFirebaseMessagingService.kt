@@ -32,7 +32,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("herere","herere")
+            Log.e("errorSDK",""+e.message)
             sendNotification(remoteMessage)
 
         }

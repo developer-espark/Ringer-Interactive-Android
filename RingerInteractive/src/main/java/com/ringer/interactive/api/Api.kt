@@ -49,4 +49,19 @@ interface Api {
         @Body list: ArrayList<CallLogMatchDetail>
     ) : Call<JsonObject>
 
+    //Search Mobile Registration
+    @GET(search_mobile_registration)
+    fun searchMobileRegistration(
+        @Header(authorization) auth: String,
+        @Query(uuid) uuid1 : String
+    ) : Call<JsonObject>
+
+    //Search Mobile Registration
+    @DELETE(search_mobile_registration)
+    fun searchDeleteRegistration(
+        @Header(authorization) auth: String,
+        @Query(uuid) uuid1 : String
+    ) : Call<JsonObject>
+
+
 }

@@ -269,11 +269,13 @@ public class CallList {
     }
 
     public CallHelper getDisconnectedCall() {
-        return getFirstCallWithState(Call.STATE_DISCONNECTED);
+//        return getFirstCallWithState(Call.STATE_DISCONNECTED);
+        return getFirstCallWithState(CallHelper.State.DISCONNECTED);
     }
 
     public CallHelper getDisconnectingCall() {
-        return getFirstCallWithState(Call.STATE_DISCONNECTED);
+//        return getFirstCallWithState(Call.STATE_DISCONNECTED);
+        return getFirstCallWithState(CallHelper.State.DISCONNECTED);
     }
 
     public CallHelper getSecondBackgroundCall() {
@@ -387,9 +389,9 @@ public class CallList {
             final int state = call.getState();
             if (state != CallHelper.State.IDLE &&
                     state != CallHelper.State.INVALID &&
-                    state != Call.STATE_DISCONNECTED) {
+                    state != CallHelper.State.DISCONNECTED) {
 
-                call.setState(Call.STATE_DISCONNECTED);
+                call.setState(CallHelper.State.DISCONNECTED);
                 call.setDisconnectCause(new DisconnectCause(DisconnectCause.UNKNOWN));
                 updateCallInMap(call);
             }
@@ -450,7 +452,7 @@ public class CallList {
 
         boolean updated = false;
 
-        if (call.getState() == Call.STATE_DISCONNECTED) {
+        if (call.getState() == CallHelper.State.DISCONNECTED) {
             // update existing (but do not add!!) disconnected calls
             if (mCallById.containsKey(call.getId())) {
                 // For disconnected calls, we want to keep them alive for a few seconds so that the
@@ -480,7 +482,7 @@ public class CallList {
 
     @SuppressLint("RestrictedApi")
     private int getDelayForDisconnect(CallHelper call) {
-        Preconditions.checkState(call.getState() == Call.STATE_DISCONNECTED);
+        Preconditions.checkState(call.getState() == CallHelper.State.DISCONNECTED);
 
 
         final int cause = call.getDisconnectCause().getCode();

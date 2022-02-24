@@ -268,9 +268,9 @@ class EditScreenActivity : AppCompatActivity() {
 
 
         PreferencesApp().setNotification(this, false)
-        PreferencesApp().setContact(this, false)
-        PreferencesApp().setDefaultApp(this, false)
-        PreferencesApp().setAppearOnTop(this, false)
+
+
+
 
 
     }

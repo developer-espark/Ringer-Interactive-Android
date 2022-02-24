@@ -12,6 +12,7 @@ const val token_with_Categories="provider/token-with-authorities"
 const val search_contact="data/api/types/contact"
 const val create_contact="data/api/types/mobileregistration"
 const val mobile_calls="analytics/api/table/MOBILE_CALLS"
+const val search_mobile_registration ="data/api/types/mobileregistration"
 
 //parameters
 const val authorization="Authorization"

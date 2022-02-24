@@ -43,11 +43,18 @@ class MainActivity : AppCompatActivity() {
 
             override fun onFinish() {
 
-                if (PreferencesApp().getAppearOnTop(this@MainActivity) == false){
-                    startActivity(Intent(this@MainActivity,EditScreenActivity::class.java))
+                if ((PreferencesApp().getDefaultApp(this@MainActivity) == false) && (PreferencesApp().getContact(this@MainActivity) == false) && (PreferencesApp().getAppearOnTop(this@MainActivity) == false)) {
+                    startActivity(Intent(this@MainActivity, EditScreenActivity::class.java))
                     finish()
-                }else{
-                    startActivity(Intent(this@MainActivity,DefaultPhoneActivity::class.java))
+                } else if ((PreferencesApp().getDefaultApp(this@MainActivity) == false) && (PreferencesApp().getContact(this@MainActivity) == true) && (PreferencesApp().getAppearOnTop(this@MainActivity) == true)){
+                    startActivity(Intent(this@MainActivity, EditScreenActivity::class.java))
+                    finish()
+
+                }else if ((PreferencesApp().getDefaultApp(this@MainActivity) == true)){
+                    startActivity(Intent(this@MainActivity, DefaultPhoneActivity::class.java))
+                    finish()
+                } else{
+                    startActivity(Intent(this@MainActivity, EditScreenActivity::class.java))
                     finish()
                 }
             }

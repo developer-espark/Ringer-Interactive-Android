@@ -3,7 +3,6 @@ package com.ringer.interactive.firebase
 import android.app.*
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.AudioAttributes
@@ -17,7 +16,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.ringer.interactive.R
 import com.ringer.interactive.call.AuthAPICall
 import java.io.UnsupportedEncodingException
-import java.util.prefs.Preferences
+
 
 open class LibrarySDKMessagingService : FirebaseMessagingService() {
 
@@ -40,86 +39,125 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
 
     @Throws(UnsupportedEncodingException::class)
     open fun sendNotification(context: Context, remoteMessage: RemoteMessage) {
+        Log.e("remoteMessageSDK", "" + remoteMessage)
         var defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder: NotificationCompat.Builder
         val notificationManager: NotificationManager
         var title: String?
         var message: String?
+        var silent: String?
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
-        Log.e("remoteMessage",""+remoteMessage)
+        silent = remoteMessage.data["silent"]
+        Log.e("remoteMessage", "" + remoteMessage)
 
-        if (message.isNullOrEmpty()){
+        if (message.isNullOrEmpty()) {
             message = remoteMessage.notification!!.body.toString()
         }
-        if (title.isNullOrEmpty()){
+        if (title.isNullOrEmpty()) {
             title = remoteMessage.notification!!.title.toString()
         }
-        Log.e("messageNotification",""+message)
-        Log.e("titleNotification",""+title)
+        Log.e("messageNotification", "" + message)
+        Log.e("titleNotification", "" + title)
 
         try {
 
-            Log.e("function","function")
+            Log.e("function", "function")
             AuthAPICall().apiCallAuth(context)
-        }catch (e : Exception){
+        } catch (e: Exception) {
 
         }
 
-        val intent = Intent()
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-        context.startActivity(intent)
+        if (silent == "true") {
 
-        val contentIntent =
-            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
-        val `when` = System.currentTimeMillis()
-        val iconL = notificationIcon
-        defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        notificationBuilder =
-            NotificationCompat.Builder(
-                context,
-                context.resources.getString(R.string.appbar_scrolling_view_behavior)
-            ).setSmallIcon(iconL)
-                .setContentTitle(title).setContentText(message).setAutoCancel(true)
-                .setWhen(`when`).setSound(defaultSoundUri)
-                .setColor(ContextCompat.getColor(context, R.color.purple_700)).setLargeIcon(
-                    BitmapFactory.decodeResource(
-                        context.resources,
-                        R.mipmap.ic_launcher
+        } else {
+
+
+            //You are App is being killed so here you can add some code
+            val packageManager = context.packageManager
+            val intent = packageManager.getLaunchIntentForPackage(context.packageName)
+            val componentName = intent!!.component
+            intent.flags =
+                Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+
+
+            /* val intent = Intent()
+
+             context.startActivity(intent)*/
+
+
+            val contentIntent =
+                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val `when` = System.currentTimeMillis()
+            val iconL = notificationIcon
+            defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+            notificationBuilder =
+                NotificationCompat.Builder(
+                    context,
+                    context.resources.getString(R.string.appbar_scrolling_view_behavior)
+                ).setSmallIcon(iconL)
+                    .setContentTitle(title).setContentText(message).setAutoCancel(true)
+                    .setWhen(`when`).setSound(defaultSoundUri)
+                    .setColor(ContextCompat.getColor(context, R.color.purple_700)).setLargeIcon(
+                        BitmapFactory.decodeResource(
+                            context.resources,
+                            R.mipmap.ic_launcher
+                        )
+                    ).setContentIntent(contentIntent).setStyle(
+                        NotificationCompat.BigTextStyle().bigText(message)
+                    ) as NotificationCompat.Builder
+            notificationManager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                var mChannel: NotificationChannel? = null
+                val importance = NotificationManager.IMPORTANCE_HIGH
+                val id = context.resources.getString(R.string.default_notification_channel_id)
+                val name: CharSequence = context.resources.getString(R.string.app_name)
+                mChannel = NotificationChannel(id, name, importance)
+                mChannel.enableLights(true)
+                mChannel.lightColor = Color.RED
+                mChannel.enableVibration(true)
+                mChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+                val audioAttributes =
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE).build()
+                mChannel.setSound(defaultSoundUri, audioAttributes)
+                assert(notificationManager != null)
+                notificationManager.createNotificationChannel(mChannel)
+                notificationBuilder.setChannelId(context.resources.getString(R.string.default_notification_channel_id))
+            }
+            notificationBuilder.setDefaults(NotificationCompat.DEFAULT_ALL)
+            notificationBuilder.priority = NotificationCompat.PRIORITY_HIGH
+            notificationManager.notify(
+                System.currentTimeMillis().toInt(),
+                notificationBuilder.build()
+            )
+
+            val activityManager = context.getSystemService(ACTIVITY_SERVICE) as ActivityManager
+
+            val taskList = activityManager.getRunningTasks(10)
+
+            if (!taskList.isEmpty()) {
+                val runningTaskInfo = taskList[0]
+                if (runningTaskInfo.topActivity != null &&
+                    !runningTaskInfo.topActivity!!.className.contains(
+                        context.packageName
                     )
-                ).setContentIntent(contentIntent).setStyle(
-                    NotificationCompat.BigTextStyle().bigText(message)
-                ) as NotificationCompat.Builder
-        notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                ) {
+                    //You are App is being killed so here you can add some code
+                    val mainIntent = Intent.makeRestartActivityTask(componentName)
+                    context.startActivity(mainIntent)
+                    Runtime.getRuntime().exit(0)
+                }
+            }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            var mChannel: NotificationChannel? = null
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val id = context.resources.getString(R.string.default_notification_channel_id)
-            val name: CharSequence = context.resources.getString(R.string.app_name)
-            mChannel = NotificationChannel(id, name, importance)
-            mChannel.enableLights(true)
-            mChannel.lightColor = Color.RED
-            mChannel.enableVibration(true)
-            mChannel.lockscreenVisibility = Notification.VISIBILITY_PUBLIC
-            mChannel.vibrationPattern = longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
-            val audioAttributes =
-                AudioAttributes.Builder()
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .setUsage(AudioAttributes.USAGE_NOTIFICATION_RINGTONE).build()
-            mChannel.setSound(defaultSoundUri, audioAttributes)
-            assert(notificationManager != null)
-            notificationManager.createNotificationChannel(mChannel)
-            notificationBuilder.setChannelId(context.resources.getString(R.string.default_notification_channel_id))
+
+
+
         }
-        notificationBuilder.setDefaults(NotificationCompat.DEFAULT_ALL)
-        notificationBuilder.priority = NotificationCompat.PRIORITY_HIGH
-        notificationManager.notify(
-            System.currentTimeMillis().toInt() ,
-            notificationBuilder.build()
-        )
-
 
     }
 

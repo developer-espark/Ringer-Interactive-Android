@@ -78,6 +78,10 @@ class AuthAPICall {
                             //api call to send fcm token
                             Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
 //                            if (Preferences().getIsCalled(context)!!) {
+
+
+                            apiCallSearchRegistration(context,Preferences().getTokenBaseUrl(context))
+
                             apiCallFirebaseToken(
                                 context,
                                 Preferences().getTokenBaseUrl(context)
@@ -104,6 +108,73 @@ class AuthAPICall {
         }
     }
 
+    private fun apiCallSearchRegistration(context: Context, tokenBaseUrl: String) {
+        lateinit var call: Call<JsonObject>
+        val api: Api = Connection().getCon(context, tokenBaseUrl)
+
+        val uuid1 : String = getDeviceId(context).toString()
+        call = api.searchMobileRegistration(
+            Preferences().getAuthToken(context),
+            uuid1
+        )
+        call.enqueue(object : Callback<JsonObject>{
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+
+                if (response.isSuccessful){
+                    if (response.body() != null){
+
+                        val total = response.body()!!.get("total").asString
+                        if (total == "0"){
+
+                            apiCallFirebaseToken(context, tokenBaseUrl)
+                        }else{
+
+                            apiCallDeleteToken(context,tokenBaseUrl)
+
+                        }
+
+                    }
+                }
+
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
+            }
+
+        })
+
+
+
+
+    }
+
+    private fun apiCallDeleteToken(context: Context, tokenBaseUrl: String) {
+        lateinit var call: Call<JsonObject>
+        val api: Api = Connection().getCon(context, tokenBaseUrl)
+
+        val uuid1 : String = getDeviceId(context).toString()
+        call = api.searchDeleteRegistration(
+            Preferences().getAuthToken(context),
+            uuid1
+        )
+        call.enqueue(object : Callback<JsonObject>{
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+
+                if (response.code() == 204){
+                    apiCallFirebaseToken(context, tokenBaseUrl)
+                }
+
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
+            }
+
+        })
+
+    }
+
     @SuppressLint("MissingPermission")
     private fun apiCallFirebaseToken(context: Context, tokenBaseUrl: String) {
         Preferences().setIsCalled(context, false)
@@ -121,6 +192,8 @@ class AuthAPICall {
 
             number = ""
         }
+
+        Log.e("deviceID",""+deviceID)
 
 
         var jsonObject = JsonObject();

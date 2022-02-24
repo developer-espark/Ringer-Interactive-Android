@@ -60,12 +60,18 @@ class DefaultPhoneActivity : AppCompatActivity() {
         if (requestCode == REQUEST_CODE_SDK){
 
             if (resultCode == RESULT_OK){
+                PreferencesApp().setDefaultApp(this, false)
+                PreferencesApp().setAppearOnTop(this,false)
+                PreferencesApp().setContact(this,false)
                 /*InitializeToken(
                     this,
                     resources.getString(R.string.ringer_user_name),
                     resources.getString(R.string.ringer_password),
                     resources.getString(R.string.app_name)
                 )*/
+                startActivity(Intent(this@DefaultPhoneActivity,AppearOnTopActivity::class.java))
+                finish()
+            }else{
                 startActivity(Intent(this@DefaultPhoneActivity,AppearOnTopActivity::class.java))
                 finish()
             }

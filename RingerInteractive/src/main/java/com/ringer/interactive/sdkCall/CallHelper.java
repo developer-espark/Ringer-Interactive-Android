@@ -34,10 +34,10 @@ public class CallHelper {
         public static final int INCOMING = 4;       /* A normal incoming phone call */
         public static final int CALL_WAITING = 5;   /* Incoming call while another is active */
         public static final int DIALING = 6;        /* An outgoing call during dial phase */
-        public static final int REDIALING = 10;      /* Subsequent dialing attempt after a failure */
+        public static final int REDIALING = 7;      /* Subsequent dialing attempt after a failure */
         public static final int ONHOLD = 8;         /* An active phone call placed on hold */
         public static final int DISCONNECTING = 9;  /* A call is being ended. */
-        public static final int DISCONNECTED = 7;  /* State after a call disconnects */
+        public static final int DISCONNECTED = 10;  /* State after a call disconnects */
         public static final int CONFERENCED = 11;   /* CallHelper part of a conference call */
         public static final int SELECT_PHONE_ACCOUNT = 12; /* Waiting for account selection */
         public static final int CONNECTING = 13;    /* Waiting for Telecomm broadcast to finish */
@@ -85,7 +85,7 @@ public class CallHelper {
                     return "ONHOLD";
                 case DISCONNECTING:
                     return "DISCONNECTING";
-                case Call.STATE_DISCONNECTED:
+                case DISCONNECTED:
                     return "DISCONNECTED";
                 case CONFERENCED:
                     return "CONFERENCED";
@@ -284,7 +284,7 @@ public class CallHelper {
         Trace.beginSection("Update");
         int oldState = getState();
         updateFromTelecommCall();
-        if (oldState != getState() && getState() == Call.STATE_DISCONNECTED) {
+        if (oldState != getState() && getState() == State.DISCONNECTED) {
             CallList.getInstance().onDisconnect(this);
         } else {
             CallList.getInstance().onUpdate(this);
@@ -425,9 +425,9 @@ public class CallHelper {
             case android.telecom.Call.STATE_HOLDING:
                 return State.ONHOLD;
             case android.telecom.Call.STATE_DISCONNECTED:
-                return Call.STATE_DISCONNECTED;
+                return State.DISCONNECTING;
             case android.telecom.Call.STATE_DISCONNECTING:
-                return Call.STATE_DISCONNECTED;
+                return State.DISCONNECTED;
             default:
                 return State.INVALID;
         }
@@ -521,7 +521,7 @@ public class CallHelper {
 
     /** Returns call disconnect cause, defined by {@link DisconnectCause}. */
     public DisconnectCause getDisconnectCause() {
-        if (mState == Call.STATE_DISCONNECTED || mState == State.IDLE) {
+        if (mState == State.DISCONNECTED || mState == State.IDLE) {
             return mDisconnectCause;
         }
 
