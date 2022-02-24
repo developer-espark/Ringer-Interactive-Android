@@ -5,24 +5,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
-import android.view.Gravity
-import android.view.MenuItem
-import android.view.View
 import android.widget.Button
-import android.widget.ExpandableListView.OnChildClickListener
-import android.widget.ExpandableListView.OnGroupClickListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.ringer.interactive.InitializeToken
-import com.techatmosphere.expandablenavigation.model.ChildModel
-import com.techatmosphere.expandablenavigation.model.HeaderModel
 import com.techatmosphere.expandablenavigation.view.ExpandableNavigationListView
 
 
@@ -39,11 +30,7 @@ class EditScreenActivity : AppCompatActivity() {
 
     lateinit var txt_contact_us: TextView
 
-    lateinit var drawer_layout : DrawerLayout
-    lateinit var nv : NavigationView
     lateinit var img_menu : ImageView
-    private var t: ActionBarDrawerToggle? = null
-    lateinit var expandable_navigation: ExpandableNavigationListView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,26 +96,20 @@ class EditScreenActivity : AppCompatActivity() {
         txt_privacy1 = findViewById(R.id.txt_privacy1)
         txt_terms_condition = findViewById(R.id.txt_terms_condition)
         txt_contact_us = findViewById(R.id.txt_contact_us)
-        expandable_navigation = findViewById(R.id.expandable_navigation)
 
 
-        drawer_layout = findViewById(R.id.drawer_layout)
-        nv = findViewById(R.id.nv)
         img_menu = findViewById(R.id.img_menu)
-        t = ActionBarDrawerToggle(this, drawer_layout, R.string.open, R.string.close)
-
-        drawer_layout.addDrawerListener(t!!)
-        t!!.syncState()
 
 
         img_menu.setOnClickListener {
 
 
-            drawer_layout.openDrawer(Gravity.START)
+            /*drawer_layout.openDrawer(Gravity.START)*/
+            Constant.openuserMenuDialog(it, this@EditScreenActivity)
         }
 
 
-        nv.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+      /*  nv.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
             val id = item.itemId
             when (id) {
                 R.id.contacts -> {
@@ -173,7 +154,7 @@ class EditScreenActivity : AppCompatActivity() {
                 else -> return@OnNavigationItemSelectedListener true
             }
             true
-        })
+        })*/
         /*expandable_navigation
             .init(this)
             .addHeaderModel(HeaderModel("Settings",R.drawable.img_down)
