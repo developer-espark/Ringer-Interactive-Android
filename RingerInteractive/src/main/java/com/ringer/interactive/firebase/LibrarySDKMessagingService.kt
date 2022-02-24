@@ -49,7 +49,7 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
         silent = remoteMessage.data["silent"]
-        Log.e("remoteMessage", "" + remoteMessage)
+        Log.e("remoteMessage", "" + remoteMessage.data["silent"])
 
         if (message.isNullOrEmpty()) {
             message = remoteMessage.notification!!.body.toString()

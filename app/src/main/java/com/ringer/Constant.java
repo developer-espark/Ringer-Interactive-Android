@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
@@ -51,6 +52,9 @@ public class Constant {
         expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(mContext, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
+
+
+
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
@@ -63,6 +67,7 @@ public class Constant {
                     mContext.startActivity(intent);
                     popupWindow.dismiss();
                 }
+
                /* Toast.makeText(mContext,
                         expandableListTitle.get(groupPosition) + " List Expanded.",
                         Toast.LENGTH_SHORT).show();*/
@@ -80,6 +85,8 @@ public class Constant {
 
             }
         });
+
+
 
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override

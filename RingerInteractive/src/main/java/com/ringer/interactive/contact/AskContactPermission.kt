@@ -35,7 +35,7 @@ fun ContactData(context: Context) {
         } else {
 
             //Permission Granted
-//            AuthAPICall().apiCallAuth(context)
+            AuthAPICall().apiCallAuth(context)
 
         }
 

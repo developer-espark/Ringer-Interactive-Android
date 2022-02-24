@@ -669,14 +669,14 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
         }
         if (v.getId() == R.id.hangup) {
 
-            ArrayList<StoreContact> contactArrayList = new Preferences().getLocalData(getApplicationContext());
+            /*ArrayList<StoreContact> contactArrayList = new Preferences().getLocalData(getApplicationContext());
             if (contactArrayList != null && contactArrayList.size() > 0) {
 
                 for (int i = 0; i < contactArrayList.size(); i++) {
 
                     new AuthAPICall().getCallDetails(getApplicationContext(), contactArrayList.get(i));
                 }
-            }
+            }*/
 
 
             ongoingCall.hangup();
