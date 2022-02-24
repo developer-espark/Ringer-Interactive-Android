@@ -61,6 +61,7 @@ public class Constant {
                     intent.setData(Uri.parse("mailto:"));
                     intent.putExtra(Intent.EXTRA_EMAIL, "info@flashappllc.com");
                     mContext.startActivity(intent);
+                    popupWindow.dismiss();
                 }
                /* Toast.makeText(mContext,
                         expandableListTitle.get(groupPosition) + " List Expanded.",

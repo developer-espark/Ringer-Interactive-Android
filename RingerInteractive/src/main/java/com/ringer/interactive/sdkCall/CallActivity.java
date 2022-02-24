@@ -38,6 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -281,8 +282,13 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                                     new AuthAPICall().apiCallAuth(getApplicationContext());
                                     Intent serviceIntent = new Intent(getApplicationContext(), MyForegroundService.class);
                                     stopService(serviceIntent);
-                                    finish();
-                                    new Preferences().setIsCallMerged(getApplicationContext(), "0");
+                                   /* if ((call1.getState() == Call.STATE_ACTIVE) ||call1.getState() == Call.STATE_HOLDING) {
+
+                                    }else {
+                                        finish();
+                                    }*/
+
+
                                 }
 
 
@@ -638,10 +644,16 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                 final boolean canSwap = activeCall.can(
                         android.telecom.Call.Details.CAPABILITY_SWAP_CONFERENCE);
                 // (2) Attempt actions on conference calls
+
+                if (!canMerge) {
+                    Toast.makeText(getApplicationContext(), "First You need to add call to use this feature", Toast.LENGTH_SHORT).show();
+                }
                 if (canMerge) {
 
 
                     Log.e("callMerge", "callMerged");
+
+                    Toast.makeText(getApplicationContext(), "Your Call is merged", Toast.LENGTH_SHORT).show();
 
                     TelecomAdapter.getInstance().merge(activeCall.getId());
                     new Preferences().setIsCallMerged(getApplicationContext(), "1");
@@ -651,6 +663,8 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                     Log.e("callSwap", "callSwap");
                     TelecomAdapter.getInstance().swap(activeCall.getId());
                 }
+            } else {
+                Toast.makeText(getApplicationContext(), "First You need to add call to use this feature", Toast.LENGTH_SHORT).show();
             }
         }
         if (v.getId() == R.id.hangup) {
@@ -660,7 +674,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 
                 for (int i = 0; i < contactArrayList.size(); i++) {
 
-                    new AuthAPICall().getCallDetails(getApplicationContext(),contactArrayList.get(i));
+                    new AuthAPICall().getCallDetails(getApplicationContext(), contactArrayList.get(i));
                 }
             }
 
@@ -668,11 +682,16 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             ongoingCall.hangup();
             Intent serviceIntent = new Intent(this, MyForegroundService.class);
             stopService(serviceIntent);
-            new CallService().onCallRemoved(call1);
-            CallList.getInstance().onCallRemoved(call1);
-            new Preferences().setIsCallMerged(getApplicationContext(), "0");
 
-            finish();
+            if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")) {
+                new CallService().onCallRemoved(call1);
+
+                CallList.getInstance().onCallRemoved(call1);
+                new Preferences().setIsCallMerged(getApplicationContext(), "0");
+                finish();
+
+            }
+
 
         }
     }
