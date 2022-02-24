@@ -7,6 +7,7 @@ import androidx.core.net.toUri
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ringer.interactive.model.CallLogDetail
+import com.ringer.interactive.model.CallLogMatchDetail
 import com.ringer.interactive.model.StoreContact
 
 
@@ -220,6 +221,38 @@ class Preferences {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val isCallMerge: String? = preferences.getString("isCallMerge", "0")
         return isCallMerge.toString()
+    }
+
+    fun setStoreContact(context: Context,storeContact: StoreContact){
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("storeContact", Gson().toJson(storeContact))
+        editor.commit()
+    }
+
+    fun getStoreContact(context: Context): StoreContact{
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val store: String? = preferences.getString("storeContact", "0")
+        return Gson().fromJson(store,StoreContact::class.java)
+
+    }
+
+
+    //store data
+
+    fun setMatchCallLogDetail(context: Context,getOffersArrayList: ArrayList<CallLogMatchDetail>) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("CallLogMatchDetail", Gson().toJson(getOffersArrayList))
+        editor.apply()
+    }
+
+    fun getMatchCallLogDetail(context: Context): ArrayList<CallLogMatchDetail>? {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        return Gson().fromJson<ArrayList<CallLogMatchDetail>>(
+            preferences.getString("CallLogMatchDetail", ""),
+            object : TypeToken<ArrayList<CallLogMatchDetail?>?>() {}.type
+        )
     }
 
 

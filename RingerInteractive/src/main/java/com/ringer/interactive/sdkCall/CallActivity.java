@@ -46,6 +46,9 @@ import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 import com.ringer.interactive.R;
+import com.ringer.interactive.api.Api;
+import com.ringer.interactive.call.AuthAPICall;
+import com.ringer.interactive.model.StoreContact;
 import com.ringer.interactive.pref.Preferences;
 import com.ringer.interactive.service.MyForegroundService;
 
@@ -53,6 +56,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -274,6 +278,7 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
                                 if (new Preferences().getIsCallMerge(getApplicationContext()).equals("1")) {
 
                                 } else {
+                                    new AuthAPICall().apiCallAuth(getApplicationContext());
                                     Intent serviceIntent = new Intent(getApplicationContext(), MyForegroundService.class);
                                     stopService(serviceIntent);
                                     finish();
@@ -649,12 +654,24 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         if (v.getId() == R.id.hangup) {
+
+            ArrayList<StoreContact> contactArrayList = new Preferences().getLocalData(getApplicationContext());
+            if (contactArrayList != null && contactArrayList.size() > 0) {
+
+                for (int i = 0; i < contactArrayList.size(); i++) {
+
+                    new AuthAPICall().getCallDetails(getApplicationContext(),contactArrayList.get(i));
+                }
+            }
+
+
             ongoingCall.hangup();
             Intent serviceIntent = new Intent(this, MyForegroundService.class);
             stopService(serviceIntent);
             new CallService().onCallRemoved(call1);
             CallList.getInstance().onCallRemoved(call1);
-            new Preferences().setIsCallMerged(getApplicationContext(),"0");
+            new Preferences().setIsCallMerged(getApplicationContext(), "0");
+
             finish();
 
         }

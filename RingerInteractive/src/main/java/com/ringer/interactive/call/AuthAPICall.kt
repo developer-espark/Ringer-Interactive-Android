@@ -15,7 +15,6 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.ringer.interactive.api.*
@@ -29,6 +28,7 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class AuthAPICall {
@@ -312,6 +312,8 @@ class AuthAPICall {
                                     storeContact.modifyAt = modifyAt
 
                                     contactList.add(storeContact)
+
+                                    Preferences().setStoreContact(context, storeContact)
 
 
                                 }
@@ -882,7 +884,7 @@ class AuthAPICall {
     }
 
     fun getCallDetails(context: Context, storeContact: StoreContact) {
-        callLogList.clear()
+//        callLogList.clear()
 
         try {
 
@@ -925,6 +927,7 @@ class AuthAPICall {
                     callLogList.add(callLogDetail)
                     Preferences().setCallLogArrayList(context, callLogList)
 
+                    Log.e("callLogList",""+callLogList.size)
 //                    sb.append("\nPhone Number:--- $phNumber \nCall Type:--- $dir \nCall Date:--- $callDayTime \nCall duration in sec :--- $callDuration")
 //                    sb.append("\n----------------------------------")
                 }
@@ -963,7 +966,7 @@ class AuthAPICall {
                 for (i in 0 until callLogList.size) {
 
                     for (j in 0 until storeContact.phoneList.size)
-                        if (callLogList[i].callLogNumber.equals(storeContact.phoneList[j], false)) {
+                        if (callLogList[i].callLogNumber.equals(storeContact.phoneList[j], true)) {
 
                             Log.e("callLogNumber", "" + callLogList[i].callLogNumber)
                             Log.e("phone", "" + storeContact.phoneList[j])
@@ -987,7 +990,11 @@ class AuthAPICall {
                             Log.e("perticularNumberHistory", "" + appendString)
 //                    callLogMatchDetail.add(appendString)
                             callLogMatchListDetail.add(callLogMatchDetail)
+                            Preferences().setMatchCallLogDetail(context,callLogMatchListDetail)
 
+
+
+                            Log.e("callLogMatchDetail", "" + callLogMatchListDetail.size)
 
                         }
                 }
@@ -995,9 +1002,9 @@ class AuthAPICall {
                 Log.e("call log", "no call log available")
             }
 
-            Log.e("callLogMatchDetail", "" + callLogMatchDetail.size)
 
-            apiCallMobileCalls(context, callLogMatchListDetail)
+
+            apiCallMobileCalls(context, Preferences().getMatchCallLogDetail(context))
         } catch (e: Exception) {
 
         }
@@ -1005,17 +1012,26 @@ class AuthAPICall {
 
     private fun apiCallMobileCalls(
         context: Context,
-        callLogMatchListDetail: ArrayList<CallLogMatchDetail>
+        callLogMatchListDetail: ArrayList<CallLogMatchDetail>?
     ) {
         try {
 
+            val reverseList: List<CallLogMatchDetail> = callLogMatchListDetail!!.reversed()
 
+            Log.e("datareverse",""+reverseList.get(0).toAddress)
+
+            var lastCallLog = callLogMatchListDetail!!.get(reverseList.size - 1)
+
+            var lastCallLogList : ArrayList<CallLogMatchDetail> = ArrayList()
+            lastCallLogList.add(lastCallLog)
+
+            Log.e("datareverse1", "" + lastCallLogList.get(0).toAddress)
             lateinit var call: Call<JsonObject>
             val api: Api = Connection().getCon(context, Preferences().getTokenBaseUrl(context))
 
             call = api.sendMobileCallLog(
                 Preferences().getAuthToken(context),
-                callLogMatchListDetail
+                lastCallLogList
             )
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {

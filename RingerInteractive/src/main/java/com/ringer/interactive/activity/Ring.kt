@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import com.gu.toolargetool.TooLargeTool
+import com.ringer.interactive.call.AuthAPICall
 import com.ringer.interactive.pref.Preferences
 import com.ringer.interactive.service.OnClearFromRecentService
 
@@ -20,6 +21,7 @@ class Ring : Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         createNotificationChannel()
+
 
 //        startService(Intent(applicationContext, OnClearFromRecentService::class.java))
 
