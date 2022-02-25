@@ -57,10 +57,10 @@ interface Api {
     ) : Call<JsonObject>
 
     //Search Mobile Registration
-    @DELETE(search_mobile_registration)
+    @DELETE("data/api/types/mobileregistration/{mobileregistrationId}")
     fun searchDeleteRegistration(
         @Header(authorization) auth: String,
-        @Query(uuid) uuid1 : String
+        @Path(mobileRegistrationId) mobileregistrationId : String
     ) : Call<JsonObject>
 
 

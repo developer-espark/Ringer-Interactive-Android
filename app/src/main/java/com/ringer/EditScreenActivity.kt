@@ -248,8 +248,6 @@ class EditScreenActivity : AppCompatActivity() {
         expandable_navigation.setSelected(0)*/
 
 
-        PreferencesApp().setNotification(this, false)
-
 
 
 

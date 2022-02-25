@@ -67,12 +67,13 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         } catch (e: Exception) {
 
         }
+        Log.e("function", "function silent "+silent)
 
         if (silent == "true") {
-
+            Log.e("function", "function silent "+silent)
         } else {
 
-
+            Log.e("function", "function silent "+silent)
             //You are App is being killed so here you can add some code
             val packageManager = context.packageManager
             val intent = packageManager.getLaunchIntentForPackage(context.packageName)
@@ -87,7 +88,7 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
 
 
             val contentIntent =
-                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             val `when` = System.currentTimeMillis()
             val iconL = notificationIcon
             defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

@@ -260,7 +260,7 @@ class Notifications {
                                     phoneNumValue
                                 ).append("\n\n")
                             val phoneNumber = PhoneNumber()
-                            phoneNumber.number = phoneNumValue
+//                            phoneNumber.number = phoneNumValue
                             phoneNumber.id = contactId
                             if (companyName == "") {
                                 phoneNumber.company_name = ""
@@ -312,7 +312,7 @@ class Notifications {
                         Log.e("numberList[i].number", "" + numberList[i].number[i])
                         Log.e("numberList[i].phone", "" + storeContact.phoneList[j])
 
-                        if (numberList[i].number.equals(storeContact.phoneList[j], false)) {
+                        if (numberList[i].number.equals(storeContact.phoneList[j])) {
 
 //                        isMatch = true
 

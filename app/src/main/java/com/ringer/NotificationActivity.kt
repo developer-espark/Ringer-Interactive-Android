@@ -25,7 +25,8 @@ class NotificationActivity : AppCompatActivity() {
     private fun onClick() {
         btn_allow_notifications.setOnClickListener {
 
-                startActivity(
+            PreferencesApp().setScreenNumber(this, 4)
+            startActivity(
                     Intent(
                         this@NotificationActivity,
                         AccessContactActivity::class.java

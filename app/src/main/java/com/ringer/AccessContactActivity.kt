@@ -54,6 +54,7 @@ class AccessContactActivity : AppCompatActivity() {
                 )
 
             } else {
+                PreferencesApp().setScreenNumber(this, 5)
                 startActivity(
                     Intent(
                         this@AccessContactActivity,
@@ -113,11 +114,11 @@ class AccessContactActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         RingerInteractive().onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS){
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                PreferencesApp().setContact(this, false)
+                PreferencesApp().setScreenNumber(this, 5)
 
                 startActivity(
                     Intent(

@@ -39,7 +39,7 @@ class Preferences {
 
     fun getIsCalled(context: Context): Boolean? {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val isCalled: Boolean? = preferences.getBoolean("isCalled", true)
+        val isCalled: Boolean? = preferences.getBoolean("isCalled", false)
         return isCalled
 
     }

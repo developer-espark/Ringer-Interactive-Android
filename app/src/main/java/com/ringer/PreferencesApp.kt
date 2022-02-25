@@ -20,60 +20,17 @@ class PreferencesApp {
         return isCalled
     }
 
-    //Notification
-    fun setNotification(context: Context,isCalled : Boolean){
+    // setScreenNumber
+    fun setScreenNumber(context: Context,isCalled : Int){
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
-        editor.putBoolean("isCalledNotification", isCalled)
+        editor.putInt("isScreen", isCalled)
         editor.commit()
     }
 
-    fun getNotification(context: Context) : Boolean?{
+    fun getScreenNumber(context: Context) : Int?{
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val isCalled: Boolean? = preferences.getBoolean("isCalledNotification", true)
-        return isCalled
-    }
-
-    //Contact Access
-    fun setContact(context: Context,isCalled : Boolean){
-        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = preferences.edit()
-        editor.putBoolean("isContact", isCalled)
-        editor.commit()
-    }
-
-    fun getContact(context: Context) : Boolean?{
-        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val isCalled: Boolean? = preferences.getBoolean("isContact", true)
-        return isCalled
-    }
-
-    //Contact Access
-    fun setDefaultApp(context: Context,isCalled : Boolean){
-        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = preferences.edit()
-        editor.putBoolean("isDefault", isCalled)
-        editor.commit()
-    }
-
-    fun getDefaultApp(context: Context) : Boolean?{
-        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val isCalled: Boolean? = preferences.getBoolean("isDefault", true)
-        return isCalled
-    }
-
-
-    //Appear On Top
-    fun setAppearOnTop(context: Context,isCalled : Boolean){
-        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = preferences.edit()
-        editor.putBoolean("isAppear", isCalled)
-        editor.commit()
-    }
-
-    fun getAppearOnTop(context: Context) : Boolean?{
-        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val isCalled: Boolean? = preferences.getBoolean("isAppear", true)
+        val isCalled: Int? = preferences.getInt("isScreen",1 )
         return isCalled
     }
 }

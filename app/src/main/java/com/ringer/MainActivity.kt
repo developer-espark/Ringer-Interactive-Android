@@ -3,7 +3,9 @@ package com.ringer
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.Button
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.ringer.interactive.InitializeToken
@@ -38,25 +40,54 @@ class MainActivity : AppCompatActivity() {
             )
 
         }
+
+
         val timer = object : CountDownTimer(3000, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
 
             override fun onFinish() {
-
-                if ((PreferencesApp().getDefaultApp(this@MainActivity) == false) && (PreferencesApp().getContact(this@MainActivity) == false) && (PreferencesApp().getAppearOnTop(this@MainActivity) == false)) {
-                    startActivity(Intent(this@MainActivity, EditScreenActivity::class.java))
-                    finish()
-                } else if ((PreferencesApp().getDefaultApp(this@MainActivity) == false) && (PreferencesApp().getContact(this@MainActivity) == true) && (PreferencesApp().getAppearOnTop(this@MainActivity) == true)){
-                    startActivity(Intent(this@MainActivity, EditScreenActivity::class.java))
-                    finish()
-
-                }else if ((PreferencesApp().getDefaultApp(this@MainActivity) == true)){
-                    startActivity(Intent(this@MainActivity, DefaultPhoneActivity::class.java))
-                    finish()
-                } else{
-                    startActivity(Intent(this@MainActivity, EditScreenActivity::class.java))
-                    finish()
+                // 1 = Default Dialer Set
+                // 2 = Allow on Top
+                // 3 = notification
+                // 4 = contact
+                // 5 = editscreen
+                val screenNumber = PreferencesApp().getScreenNumber(this@MainActivity);
+                Log.e("screenNumber",screenNumber.toString())
+                when (screenNumber) {
+                    1 -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            DefaultPhoneActivity::class.java
+                        )
+                    )
+                    2 -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            AppearOnTopActivity::class.java
+                        )
+                    )
+                    3 -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            NotificationActivity::class.java
+                        )
+                    )
+                    4 -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            AccessContactActivity::class.java
+                        )
+                    )
+                    5 -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            EditScreenActivity::class.java
+                        )
+                    )
                 }
+                finish()
+
+
             }
         }
         timer.start()

@@ -1,6 +1,7 @@
 package com.ringer.interactive.model
 
 class StoreContact {
+    var contactId: String = ""
     var userName: String = ""
     var galleryId: String = ""
     var phoneList: ArrayList<String> = ArrayList()
@@ -8,4 +9,5 @@ class StoreContact {
     var lastName : String = ""
     var contactID : String = ""
     var modifyAt : String = ""
+    var isModified: Boolean = true
 }

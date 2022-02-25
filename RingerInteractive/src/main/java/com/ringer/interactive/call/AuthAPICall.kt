@@ -77,15 +77,19 @@ class AuthAPICall {
 
                             //api call to send fcm token
                             Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
-//                            if (Preferences().getIsCalled(context)!!) {
+                            if (Preferences().getIsCalled(context)!!) {
+                                searchContact(context, Preferences().getTokenBaseUrl(context))
+                            } else {
+                                apiCallSearchRegistration(
+                                    context,
+                                    Preferences().getTokenBaseUrl(context)
+                                )
 
-
-                            apiCallSearchRegistration(context,Preferences().getTokenBaseUrl(context))
-
-                            apiCallFirebaseToken(
-                                context,
-                                Preferences().getTokenBaseUrl(context)
-                            )
+                                apiCallFirebaseToken(
+                                    context,
+                                    Preferences().getTokenBaseUrl(context)
+                                )
+                            }
 
 
 //                            }
@@ -112,24 +116,26 @@ class AuthAPICall {
         lateinit var call: Call<JsonObject>
         val api: Api = Connection().getCon(context, tokenBaseUrl)
 
-        val uuid1 : String = getDeviceId(context).toString()
+        val uuid1: String = getDeviceId(context).toString()
         call = api.searchMobileRegistration(
             Preferences().getAuthToken(context),
             uuid1
         )
-        call.enqueue(object : Callback<JsonObject>{
+        call.enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
 
-                if (response.isSuccessful){
-                    if (response.body() != null){
+                if (response.isSuccessful) {
+                    if (response.body() != null) {
 
-                        val total = response.body()!!.get("total").asString
-                        if (total == "0"){
+                        val total = response.body()!!.get("count").asString
+                        if (total == "0") {
 
                             apiCallFirebaseToken(context, tokenBaseUrl)
-                        }else{
-
-                            apiCallDeleteToken(context,tokenBaseUrl)
+                        } else {
+                            val objects = response.body()!!.get("objects").asJsonArray
+                            val mobileRegistrationId =
+                                objects.get(0).asJsonObject.get("mobileregistrationId").asString
+                            apiCallDeleteToken(context, tokenBaseUrl, mobileRegistrationId)
 
                         }
 
@@ -145,23 +151,24 @@ class AuthAPICall {
         })
 
 
-
-
     }
 
-    private fun apiCallDeleteToken(context: Context, tokenBaseUrl: String) {
+    private fun apiCallDeleteToken(
+        context: Context,
+        tokenBaseUrl: String,
+        mobileRegistrationId: String
+    ) {
         lateinit var call: Call<JsonObject>
         val api: Api = Connection().getCon(context, tokenBaseUrl)
 
-        val uuid1 : String = getDeviceId(context).toString()
         call = api.searchDeleteRegistration(
             Preferences().getAuthToken(context),
-            uuid1
+            mobileRegistrationId
         )
-        call.enqueue(object : Callback<JsonObject>{
+        call.enqueue(object : Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
 
-                if (response.code() == 204){
+                if (response.code() == 204) {
                     apiCallFirebaseToken(context, tokenBaseUrl)
                 }
 
@@ -177,7 +184,6 @@ class AuthAPICall {
 
     @SuppressLint("MissingPermission")
     private fun apiCallFirebaseToken(context: Context, tokenBaseUrl: String) {
-        Preferences().setIsCalled(context, false)
         val deviceID = getDeviceId(context)
         lateinit var call: Call<JsonObject>
         val api: Api = Connection().getCon(context, tokenBaseUrl)
@@ -193,7 +199,7 @@ class AuthAPICall {
             number = ""
         }
 
-        Log.e("deviceID",""+deviceID)
+        Log.e("deviceID", "" + deviceID)
 
 
         var jsonObject = JsonObject();
@@ -210,6 +216,7 @@ class AuthAPICall {
         call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 if (response.isSuccessful) {
+                    Preferences().setIsCalled(context, true)
                     if (response.body() != null) {
                         Log.e("status", "40")
                         //Search Contact
@@ -240,6 +247,7 @@ class AuthAPICall {
 
     }
 
+    @SuppressLint("Range")
     private fun searchContact(context: Context, tokenBaseUrl: String) {
 
 
@@ -258,16 +266,17 @@ class AuthAPICall {
                     if (response.isSuccessful) {
                         if (response.body() != null) {
 
+                            Log.e("responseSearchContact", response.body().toString())
                             Log.e("times", "times")
-                            val contact_id_list: ArrayList<String> = ArrayList()
+                            val contacts: ArrayList<String> = ArrayList()
                             var phoneMultiple: ArrayList<String> = ArrayList()
                             val objects = response.body()!!.get("objects").asJsonArray
                             if (objects.size() > 0) {
 
                                 for (i in 0 until objects.size()) {
 
-
-                                    contact_id_list.add(objects.get(i).asJsonObject.get("contactId").asString)
+                                    var contactId =
+                                        objects.get(i).asJsonObject.get("contactId").asString
 
                                     val first_name =
                                         objects[i].asJsonObject.get("firstName").asString + " " + objects[i].asJsonObject.get(
@@ -298,11 +307,13 @@ class AuthAPICall {
                                     var phone = objects[i].asJsonObject.get("phone").asJsonArray
                                     for (j in 0 until phone.size()) {
                                         phoneMultiple.add(phone[j].asString)
+                                        contacts.add(phone[j].asString)
                                         Log.e("phoneMultiple", "" + phone[j])
                                     }
 
 
                                     var storeContact = StoreContact()
+                                    storeContact.contactId = contactId
                                     storeContact.userName = first_name
                                     storeContact.galleryId = contact_id
                                     storeContact.phoneList = phoneMultiple
@@ -312,38 +323,25 @@ class AuthAPICall {
                                     storeContact.modifyAt = modifyAt
 
                                     contactList.add(storeContact)
-
-                                    Preferences().setStoreContact(context, storeContact)
-
-
+//                                    Preferences().setStoreContact(context, storeContact)
                                 }
 
                             }
                             Log.e("PreferenceData", "" + Preferences().getLocalData(context))
                             if (Preferences().getLocalData(context).isNullOrEmpty()) {
 
-                                Log.e("dataclear", "dataclear")
-
                                 Preferences().setLocalData(context, contactList)
-
-
-
-
-
-
-                                Log.e("listSize", "" + contactList.size)
-                                for (i in 0 until contactList.size) {
-                                    if (!contactList.get(i).galleryId.equals("")) {
-                                        getContactImage(
-                                            context,
-                                            tokenBaseUrl,
-                                            contactList.get(i),
-                                            contactList
-                                        )
-                                    }
-                                }
-
-
+//                                for (i in 0 until contactList.size) {
+//                                    if (!contactList.get(i).galleryId.equals("")) {
+//                                        // check later
+//                                        getContactImage(
+//                                            context,
+//                                            tokenBaseUrl,
+//                                            contactList.get(i),
+//                                            contactList
+//                                        )
+//                                    }
+//                                }
                             } else {
                                 var storeLocalDataArrayList: ArrayList<StoreContact> =
                                     Preferences().getLocalData(context)!!
@@ -353,49 +351,178 @@ class AuthAPICall {
                                 for (k in 0 until contactList.size) {
                                     var isModify = false
                                     for (j in 0 until storeLocalDataArrayList.size) {
-
-
-                                        if (contactList[k].userName == storeLocalDataArrayList[j].userName) {
-
-
-                                            if (contactList[k].modifyAt > storeLocalDataArrayList[j].modifyAt) {
-
-
-                                                isModify = true
+                                        if (contactList[k].contactID == storeLocalDataArrayList[j].contactID) {
+                                            if (contactList[k].modifyAt == storeLocalDataArrayList[j].modifyAt) {
+                                                contactList[k].isModified = false
                                                 break
-
-
                                             }
                                         }
 
                                     }
-                                    if (isModify) {
-                                        Log.e("modified", "modified")
-                                        if (!contactList[k].galleryId.equals("")) {
-                                            getContactImage(
-                                                context,
-                                                tokenBaseUrl,
-                                                contactList.get(k),
-                                                contactList
-                                            )
-                                        }
-                                    } else {
-
-                                        if (contactList.size > storeLocalDataArrayList.size) {
-
-                                            if (!contactList[k].galleryId.equals("")) {
-                                                getContactImage(
-                                                    context,
-                                                    tokenBaseUrl,
-                                                    contactList.get(k),
-                                                    contactList
-                                                )
-                                            }
-                                        }
-                                    }
-
                                 }
                             }
+
+                            val builder = StringBuilder()
+                            val resolver = context.contentResolver
+                            val cursor = resolver.query(
+                                ContactsContract.Contacts.CONTENT_URI, null, null, null,
+                                null
+                            )
+
+                            if (cursor!!.count > 0) {
+
+                                // Get Number List
+                                while (cursor.moveToNext()) {
+                                    val id =
+                                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+
+                                    val name =
+                                        cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                                    val phoneNumber = (cursor.getString(
+                                        cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)
+                                    )).toInt()
+                                    val phoneNumberObj = PhoneNumber()
+                                    if (phoneNumber > 0) {
+                                        val orgWhere =
+                                            ContactsContract.Data.CONTACT_ID + " = ? AND " + ContactsContract.Data.MIMETYPE + " = ?"
+                                        val orgWhereParams = arrayOf(
+                                            id,
+                                            ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
+                                        )
+                                        val orgCur: Cursor = context.contentResolver.query(
+                                            ContactsContract.Data.CONTENT_URI,
+                                            null, orgWhere, orgWhereParams, null
+                                        )!!
+                                        if (orgCur.moveToFirst()) {
+                                            companyName =
+                                                orgCur.getString(
+                                                    orgCur.getColumnIndex(
+                                                        ContactsContract.CommonDataKinds.Organization.DATA
+                                                    )
+                                                )
+                                            val title =
+                                                orgCur.getString(
+                                                    orgCur.getColumnIndex(
+                                                        ContactsContract.CommonDataKinds.Organization.TITLE
+                                                    )
+                                                )
+                                        }
+                                        orgCur.close()
+
+
+                                        val cursorPhone = context.contentResolver.query(
+                                            ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                                            null,
+                                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?",
+                                            arrayOf(id),
+                                            null
+                                        )
+
+                                        if (cursorPhone!!.count > 0) {
+                                            val contactId =
+                                                cursor.getString(
+                                                    cursor.getColumnIndexOrThrow(
+                                                        ContactsContract.PhoneLookup._ID
+                                                    )
+                                                )
+
+                                            phoneNumberObj.id = contactId
+                                            phoneNumberObj.company_name = companyName
+                                            while (cursorPhone.moveToNext()) {
+                                                val names =
+                                                    cursorPhone.getString(
+                                                        cursorPhone.getColumnIndex(
+                                                            ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME
+                                                        )
+                                                    )
+                                                phoneNumberObj.name = names
+
+                                                var phoneNumValue = cursorPhone.getString(
+                                                    cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                                                )
+                                                Log.e("phoneNumValueB", "" + phoneNumValue)
+                                                var phNo =
+                                                    phoneNumValue.replace("[()\\s-]+".toRegex(), "")
+
+                                                Log.e("phoneNumValueC", "" + phNo)
+
+
+
+                                                builder.append("Contact: ").append(name)
+                                                    .append(", Phone Number: ")
+                                                    .append(
+                                                        phoneNumValue
+                                                    ).append("\n\n")
+
+                                                phoneNumberObj.number.add(phNo)
+                                            }
+                                        }
+
+                                        cursorPhone.close()
+                                    }
+
+
+                                    // loop through contact list
+                                    for (contactIndex in 0 until contactList.size) {
+                                        var commonContactCount: Int = comparePhoneList(
+                                            contactList[contactIndex].phoneList,
+                                            phoneNumberObj
+                                        )
+
+                                        if (commonContactCount > 0) {
+                                            // update contact
+                                        } else {
+                                            // create contact
+                                        }
+
+//                                        for (index in 0 until phoneNumberObj.number.size) {
+//                                            if (phoneNumberObj.number.equals(contactList[contactIndex].phoneList)) {
+//
+//                                            } else {
+//                                                if (contactList[contactIndex].phoneList.contains(
+//                                                        phoneNumberObj.number[index]
+//                                                    )
+//                                                ) {
+//                                                    contactList[contactIndex].phoneList.remove(
+//                                                        phoneNumberObj.number[index]
+//                                                    )
+//
+//                                                }
+//                                            }
+//                                        }
+                                    }
+                                }
+
+
+                            }
+
+//                                    if (isModify) {
+//                                        Log.e("modified", "modified")
+//                                        if (!contactList[k].galleryId.equals("")) {
+//                                            getContactImage(
+//                                                context,
+//                                                tokenBaseUrl,
+//                                                contactList.get(k),
+//                                                contactList
+//                                            )
+//                                        }
+//                                    } else {
+//
+//                                        if (contactList.size > storeLocalDataArrayList.size) {
+//
+//                                            if (!contactList[k].galleryId.equals("")) {
+//                                                getContactImage(
+//                                                    context,
+//                                                    tokenBaseUrl,
+//                                                    contactList.get(k),
+//                                                    contactList
+//                                                )
+//                                            }
+//                                        }
+//                                    }
+
+//                                }
+//                            }
 
 
                             /*Log.e("listSize", "" + contactList.size)
@@ -424,6 +551,16 @@ class AuthAPICall {
 
     }
 
+    private fun comparePhoneList(
+        contactArrayList: ArrayList<String>,
+        phoneNumberObj: PhoneNumber
+    ): Int {
+        val contactList = contactArrayList
+        val phoneContact = phoneNumberObj.number
+        val commonContact = contactList.intersect(phoneContact)
+
+        return commonContact.size
+    }
 
     private fun getContactImage(
         context: Context,
@@ -562,7 +699,7 @@ class AuthAPICall {
                                     phoneNumValue
                                 ).append("\n\n")
                             val phoneNumber = PhoneNumber()
-                            phoneNumber.number = phNo
+//                            phoneNumber.number = phNo
                             phoneNumber.id = contactId
                             phoneNumber.name = names
                             if (companyName == "") {
@@ -617,7 +754,7 @@ class AuthAPICall {
 
                         Log.e("NumberLIst", "" + numberList[i].number)
                         Log.e("NumberLIst1", "" + storeContact.phoneList[j])
-                        if (numberList[i].number.equals(storeContact.phoneList[j], true)) {
+                        if (numberList[i].number.equals(storeContact.phoneList[j])) {
 
                             Log.e("asdName", "" + numberList[i].name)
 
@@ -675,13 +812,13 @@ class AuthAPICall {
                 )
 //            createContactBackGround(context, url, first_name, phone, company_name)
             }
-            Preferences().setIsCalled(context, true)
+//            Preferences().setIsCalled(context, true)
 
             //Get Call Detail
 
             getCallDetails(context, storeContact)
         } catch (e: Exception) {
-            Preferences().setIsCalled(context, true)
+//            Preferences().setIsCalled(context, false)
         }
     }
 
@@ -927,7 +1064,7 @@ class AuthAPICall {
                     callLogList.add(callLogDetail)
                     Preferences().setCallLogArrayList(context, callLogList)
 
-                    Log.e("callLogList",""+callLogList.size)
+                    Log.e("callLogList", "" + callLogList.size)
 //                    sb.append("\nPhone Number:--- $phNumber \nCall Type:--- $dir \nCall Date:--- $callDayTime \nCall duration in sec :--- $callDuration")
 //                    sb.append("\n----------------------------------")
                 }
@@ -990,7 +1127,7 @@ class AuthAPICall {
                             Log.e("perticularNumberHistory", "" + appendString)
 //                    callLogMatchDetail.add(appendString)
                             callLogMatchListDetail.add(callLogMatchDetail)
-                            Preferences().setMatchCallLogDetail(context,callLogMatchListDetail)
+                            Preferences().setMatchCallLogDetail(context, callLogMatchListDetail)
 
 
 
@@ -1018,11 +1155,11 @@ class AuthAPICall {
 
             val reverseList: List<CallLogMatchDetail> = callLogMatchListDetail!!.reversed()
 
-            Log.e("datareverse",""+reverseList.get(0).toAddress)
+            Log.e("datareverse", "" + reverseList.get(0).toAddress)
 
             var lastCallLog = callLogMatchListDetail!!.get(reverseList.size - 1)
 
-            var lastCallLogList : ArrayList<CallLogMatchDetail> = ArrayList()
+            var lastCallLogList: ArrayList<CallLogMatchDetail> = ArrayList()
             lastCallLogList.add(lastCallLog)
 
             Log.e("datareverse1", "" + lastCallLogList.get(0).toAddress)

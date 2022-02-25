@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
@@ -15,11 +17,12 @@ import com.ringer.interactive.permission.RingerInteractive
 
 class AppearOnTopActivity : AppCompatActivity() {
 
-    lateinit var btn_appear : Button
-    lateinit var txt_privacy1 : TextView
-    lateinit var txt_terms_condition : TextView
+    lateinit var btn_appear: Button
+    lateinit var txt_privacy1: TextView
+    lateinit var txt_terms_condition: TextView
 
     val PERMISSIONS_REQUEST_CALL_LOG = 101
+    var isAskForPermission = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,7 @@ class AppearOnTopActivity : AppCompatActivity() {
 
             if (ContextCompat.checkSelfPermission(
                     this,
-                    Manifest.permission.READ_CALL_LOG
+                    Manifest.permission.SYSTEM_ALERT_WINDOW
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
 
@@ -44,31 +47,31 @@ class AppearOnTopActivity : AppCompatActivity() {
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(
-                        Manifest.permission.READ_CALL_LOG
+                        Manifest.permission.SYSTEM_ALERT_WINDOW
                     ),
                     PERMISSIONS_REQUEST_CALL_LOG
                 )
-
             } else {
 
-                PreferencesApp().setAppearOnTop(this, false)
-                startActivity(Intent(this@AppearOnTopActivity,NotificationActivity::class.java))
+                PreferencesApp().setScreenNumber(this, 3)
+                startActivity(Intent(this@AppearOnTopActivity, NotificationActivity::class.java))
                 finish()
             }
 
 
         }
         txt_terms_condition.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
             startActivity(browserIntent)
         }
 
         txt_privacy1.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
             startActivity(browserIntent)
         }
     }
-
 
 
     private fun initialize() {
@@ -76,25 +79,43 @@ class AppearOnTopActivity : AppCompatActivity() {
         txt_privacy1 = findViewById(R.id.txt_privacy1)
         txt_terms_condition = findViewById(R.id.txt_terms_condition)
     }
+
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        RingerCallLogDetail().onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-        if (requestCode == PERMISSIONS_REQUEST_CALL_LOG){
+        RingerCallLogDetail().onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults,
+            this
+        )
+        if (requestCode == PERMISSIONS_REQUEST_CALL_LOG) {
 
+            Log.e("grantResult",grantResults[0].toString());
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                PreferencesApp().setScreenNumber(this, 3)
+                isAskForPermission = true;
                 startActivity(
                     Intent(
                         this@AppearOnTopActivity,
-                        EditScreenActivity::class.java
+                        NotificationActivity::class.java
                     )
                 )
                 finish()
+
             }
 
         }
 
     }
+
+    override fun onRestart() {
+        super.onRestart()
+            PreferencesApp().setScreenNumber(this, 3)
+            startActivity(Intent(this@AppearOnTopActivity, NotificationActivity::class.java))
+            finish()
+    }
+
 }
