@@ -91,7 +91,7 @@ class Notifications {
                                     storeContact.userName = first_name
                                     storeContact.galleryId = contact_id
                                     storeContact.phoneList = phoneMultiple
-                                    storeContact.contactID = userContactID
+                                    storeContact.contactId = userContactID
                                     storeContact.firstName = uFirstName
                                     storeContact.lastName = lastName
 
@@ -154,7 +154,7 @@ class Notifications {
                 storeContact.phoneList[0],
                 storeContact.firstName,
                 storeContact.lastName,
-                storeContact.contactID
+                storeContact.contactId
             )
             numberList.clear()
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {

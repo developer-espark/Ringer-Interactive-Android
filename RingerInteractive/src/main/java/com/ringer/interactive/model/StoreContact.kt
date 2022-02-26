@@ -7,7 +7,6 @@ class StoreContact {
     var phoneList: ArrayList<String> = ArrayList()
     var firstName : String = ""
     var lastName : String = ""
-    var contactID : String = ""
     var modifyAt : String = ""
     var isModified: Boolean = true
 }
