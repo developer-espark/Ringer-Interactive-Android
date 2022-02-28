@@ -15,10 +15,21 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.datatransport.cct.internal.LogEvent
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.codec.language.bm.Rule
 import com.google.gson.JsonObject
 import com.ringer.interactive.api.*
 import com.ringer.interactive.model.*
 import com.ringer.interactive.pref.Preferences
+import contacts.core.*
+import contacts.core.entities.Name
+import contacts.core.entities.NewName
+import contacts.core.entities.NewPhone
+import contacts.core.entities.NewRawContact
+import contacts.core.util.addEmail
+import contacts.core.util.addPhone
+import contacts.core.util.setName
 import okhttp3.HttpUrl
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -27,6 +38,7 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.util.*
+import java.util.logging.Logger
 import kotlin.collections.ArrayList
 
 
@@ -307,16 +319,51 @@ class AuthAPICall {
                                     storeContact.lastName = lastName
                                     storeContact.modifyAt = modifyAt
 
+//                                    val matchesContact = Contacts(context).query()
+//                                        .where { (Phone.Number equalTo phoneMultiple) }
+//                                        .include {
+//                                            Fields.all()
+//                                        }.find()
+//                                    Log.e("matchContacts", matchesContact.toString())
+//
+//
+//                                    if (matchesContact.size > 0) {
+//
+//                                    } else {
+//                                        val insertResult = Contacts(context)
+//                                            .insert()
+//                                            .rawContact {
+//                                                setName {
+//                                                    givenName = uFirstName
+//                                                    familyName = lastName
+//                                                }
+//                                                for (i in 0 until phoneMultiple.size)
+//                                                {
+//                                                    addPhone {
+//                                                        number = phoneMultiple[i]
+//                                                    }
+//                                                }
+//
+//
+//                                            }
+//                                            .commit()
+//
+//                                        Log.e("createContactResult",""+insertResult.toString());
+//
+//                                    }
                                     contactList.add(storeContact)
+
                                 }
 
                             }
 
                             val createContactIndex: ArrayList<Int> = ArrayList()
                             val existingContactIndex: ArrayList<Int> = ArrayList()
-                            var storeLocalDataArrayList: ArrayList<StoreContact> =
-                                Preferences().getLocalData(context)!!
+                            var storeLocalDataArrayList: ArrayList<StoreContact> = ArrayList()
 
+                            if (Preferences().getLocalData(context) != null) {
+                                storeLocalDataArrayList = Preferences().getLocalData(context)!!
+                            }
 
                             for (k in 0 until contactList.size) {
                                 var contactFound = false
@@ -325,6 +372,7 @@ class AuthAPICall {
                                         contactFound = true
                                         if ((contactList[k].modifyAt == storeLocalDataArrayList[j].modifyAt)) {
                                             contactList[k].isModified = false
+
                                             break
                                         }
                                     }
@@ -435,15 +483,17 @@ class AuthAPICall {
                                         cursorPhone.close()
                                     }
 
-
                                     // loop through contact list
                                     for (contactIndex in 0 until contactList.size) {
+
                                         if (contactList[contactIndex].isModified) {
 
                                             var commonContactCount: Int = comparePhoneList(
                                                 contactList[contactIndex].phoneList,
                                                 phoneNumberObj
                                             )
+
+
 
                                             if (commonContactCount > 0) {
                                                 existingContactIndex.add(contactIndex)
@@ -488,11 +538,17 @@ class AuthAPICall {
                 } catch (e: Exception) {
 
                     Log.e("errorSearch", "" + e.message)
+                    Log.e("errorSearch", "" + e.stackTraceToString())
                 } finally {
-                    var storeLocalDataArrayList: ArrayList<StoreContact> =
-                        Preferences().getLocalData(context)!!
-                    if(storeLocalDataArrayList.size > 0) {
-                        getCallDetails(context, storeLocalDataArrayList);
+                    if (Preferences().getLocalData(context) != null) {
+                        var storeLocalDataArrayList: ArrayList<StoreContact> =
+                            Preferences().getLocalData(context)!!
+                        Log.e("storeLocalDataArrayList", storeLocalDataArrayList.size.toString())
+                        if (storeLocalDataArrayList.size > 0) {
+                            getCallDetails(context, storeLocalDataArrayList);
+                        }
+                    } else {
+                        getCallDetails(context, contactList);
                     }
                 }
             }
@@ -500,7 +556,7 @@ class AuthAPICall {
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
 
                 Log.e("failure", "" + t.message)
-                if(contactList.size > 0) {
+                if (contactList.size > 0) {
                     getCallDetails(context, contactList);
                 }
             }
@@ -635,11 +691,8 @@ class AuthAPICall {
 
 
     fun getCallDetails(context: Context, contactList: ArrayList<StoreContact>) {
-//        callLogList.clear()
-
         try {
-
-
+            var numberArrayList: ArrayList<String> = ArrayList()
             val sb = StringBuffer()
             val managedCursor: Cursor? =
                 context.contentResolver.query(CallLog.Calls.CONTENT_URI, null, null, null, null)
@@ -649,12 +702,14 @@ class AuthAPICall {
             val date: Int = managedCursor.getColumnIndex(CallLog.Calls.DATE)
             val duration: Int = managedCursor.getColumnIndex(CallLog.Calls.DURATION)
             sb.append("Call Details :")
+            for (i in 0 until contactList.size) {
+                if (contactList[i].phoneList.size > 0) {
+                    numberArrayList.addAll(contactList[i].phoneList)
+                }
+            }
             if (managedCursor.count > 0) {
-
-                Log.e("managedCursor",managedCursor.count.toString());
-
-
                 while (managedCursor.moveToNext()) {
+
                     val phNumber: String = managedCursor.getString(number)
                     val callType: String = managedCursor.getString(type)
                     val callName: String = managedCursor.getString(type)
@@ -663,44 +718,58 @@ class AuthAPICall {
                     val callDuration: String = managedCursor.getString(duration)
                     var dir: String? = null
                     val dircode = callType.toInt()
+
                     when (dircode) {
                         CallLog.Calls.OUTGOING_TYPE -> dir = "OUTGOING"
                         CallLog.Calls.INCOMING_TYPE -> dir = "INCOMING"
                         CallLog.Calls.MISSED_TYPE -> dir = "MISSED"
                     }
 
-                    val callLogDetail = CallLogDetail()
-                    callLogDetail.callLogNumber = phNumber
-                    callLogDetail.callLogType = dir!!
-                    callLogDetail.callLogDateAndTime = callDayTime.toString()
-                    callLogDetail.callLogCallDuration = callDuration
-                    callLogDetail.callName = callName
+                    if (numberArrayList.size > 0) {
+                        if (numberArrayList.contains(phNumber) && callDayTime.time > Preferences().getContactLastSyncTime(
+                                context
+                            )
+                        ) {
+                            val appendString = "\n" +
+                                    "Phone Number:--- ${phNumber} \n" +
+                                    "Call Type:---" + type + " \n" +
+                                    "Call Date:--- ${date} \n" +
+                                    "Call duration in sec :--- ${duration} \n" +
+                                    "Call Name:--- "
+
+                            var callLogMatchDetail = CallLogMatchDetail()
+                            if (dir == "OUTGOING") {
+                                callLogMatchDetail.toAddress = phNumber
+                                callLogMatchDetail.callType = "Outbound"
+                                callLogMatchDetail.fromAddress = ""
+                            } else {
+                                callLogMatchDetail.fromAddress = phNumber
+                                callLogMatchDetail.callType = "Inbound"
+                                callLogMatchDetail.toAddress = ""
+                            }
+                            callLogMatchDetail.duration = callDuration
+                            callLogMatchDetail.createdAt = callDayTime.toString()
 
 
-                    callLogList.add(callLogDetail)
-                    Preferences().setCallLogArrayList(context, callLogList)
+                            Log.e("perticularNumberHistory", "" + appendString)
 
-                    Log.e("callLogList", "" + callLogList.size)
-//                    sb.append("\nPhone Number:--- $phNumber \nCall Type:--- $dir \nCall Date:--- $callDayTime \nCall duration in sec :--- $callDuration")
-//                    sb.append("\n----------------------------------")
+                            callLogMatchListDetail.add(callLogMatchDetail)
+                            Log.e("callLogMatchDetail", "" + callLogMatchListDetail.size)
+                        }
+                    }
                 }
 
-
-                //match phone number for call log detail
-//                matchPhoneNumberDetail(context, callLogList, storeContact)
-
-
+                if (callLogMatchListDetail.size > 0) {
+                    apiCallMobileCalls(context, callLogMatchListDetail)
+                    Preferences().setContactLastSyncTime(context, System.currentTimeMillis())
+                }
             } else {
-
                 Log.e("NoCallLogFound", "NoCallLogFound")
-
-
             }
             managedCursor.close()
         } catch (e: Exception) {
-
+            Log.e("error", "" + e.printStackTrace())
             Log.e("error", "" + e.message)
-
         }
 
 
@@ -739,11 +808,8 @@ class AuthAPICall {
 
 
                             Log.e("perticularNumberHistory", "" + appendString)
-//                    callLogMatchDetail.add(appendString)
                             callLogMatchListDetail.add(callLogMatchDetail)
                             Preferences().setMatchCallLogDetail(context, callLogMatchListDetail)
-
-
 
                             Log.e("callLogMatchDetail", "" + callLogMatchListDetail.size)
 
@@ -755,7 +821,7 @@ class AuthAPICall {
 
 
 
-            apiCallMobileCalls(context, Preferences().getMatchCallLogDetail(context))
+            apiCallMobileCalls(context, callLogMatchListDetail)
         } catch (e: Exception) {
 
         }
@@ -769,24 +835,23 @@ class AuthAPICall {
 
             val reverseList: List<CallLogMatchDetail> = callLogMatchListDetail!!.reversed()
 
-            Log.e("datareverse", "" + reverseList.get(0).toAddress)
-
-            var lastCallLog = callLogMatchListDetail!!.get(reverseList.size - 1)
-
-            var lastCallLogList: ArrayList<CallLogMatchDetail> = ArrayList()
-            lastCallLogList.add(lastCallLog)
-
-            Log.e("datareverse1", "" + lastCallLogList.get(0).toAddress)
+//            Log.e("datareverse", "" + reverseList.get(0).toAddress)
+//
+//            var lastCallLog = callLogMatchListDetail!!.get(reverseList.size - 1)
+//
+//            var lastCallLogList: ArrayList<CallLogMatchDetail> = ArrayList()
+//            lastCallLogList.add(lastCallLog)
+//
+//            Log.e("datareverse1", "" + lastCallLogList.get(0).toAddress)
             lateinit var call: Call<JsonObject>
             val api: Api = Connection().getCon(context, Preferences().getTokenBaseUrl(context))
 
             call = api.sendMobileCallLog(
                 Preferences().getAuthToken(context),
-                lastCallLogList
+                callLogMatchListDetail
             )
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -873,35 +938,6 @@ class AuthAPICall {
                     .build()
             )
         }
-
-        /* ops.add(
-             ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                 .withValue(
-                     ContactsContract.Data.MIMETYPE,
-                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE
-                 )
-                 .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phone)
-                 .withValue(
-                     ContactsContract.CommonDataKinds.Phone.TYPE,
-                     ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE
-                 )
-                 .build()
-         )
-         ops.add(
-             ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                 .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
-                 .withValue(
-                     ContactsContract.Data.MIMETYPE,
-                     ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE
-                 )
-                 .withValue(
-                     ContactsContract.CommonDataKinds.Organization.COMPANY,
-                     Preferences().getApplicationName(context)
-                 )
-                 .build()
-         )*/
-
         // Photo
 
         if (photo != null) {
@@ -932,12 +968,6 @@ class AuthAPICall {
             context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
             storeLocalDataList[contactIndex].isModified = true
             Preferences().setLocalData(context, storeLocalDataList)
-//            val s = context.contentResolver.applyBatch(
-//                ContactsContract.AUTHORITY,
-//                ops
-//            ) //apply above data insertion into contacts list
-
-
         } catch (e: Exception) {
             Log.e("errorNewCreate", "" + e.message)
             e.printStackTrace()

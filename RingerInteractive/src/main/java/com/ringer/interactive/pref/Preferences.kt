@@ -9,6 +9,8 @@ import com.google.gson.reflect.TypeToken
 import com.ringer.interactive.model.CallLogDetail
 import com.ringer.interactive.model.CallLogMatchDetail
 import com.ringer.interactive.model.StoreContact
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class Preferences {
@@ -91,7 +93,6 @@ class Preferences {
     }
 
 
-
     //set api auth token
     fun setAuthToken(context: Context, auth_token: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
@@ -107,7 +108,7 @@ class Preferences {
     }
 
     //set fcm token
-    fun setFCMToken(context: Context,fcm_token : String){
+    fun setFCMToken(context: Context, fcm_token: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("fcm_token", fcm_token)
@@ -121,7 +122,7 @@ class Preferences {
     }
 
     //set app name
-    fun setApplicationName(context: Context,app_name : String){
+    fun setApplicationName(context: Context, app_name: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("app_name", app_name)
@@ -135,7 +136,7 @@ class Preferences {
     }
 
 
-    fun setCallLogArrayList(context: Context,callLogList : ArrayList<CallLogDetail>){
+    fun setCallLogArrayList(context: Context, callLogList: ArrayList<CallLogDetail>) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         val gson = Gson()
@@ -145,9 +146,17 @@ class Preferences {
 
     }
 
+    fun getCallLogArrayList(context: Context): ArrayList<CallLogDetail> {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        return Gson().fromJson<ArrayList<CallLogDetail>>(
+            preferences.getString("offers", ""),
+            object : TypeToken<ArrayList<CallLogDetail?>?>() {}.type
+        )
+    }
+
     //store data
 
-    fun setLocalData(context: Context,getOffersArrayList: ArrayList<StoreContact>) {
+    fun setLocalData(context: Context, getOffersArrayList: ArrayList<StoreContact>) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("offers", Gson().toJson(getOffersArrayList))
@@ -165,14 +174,14 @@ class Preferences {
 
     //Store Number
 
-    fun setPhoneNumber(context: Context,mobile_number : String){
+    fun setPhoneNumber(context: Context, mobile_number: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("mobile_number", mobile_number)
         editor.commit()
     }
 
-    fun getPhoneNumber(context: Context) : String{
+    fun getPhoneNumber(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val mobile_number: String? = preferences.getString("mobile_number", "")
         return mobile_number.toString()
@@ -180,13 +189,14 @@ class Preferences {
 
     // Store Image
 
-    fun setImageUser(context: Context,imageUser : String){
+    fun setImageUser(context: Context, imageUser: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("image_user", imageUser)
         editor.commit()
     }
-    fun getImageUser(context: Context) : String{
+
+    fun getImageUser(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val image_user: String? = preferences.getString("image_user", "")
         return image_user.toString()
@@ -195,14 +205,14 @@ class Preferences {
 
     //Store Name
 
-    fun setPhoneName(context: Context,mobile_name : String){
+    fun setPhoneName(context: Context, mobile_name: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("mobile_name", mobile_name)
         editor.commit()
     }
 
-    fun getPhoneName(context: Context) : String{
+    fun getPhoneName(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val mobile_name: String? = preferences.getString("mobile_name", "")
         return mobile_name.toString()
@@ -210,37 +220,37 @@ class Preferences {
 
     // Is Call Merged
 
-    fun setIsCallMerged(context: Context,isCallMerge : String){
+    fun setIsCallMerged(context: Context, isCallMerge: String) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("isCallMerge", isCallMerge)
         editor.commit()
     }
 
-    fun getIsCallMerge(context: Context) : String{
+    fun getIsCallMerge(context: Context): String {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val isCallMerge: String? = preferences.getString("isCallMerge", "0")
         return isCallMerge.toString()
     }
 
-    fun setStoreContact(context: Context,storeContact: StoreContact){
+    fun setStoreContact(context: Context, storeContact: StoreContact) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("storeContact", Gson().toJson(storeContact))
         editor.commit()
     }
 
-    fun getStoreContact(context: Context): StoreContact{
+    fun getStoreContact(context: Context): StoreContact {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val store: String? = preferences.getString("storeContact", "0")
-        return Gson().fromJson(store,StoreContact::class.java)
+        return Gson().fromJson(store, StoreContact::class.java)
 
     }
 
 
     //store data
 
-    fun setMatchCallLogDetail(context: Context,getOffersArrayList: ArrayList<CallLogMatchDetail>) {
+    fun setMatchCallLogDetail(context: Context, getOffersArrayList: ArrayList<CallLogMatchDetail>) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         val editor: SharedPreferences.Editor = preferences.edit()
         editor.putString("CallLogMatchDetail", Gson().toJson(getOffersArrayList))
@@ -255,5 +265,17 @@ class Preferences {
         )
     }
 
+    //set contact sync time
+    fun setContactLastSyncTime(context: Context, lastSyncTime: Long) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putLong("lastSyncTime", lastSyncTime)
+        editor.apply()
+    }
+
+    fun getContactLastSyncTime(context: Context): Long {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        return preferences.getLong("lastSyncTime", 0);
+    }
 
 }

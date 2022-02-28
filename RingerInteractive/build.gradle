@@ -74,6 +74,7 @@ dependencies {
 
     implementation 'com.googlecode.libphonenumber:libphonenumber:7.0'
     implementation 'com.google.guava:guava:27.0.1-android'
+    implementation 'com.github.vestrel00.contacts-android:core:0.1.10'
 
     compileOnly("com.google.firebase:firebase-crashlytics:18.2.8") {
         exclude group: 'org.json', module: 'json'
