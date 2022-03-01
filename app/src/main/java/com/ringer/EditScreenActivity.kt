@@ -30,7 +30,7 @@ class EditScreenActivity : AppCompatActivity() {
 
     lateinit var txt_contact_us: TextView
 
-    lateinit var img_menu : ImageView
+    lateinit var img_menu: ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,8 @@ class EditScreenActivity : AppCompatActivity() {
             this,
             resources.getString(R.string.ringer_user_name),
             resources.getString(R.string.ringer_password),
-            resources.getString(R.string.app_name)
+            resources.getString(R.string.app_name),
+            PreferencesApp().getContactNumber(this)
         )
 
         onClick()
@@ -109,52 +110,52 @@ class EditScreenActivity : AppCompatActivity() {
         }
 
 
-      /*  nv.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
-            val id = item.itemId
-            when (id) {
-                R.id.contacts -> {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    intent.data = Uri.parse("package:" + packageName)
-                    startActivity(intent)
-                    drawer_layout.closeDrawers()
-                }
-                R.id.notifications -> {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    intent.data = Uri.parse("package:" + packageName)
-                    startActivity(intent)
-                    drawer_layout.closeDrawers()
-                }
-                R.id.privacy -> {
-                    val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
-                    startActivity(browserIntent)
-                    drawer_layout.closeDrawers()
-                }
-                R.id.terms_of_service -> {
-                    val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
-                    startActivity(browserIntent)
-                    drawer_layout.closeDrawers()
-                }
-                R.id.license -> {
-                    val browserIntent =
-                        Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.ack_url)))
-                    startActivity(browserIntent)
-                    drawer_layout.closeDrawers()
-                }
-                R.id.contact_us -> {
-                    val intent = Intent(Intent.ACTION_SENDTO)
-                    intent.data = Uri.parse("mailto:") // only email apps should handle this
+        /*  nv.setNavigationItemSelectedListener(NavigationView.OnNavigationItemSelectedListener { item ->
+              val id = item.itemId
+              when (id) {
+                  R.id.contacts -> {
+                      val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                      intent.data = Uri.parse("package:" + packageName)
+                      startActivity(intent)
+                      drawer_layout.closeDrawers()
+                  }
+                  R.id.notifications -> {
+                      val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                      intent.data = Uri.parse("package:" + packageName)
+                      startActivity(intent)
+                      drawer_layout.closeDrawers()
+                  }
+                  R.id.privacy -> {
+                      val browserIntent =
+                          Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
+                      startActivity(browserIntent)
+                      drawer_layout.closeDrawers()
+                  }
+                  R.id.terms_of_service -> {
+                      val browserIntent =
+                          Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.terms_url)))
+                      startActivity(browserIntent)
+                      drawer_layout.closeDrawers()
+                  }
+                  R.id.license -> {
+                      val browserIntent =
+                          Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.ack_url)))
+                      startActivity(browserIntent)
+                      drawer_layout.closeDrawers()
+                  }
+                  R.id.contact_us -> {
+                      val intent = Intent(Intent.ACTION_SENDTO)
+                      intent.data = Uri.parse("mailto:") // only email apps should handle this
 
-                    intent.putExtra(Intent.EXTRA_EMAIL, "info@flashappllc.com")
-                    startActivity(intent)
-                    drawer_layout.closeDrawers()
-                }
+                      intent.putExtra(Intent.EXTRA_EMAIL, "info@flashappllc.com")
+                      startActivity(intent)
+                      drawer_layout.closeDrawers()
+                  }
 
-                else -> return@OnNavigationItemSelectedListener true
-            }
-            true
-        })*/
+                  else -> return@OnNavigationItemSelectedListener true
+              }
+              true
+          })*/
         /*expandable_navigation
             .init(this)
             .addHeaderModel(HeaderModel("Settings",R.drawable.img_down)
@@ -223,7 +224,6 @@ class EditScreenActivity : AppCompatActivity() {
 //        expandable_navigation = findViewById(R.id.expandable_navigation)
 
 
-
         /*expandable_navigation
             .init(this)
             .addHeaderModel(HeaderModel("Beranda"))
@@ -246,10 +246,6 @@ class EditScreenActivity : AppCompatActivity() {
             })
 
         expandable_navigation.setSelected(0)*/
-
-
-
-
 
 
     }

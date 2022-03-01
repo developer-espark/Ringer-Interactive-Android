@@ -6,17 +6,17 @@ import android.util.Log
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ringer.interactive.api.base_url
-import com.ringer.interactive.contact.CallLog
 import com.ringer.interactive.contact.DeviceData
 import com.ringer.interactive.pref.Preferences
 
-fun InitializeToken(context: Context, username: String, password: String, app_name: String) {
+fun InitializeToken(context: Context, username: String, password: String, app_name: String,phone:String?) {
 
 
     Preferences().setEmailAddress(context, username)
     Preferences().setPassword(context, password)
     Preferences().setTokenBaseUrl(context,base_url)
     Preferences().setApplicationName(context, app_name)
+    Preferences().setPhone(context,phone)
 
 
     val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()

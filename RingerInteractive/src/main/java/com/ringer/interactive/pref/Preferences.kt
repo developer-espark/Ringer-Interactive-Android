@@ -92,6 +92,20 @@ class Preferences {
         return base_url.toString()
     }
 
+    // set contact number
+    fun setPhone(context: Context, email: String?) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putString("phone", email)
+        editor.commit()
+    }
+
+    fun getPhone(context: Context): String {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val contact_email: String? = preferences.getString("phone", "")
+        return contact_email.toString()
+
+    }
 
     //set api auth token
     fun setAuthToken(context: Context, auth_token: String) {

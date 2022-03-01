@@ -25,9 +25,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//
-
-
         btn_continue = findViewById(R.id.btn_continue)
 
 
@@ -46,14 +43,21 @@ class MainActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {}
 
             override fun onFinish() {
+                // 0 = Get Contact Number
                 // 1 = Default Dialer Set
                 // 2 = Allow on Top
                 // 3 = notification
                 // 4 = contact
                 // 5 = editscreen
                 val screenNumber = PreferencesApp().getScreenNumber(this@MainActivity);
-                Log.e("screenNumber",screenNumber.toString())
+                Log.e("screenNumber", screenNumber.toString())
                 when (screenNumber) {
+                    0 -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            SimNumberActivity::class.java
+                        )
+                    )
                     1 -> startActivity(
                         Intent(
                             this@MainActivity,
