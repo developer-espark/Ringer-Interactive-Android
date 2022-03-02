@@ -387,10 +387,12 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
 //        callInfo.setText(name + "\n" +number +"\n"+asString(state));
 //        callInfo.setText(name + "\n" + number);
 
-        if (state != Call.STATE_RINGING) {
+        if (state != Call.STATE_RINGING && state != Call.STATE_DISCONNECTED) {
             answer.setVisibility(View.GONE);
             txt_answer.setVisibility(View.GONE);
             lin_call_accept.setVisibility(View.GONE);
+        } else if (state == Call.STATE_DISCONNECTED) {
+            finish();
         } else {
             answer.setVisibility(View.VISIBLE);
             txt_answer.setVisibility(View.VISIBLE);

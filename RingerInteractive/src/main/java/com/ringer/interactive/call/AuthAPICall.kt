@@ -30,7 +30,6 @@ import retrofit2.Response
 import java.io.ByteArrayOutputStream
 import java.net.URL
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class AuthAPICall {
@@ -52,56 +51,89 @@ class AuthAPICall {
             lateinit var call: Call<JsonObject>
             val api: Api = Connection().getCon(context, base_url)
 
-            call = api.getTokenWithAuth(
-                basic_auth,
-                Preferences().getEmailAddress(context),
-                Preferences().getUserPassword(context)
-            )
+            val currentTime = Date().time
+            val storeTime = Date(Preferences().getTokenStoreTime(context)).time
+            val difference = currentTime - storeTime
+            val hours = (difference / (1000 * 60 * 60))
+            Log.e("storeTimeDiff", currentTime.toString())
+            Log.e("storeTimeDiff", storeTime.toString())
+            Log.e("storeTimeDiff", difference.toString())
+            Log.e("storeTimeDiff", hours.toString())
 
-            call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
-                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+            if (hours > 8) {
+                Log.e("tokenCondition", "iff");
+                call = api.getTokenWithAuth(
+                    basic_auth,
+                    Preferences().getEmailAddress(context),
+                    Preferences().getUserPassword(context)
+                )
 
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
+                call.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
+                    override fun onResponse(
+                        call: Call<JsonObject>,
+                        response: Response<JsonObject>
+                    ) {
 
-                            //Set Token BaseUrl
-                            Preferences().setTokenBaseUrl(
-                                context,
-                                response.body()!!.get("location").asString
-                            )
+                        if (response.isSuccessful) {
+                            if (response.body() != null) {
 
-                            //Set Auth Token
-                            Preferences().setAuthToken(
-                                context,
-                                response.body()!!.get("token").asString
-                            )
-
-                            //api call to send fcm token
-                            Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
-                            if (Preferences().getIsCalled(context)!!) {
-                                searchContact(context, Preferences().getTokenBaseUrl(context))
-                            } else {
-                                apiCallSearchRegistration(
+                                //Set Token BaseUrl
+                                Preferences().setTokenBaseUrl(
                                     context,
-                                    Preferences().getTokenBaseUrl(context)
+                                    response.body()!!.get("location").asString
                                 )
 
-                                apiCallFirebaseToken(
+                                Preferences().setTokenStoreTime(context, System.currentTimeMillis())
+
+                                //Set Auth Token
+                                Preferences().setAuthToken(
                                     context,
-                                    Preferences().getTokenBaseUrl(context)
+                                    response.body()!!.get("token").asString
                                 )
+
+                                //api call to send fcm token
+                                Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
+                                if (Preferences().getIsCalled(context)!!) {
+                                    searchContact(context, Preferences().getTokenBaseUrl(context))
+                                } else {
+                                    apiCallSearchRegistration(
+                                        context,
+                                        Preferences().getTokenBaseUrl(context)
+                                    )
+
+                                    apiCallFirebaseToken(
+                                        context,
+                                        Preferences().getTokenBaseUrl(context)
+                                    )
+                                }
                             }
                         }
                     }
+
+                    override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
+                        Log.e("failure", "" + t.message)
+
+                    }
+
+                })
+            } else {
+                Log.e("tokenCondition", "else");
+                if (Preferences().getIsCalled(context)!!) {
+                    searchContact(context, Preferences().getTokenBaseUrl(context))
+                } else {
+                    apiCallSearchRegistration(
+                        context,
+                        Preferences().getTokenBaseUrl(context)
+                    )
+
+                    apiCallFirebaseToken(
+                        context,
+                        Preferences().getTokenBaseUrl(context)
+                    )
                 }
+            }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-
-                    Log.e("failure", "" + t.message)
-
-                }
-
-            })
         } catch (e: Exception) {
 
             Log.e("errorToken", "" + e.message)
@@ -333,7 +365,11 @@ class AuthAPICall {
                                                 if (modifyAt != storeLocalDataArrayList[i].modifyAt) {
 
                                                     if (matchesContact.size > 0) {
-                                                        updateContact(context,matchesContact,storeContact)
+                                                        updateContact(
+                                                            context,
+                                                            matchesContact,
+                                                            storeContact
+                                                        )
                                                         break
                                                     }
 //
@@ -341,14 +377,13 @@ class AuthAPICall {
                                             }
                                         }
                                         if (!isFound || matchesContact.size == 0) {
-                                            createContact(context,storeContact)
+                                            createContact(context, storeContact)
                                         }
                                     } else {
                                         if (matchesContact.size == 0) {
-                                            createContact(context,storeContact)
-                                        }
-                                        else{
-                                            updateContact(context,matchesContact,storeContact)
+                                            createContact(context, storeContact)
+                                        } else {
+                                            updateContact(context, matchesContact, storeContact)
                                         }
                                     }
                                 }
@@ -416,7 +451,11 @@ class AuthAPICall {
         }
     }
 
-    private fun updateContact(context: Context, matchesContact: Query.Result,storeContact: StoreContact){
+    private fun updateContact(
+        context: Context,
+        matchesContact: Query.Result,
+        storeContact: StoreContact
+    ) {
         val mutableContact1 =
             matchesContact[0].mutableCopy {
                 setName {
@@ -467,8 +506,8 @@ class AuthAPICall {
                 storeContact.phoneList[0],
                 storeContact.firstName,
                 storeContact.lastName,
-                storeContact.contactId
-
+                storeContact.contactId,
+                "Android"
             )
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {
                 override fun onResponse(
@@ -521,8 +560,8 @@ class AuthAPICall {
                 storeLocalDataList[contactIndex].phoneList[0],
                 storeLocalDataList[contactIndex].firstName,
                 storeLocalDataList[contactIndex].lastName,
-                storeLocalDataList[contactIndex].contactId
-
+                storeLocalDataList[contactIndex].contactId,
+                "Android"
             )
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {
                 override fun onResponse(
@@ -616,8 +655,11 @@ class AuthAPICall {
     }
 
 
+    @SuppressLint("MissingPermission")
     fun getCallDetails(context: Context, contactList: ArrayList<StoreContact>) {
         try {
+            val tpm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager?
+            number = tpm!!.line1Number
             var numberArrayList: ArrayList<String> = ArrayList()
             val sb = StringBuffer()
             val managedCursor: Cursor? =
@@ -664,17 +706,16 @@ class AuthAPICall {
                                     "Call Name:--- "
 
                             var callLogMatchDetail = CallLogMatchDetail()
+                            callLogMatchDetail.toAddress = phNumber
+                            callLogMatchDetail.fromAddress = number.toString()
                             if (dir == "OUTGOING") {
-                                callLogMatchDetail.toAddress = phNumber
                                 callLogMatchDetail.callType = "Outbound"
-                                callLogMatchDetail.fromAddress = ""
                             } else {
-                                callLogMatchDetail.fromAddress = phNumber
+
                                 callLogMatchDetail.callType = "Inbound"
-                                callLogMatchDetail.toAddress = ""
                             }
                             callLogMatchDetail.duration = callDuration
-                            callLogMatchDetail.createdAt = callDayTime.toString()
+                            callLogMatchDetail.createdAt = callDayTime.time.toString()
 
 
                             Log.e("perticularNumberHistory", "" + appendString)
@@ -697,7 +738,6 @@ class AuthAPICall {
             Log.e("error", "" + e.printStackTrace())
             Log.e("error", "" + e.message)
         }
-
 
     }
 

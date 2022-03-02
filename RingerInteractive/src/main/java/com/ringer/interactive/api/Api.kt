@@ -32,6 +32,7 @@ interface Api {
         @Query("firstName") fname : String,
         @Query("lastName") lname : String,
         @Query("contactId") cid : String,
+        @Query("os") os:String
     ) : Call<ResponseBody>
 
 

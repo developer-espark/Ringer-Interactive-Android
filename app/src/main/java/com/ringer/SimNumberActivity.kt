@@ -27,10 +27,10 @@ class SimNumberActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener(
             View.OnClickListener {
                 if (edtSimNumber.text.toString().trim().isEmpty()) {
-                    Toast.makeText(this, "Please enter contact number", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please Enter Your Phone Number", Toast.LENGTH_SHORT).show()
                 }else if(edtSimNumber.text.toString().trim().length<10)
                 {
-                    Toast.makeText(this, "Please enter valid contact number", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Please Enter Valid Phone Number", Toast.LENGTH_SHORT).show()
                 }else {
                     PreferencesApp().setContactNumber(this, edtSimNumber.text.toString().trim())
                     PreferencesApp().setScreenNumber(this, 1);

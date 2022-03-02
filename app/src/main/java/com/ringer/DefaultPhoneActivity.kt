@@ -68,8 +68,8 @@ class DefaultPhoneActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.e("resultCode",resultCode.toString())
         if (requestCode == REQUEST_CODE_SDK) {
-
             if (resultCode == RESULT_OK) {
                 PreferencesApp().setScreenNumber(this, 2)
 //                PreferencesApp().setAppearOnTop(this,false)

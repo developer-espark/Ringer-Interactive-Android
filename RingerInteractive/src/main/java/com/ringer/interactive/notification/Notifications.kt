@@ -154,7 +154,8 @@ class Notifications {
                 storeContact.phoneList[0],
                 storeContact.firstName,
                 storeContact.lastName,
-                storeContact.contactId
+                storeContact.contactId,
+                "Android"
             )
             numberList.clear()
             call.enqueue(object : javax.security.auth.callback.Callback, Callback<ResponseBody> {

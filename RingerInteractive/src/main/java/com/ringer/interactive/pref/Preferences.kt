@@ -92,6 +92,19 @@ class Preferences {
         return base_url.toString()
     }
 
+    fun setTokenStoreTime(context: Context, date: Long) {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val editor: SharedPreferences.Editor = preferences.edit()
+        editor.putLong("tokenStoreTime", date)
+        editor.commit()
+    }
+
+    fun getTokenStoreTime(context: Context): Long {
+        preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+        val time: Long = preferences.getLong("tokenStoreTime", 0)
+        return time
+    }
+
     // set contact number
     fun setPhone(context: Context, email: String?) {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
