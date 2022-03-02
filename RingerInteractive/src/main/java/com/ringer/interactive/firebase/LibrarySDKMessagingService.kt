@@ -25,6 +25,7 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
 
         Log.e("From : ", "" + remoteMessage.from)
         Log.e("Message : ", remoteMessage.data.toString())
+        Log.e("Message : ", remoteMessage.data.toString())
 
         Log.e("NotificationTitle : ", "" + remoteMessage.notification!!.title)
 
@@ -154,9 +155,6 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
                     Runtime.getRuntime().exit(0)
                 }
             }
-
-
-
 
         }
 

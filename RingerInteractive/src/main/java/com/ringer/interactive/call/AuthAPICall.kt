@@ -453,17 +453,6 @@ class AuthAPICall {
         )
     }
 
-    private fun comparePhoneList(
-        contactArrayList: ArrayList<String>,
-        phoneNumberObj: PhoneNumber
-    ): Int {
-        val contactList = contactArrayList
-        val phoneContact = phoneNumberObj.number
-        val commonContact = contactList.intersect(phoneContact)
-
-        return commonContact.size
-    }
-
     private fun getContactImageNew(
         context: Context, tokenBaseUrl: String, rawContact: RawContact,
         storeContact: StoreContact
