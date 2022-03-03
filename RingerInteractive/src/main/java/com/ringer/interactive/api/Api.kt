@@ -24,10 +24,11 @@ interface Api {
     ) : Call<JsonObject>
 
     //Get Avatar
-    @GET("data/api/types/gallery/{galleryId}/avatar")
+    @GET("data/api/types/gallery/{galleryId}/avatar/{uuid}")
     fun getAvatar(
         @Header(authorization) auth: String,
         @Path("galleryId") contact_id : String,
+        @Path("uuid") _uuid : String,
         @Query("phone") phone_number : String,
         @Query("firstName") fname : String,
         @Query("lastName") lname : String,

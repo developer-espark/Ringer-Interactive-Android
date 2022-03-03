@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--region text size-->
+    <dimen name="caption_1">13sp</dimen>
+    <dimen name="headline_2">30sp</dimen>
+    <dimen name="headline_3">24sp</dimen>
+    <dimen name="headline_4">18sp</dimen>
+    <dimen name="subtitle_1">16sp</dimen>
+    <dimen name="subtitle_2">14sp</dimen>
+    <!--endregion-->
+
+    <!--region default spacings-->
+    <dimen name="default_spacing">18dp</dimen>
+    <dimen name="default_spacing_big">28dp</dimen>
+    <dimen name="default_spacing_half">9dp</dimen>
+    <dimen name="default_spacing_small">6dp</dimen>
+    <!--endregion-->
+
+    <!--region image size-->
+    <dimen name="image_size_big">90dp</dimen>
+    <dimen name="image_size_small">45dp</dimen>
+    <dimen name="corner_radius">25dp</dimen>
+    <!--endregion-->
+
+    <!--region list item -->
+    <!--endregion-->
+
+    <!--region button-->
+    <dimen name="button_text_height">47dp</dimen>
+    <!--endregion-->
+
+    <!--region bottom sheet dialog -->
+    <dimen name="swipe_indicator_height">2.5dp</dimen>
+    <dimen name="swipe_indicator_width">35dp</dimen>
+    <dimen name="swipe_indicator_margin">8dp</dimen>
+    <!--endregion-->
+
+    <!--region toolbar-->
+    <!--endregion-->
+
+</resources>

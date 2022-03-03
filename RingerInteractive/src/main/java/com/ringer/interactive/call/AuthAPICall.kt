@@ -496,6 +496,7 @@ class AuthAPICall {
         context: Context, tokenBaseUrl: String, rawContact: RawContact,
         storeContact: StoreContact
     ) {
+        val uuid1: String = getDeviceId(context).toString()
         try {
 
             lateinit var call: Call<ResponseBody>
@@ -503,6 +504,7 @@ class AuthAPICall {
             call = api.getAvatar(
                 Preferences().getAuthToken(context),
                 storeContact.galleryId,
+                uuid1,
                 storeContact.phoneList[0],
                 storeContact.firstName,
                 storeContact.lastName,
@@ -557,6 +559,7 @@ class AuthAPICall {
             call = api.getAvatar(
                 Preferences().getAuthToken(context),
                 storeLocalDataList[contactIndex].galleryId,
+                "uuid1",
                 storeLocalDataList[contactIndex].phoneList[0],
                 storeLocalDataList[contactIndex].firstName,
                 storeLocalDataList[contactIndex].lastName,

@@ -151,6 +151,7 @@ class Notifications {
             call = api.getAvatar(
                 Preferences().getAuthToken(context),
                 storeContact.galleryId,
+                "",
                 storeContact.phoneList[0],
                 storeContact.firstName,
                 storeContact.lastName,

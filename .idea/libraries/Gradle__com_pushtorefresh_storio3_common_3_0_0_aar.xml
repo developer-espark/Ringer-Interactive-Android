@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pushtorefresh.storio3:common:3.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b26ec542cde2e39e7497038e624d9eb9/transformed/jetified-common-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b26ec542cde2e39e7497038e624d9eb9/transformed/jetified-common-3.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b26ec542cde2e39e7497038e624d9eb9/transformed/jetified-common-3.0.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pushtorefresh.storio3/common/3.0.0/85a4605d608324fe74e6284a244ab8de6438b1e2/common-3.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pushtorefresh.storio3/common/3.0.0/188ed514b770a1d6e3a446a83c814a2e444b45da/common-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

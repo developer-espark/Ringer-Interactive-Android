@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.os.Trace;
 import android.telecom.Call;
 import android.telecom.DisconnectCause;
+import android.util.Log;
+import android.widget.Toast;
 
 
 import com.google.common.base.Preconditions;
@@ -72,6 +74,8 @@ public class CallList {
     public void onCallRemoved(android.telecom.Call telecommCall) {
         if (mCallByTelecommCall.containsKey(telecommCall)) {
             CallHelper call = mCallByTelecommCall.get(telecommCall);
+            call.setState(CallHelper.State.DISCONNECTED);
+            call.setDisconnectCause(new DisconnectCause(DisconnectCause.UNKNOWN));
             if (updateCallInMap(call)) {
 //                Log.w(this, "Removing call not previously disconnected " + call.getId());
             }
@@ -244,9 +248,7 @@ public class CallList {
 
     /**
      */
-    public CallHelper getWaitingForAccountCall() {
-        return getFirstCallWithState(CallHelper.State.SELECT_PHONE_ACCOUNT);
-    }
+
 
     public CallHelper getPendingOutgoingCall() {
         return getFirstCallWithState(CallHelper.State.CONNECTING);

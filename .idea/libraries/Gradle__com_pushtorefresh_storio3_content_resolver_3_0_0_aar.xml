@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.pushtorefresh.storio3:content-resolver:3.0.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4538b1bc8dc97949d4a8c1424e745326/transformed/jetified-content-resolver-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4538b1bc8dc97949d4a8c1424e745326/transformed/jetified-content-resolver-3.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4538b1bc8dc97949d4a8c1424e745326/transformed/jetified-content-resolver-3.0.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pushtorefresh.storio3/content-resolver/3.0.0/9b3f97d5d28d89268fc385baa75db0c96535c89d/content-resolver-3.0.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pushtorefresh.storio3/content-resolver/3.0.0/e30a202306f11c891a3a04fe52a2a5bb3623674e/content-resolver-3.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

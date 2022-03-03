@@ -49,7 +49,6 @@ import com.google.i18n.phonenumbers.Phonenumber;
 import com.ringer.interactive.R;
 import com.ringer.interactive.api.Api;
 import com.ringer.interactive.call.AuthAPICall;
-import com.ringer.interactive.model.StoreContact;
 import com.ringer.interactive.pref.Preferences;
 import com.ringer.interactive.service.MyForegroundService;
 
@@ -681,7 +680,9 @@ public class CallActivity extends AppCompatActivity implements View.OnClickListe
             }*/
 
 
-            ongoingCall.hangup();
+            if (!isMerge){
+                ongoingCall.hangup();
+            }
             Intent serviceIntent = new Intent(this, MyForegroundService.class);
             stopService(serviceIntent);
 
