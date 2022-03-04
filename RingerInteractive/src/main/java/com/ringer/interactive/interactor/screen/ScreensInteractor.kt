@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.screen
 
 import android.view.MotionEvent
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.ringer.interactive.interactor.base.BaseInteractor
 
 interface ScreensInteractor : BaseInteractor<ScreensInteractor.Listener> {
     interface Listener

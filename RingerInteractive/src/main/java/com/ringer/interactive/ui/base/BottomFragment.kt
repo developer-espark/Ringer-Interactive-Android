@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.databinding.BottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import javax.inject.Inject
 
@@ -15,7 +14,7 @@ open class BottomFragment<FragmentType : BaseFragment<out BaseViewState>>(
 ) : BottomSheetDialogFragment(), BaseView<BaseViewState> {
     override val viewState: BaseViewState by viewModels()
 
-    private val binding by lazy { BottomDialogBinding.inflate(layoutInflater) }
+    private val binding by lazy { com.ringer.interactive.databinding.BottomDialogBinding.inflate(layoutInflater) }
 
     @Inject lateinit var baseActivity: BaseActivity<*>
 

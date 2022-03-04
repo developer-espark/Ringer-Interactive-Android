@@ -1,11 +1,8 @@
 package com.ringer.interactive.interactor.preferences
 
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.AccentTheme
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
-import com.chooloo.www.chooloolib.util.PreferencesManager
+import com.ringer.interactive.R
+import com.ringer.interactive.interactor.base.BaseInteractorImpl
+import com.ringer.interactive.util.PreferencesManager
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -69,20 +66,20 @@ class PreferencesInteractorImpl @Inject constructor(
             preferencesManager.putBoolean(R.string.pref_key_dialpad_vibrate, value)
         }
 
-    override var defaultPage: Page
-        get() = Page.fromKey(preferencesManager.getString(R.string.pref_key_default_page))
+    override var defaultPage: PreferencesInteractor.Companion.Page
+        get() = PreferencesInteractor.Companion.Page.fromKey(preferencesManager.getString(R.string.pref_key_default_page))
         set(value) {
             preferencesManager.putString(R.string.pref_key_default_page, value.key)
         }
 
-    override var themeMode: ThemeMode
-        get() = ThemeMode.fromKey(preferencesManager.getString(R.string.pref_key_theme_mode))
+    override var themeMode: PreferencesInteractor.Companion.ThemeMode
+        get() = PreferencesInteractor.Companion.ThemeMode.fromKey(preferencesManager.getString(R.string.pref_key_theme_mode))
         set(value) {
             preferencesManager.putString(R.string.pref_key_theme_mode, value.key)
         }
 
-    override var accentTheme: AccentTheme
-        get() = AccentTheme.fromKey(preferencesManager.getString(R.string.pref_key_color))
+    override var accentTheme: PreferencesInteractor.Companion.AccentTheme
+        get() = PreferencesInteractor.Companion.AccentTheme.fromKey(preferencesManager.getString(R.string.pref_key_color))
         set(value) {
             preferencesManager.putString(R.string.pref_key_color, value.key)
         }

@@ -2,9 +2,9 @@ package com.ringer.interactive.ui.recents
 
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
-import com.chooloo.www.chooloolib.adapter.RecentsAdapter
-import com.chooloo.www.chooloolib.model.RecentAccount
-import com.chooloo.www.chooloolib.ui.list.ListFragment
+import com.ringer.interactive.adapter.RecentsAdapter
+import com.ringer.interactive.model.RecentAccount
+import com.ringer.interactive.ui.list.ListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

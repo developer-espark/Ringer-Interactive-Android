@@ -1,12 +1,12 @@
 package com.ringer.interactive.ui.contacts
 
 import androidx.lifecycle.LiveData
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.contentprovider.ContactsProviderLiveData
-import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
-import com.chooloo.www.chooloolib.ui.list.ListViewState
+import com.ringer.interactive.R
+import com.ringer.interactive.contentprovider.ContactsProviderLiveData
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.model.ContactAccount
+import com.ringer.interactive.repository.contacts.ContactsRepository
+import com.ringer.interactive.ui.list.ListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

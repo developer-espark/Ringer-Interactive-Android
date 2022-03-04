@@ -32,7 +32,6 @@ import com.github.abdularis.civ.AvatarImageView.Companion.SHOW_INITIAL
 import com.google.android.material.floatingactionbutton.FloatingActionButton.SIZE_MINI
 import com.ringer.interactive.R
 import com.ringer.interactive.ui.widgets.IconButton
-import com.ringer.interactive.util.getAttrColor
 import com.ringer.interactive.util.getSelectableItemBackgroundDrawable
 import com.ringer.interactive.util.getSizeInDp
 import dagger.hilt.android.AndroidEntryPoint
@@ -326,7 +325,7 @@ open class ListItem : LinearLayout {
     override fun setSelected(selected: Boolean) {
         super.setSelected(selected)
         if (selected) {
-            personLayout.setBackgroundColor(context.getAttrColor(R.attr.colorSecondary))
+            personLayout.setBackgroundColor(resources.getColor(R.color.gray))
         } else {
             personLayout.background =
                 ContextCompat.getDrawable(context, R.drawable.bubble_background_no_ripple)
@@ -399,7 +398,7 @@ open class ListItem : LinearLayout {
             if (it != -1) {
                 val spannable = SpannableString(titleText)
                 spannable.setSpan(
-                    ForegroundColorSpan(context.getAttrColor(R.attr.colorOnSecondary)),
+                    ForegroundColorSpan(resources.getColor(R.color.gray)),
                     it,
                     it + text.length,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

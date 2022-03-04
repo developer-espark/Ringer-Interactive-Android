@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
+import com.ringer.interactive.interactor.preferences.PreferencesInteractor
+import com.ringer.interactive.interactor.string.StringsInteractor
 import io.reactivex.disposables.CompositeDisposable
 import javax.inject.Inject
 

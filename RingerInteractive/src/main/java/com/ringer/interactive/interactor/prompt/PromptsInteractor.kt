@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.prompt
 
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.ringer.interactive.interactor.base.BaseInteractor
+import com.ringer.interactive.ui.base.BaseFragment
 
 interface PromptsInteractor : BaseInteractor<PromptsInteractor.Listener> {
     interface Listener

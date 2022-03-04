@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.recents
 
-import com.chooloo.www.chooloolib.model.RecentAccount
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.ringer.interactive.interactor.base.BaseInteractor
+import com.ringer.interactive.model.RecentAccount
 
 interface RecentsInteractor : BaseInteractor<RecentsInteractor.Listener> {
     interface Listener

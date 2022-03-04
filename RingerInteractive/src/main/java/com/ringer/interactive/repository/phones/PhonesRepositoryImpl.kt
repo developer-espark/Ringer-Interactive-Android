@@ -1,6 +1,6 @@
 package com.ringer.interactive.repository.phones
 
-import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
+import com.ringer.interactive.di.factory.livedata.LiveDataFactory
 import javax.inject.Inject
 import javax.inject.Singleton
 

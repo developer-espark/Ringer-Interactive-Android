@@ -6,13 +6,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.livedata.contentprovider.PhonesProviderLiveData
-import com.chooloo.www.chooloolib.model.PhoneAccount
-import com.chooloo.www.chooloolib.repository.phones.PhonesRepository
-import com.chooloo.www.chooloolib.ui.list.ListViewState
-import com.chooloo.www.chooloolib.util.DataLiveEvent
+import com.ringer.interactive.R
+import com.ringer.interactive.contentprovider.PhonesProviderLiveData
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.model.PhoneAccount
+import com.ringer.interactive.repository.phones.PhonesRepository
+import com.ringer.interactive.ui.list.ListViewState
+import com.ringer.interactive.util.DataLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

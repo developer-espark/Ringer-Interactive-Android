@@ -2,16 +2,16 @@ package com.ringer.interactive.ui.briefcontact
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.contacts.ContactsInteractor
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.model.PhoneAccount
-import com.chooloo.www.chooloolib.ui.base.BaseViewState
-import com.chooloo.www.chooloolib.util.DataLiveEvent
-import com.chooloo.www.chooloolib.util.LiveEvent
+import com.ringer.interactive.R
+import com.ringer.interactive.interactor.contacts.ContactsInteractor
+import com.ringer.interactive.interactor.navigation.NavigationsInteractor
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.interactor.phoneaccounts.PhonesInteractor
+import com.ringer.interactive.model.ContactAccount
+import com.ringer.interactive.model.PhoneAccount
+import com.ringer.interactive.ui.base.BaseViewState
+import com.ringer.interactive.util.DataLiveEvent
+import com.ringer.interactive.util.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

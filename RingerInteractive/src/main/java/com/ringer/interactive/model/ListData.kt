@@ -1,6 +1,6 @@
 package com.ringer.interactive.model
 
-import com.chooloo.www.chooloolib.util.getRelativeDateString
+import com.ringer.interactive.util.getRelativeDateString
 
 data class ListData<DataType>(
     val items: List<DataType> = arrayListOf(),

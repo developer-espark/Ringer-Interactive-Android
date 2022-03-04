@@ -1,14 +1,14 @@
 package com.ringer.interactive.ui.dialer
 
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
-import com.chooloo.www.chooloolib.interactor.navigation.NavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.interactor.recents.RecentsInteractor
-import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
-import com.chooloo.www.chooloolib.util.DataLiveEvent
-import com.chooloo.www.chooloolib.util.LiveEvent
+import com.ringer.interactive.interactor.audio.AudiosInteractor
+import com.ringer.interactive.interactor.navigation.NavigationsInteractor
+import com.ringer.interactive.interactor.preferences.PreferencesInteractor
+import com.ringer.interactive.interactor.recents.RecentsInteractor
+import com.ringer.interactive.model.ContactAccount
+import com.ringer.interactive.ui.dialpad.DialpadViewState
+import com.ringer.interactive.util.DataLiveEvent
+import com.ringer.interactive.util.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.string
 
 import androidx.annotation.StringRes
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.ringer.interactive.interactor.base.BaseInteractor
 
 interface StringsInteractor : BaseInteractor<StringsInteractor.Listener> {
     interface Listener

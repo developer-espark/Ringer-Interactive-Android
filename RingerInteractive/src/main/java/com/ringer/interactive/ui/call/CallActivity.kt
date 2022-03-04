@@ -6,18 +6,18 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.text.format.DateUtils
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.databinding.CallBinding
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
-import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.interactor.screen.ScreensInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.ui.call.CallViewState.UIState
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadViewState
+import com.ringer.interactive.R
+import com.ringer.interactive.databinding.CallBinding
+import com.ringer.interactive.di.factory.fragment.FragmentFactory
+import com.ringer.interactive.interactor.animation.AnimationsInteractor
+import com.ringer.interactive.interactor.dialog.DialogsInteractor
+import com.ringer.interactive.interactor.prompt.PromptsInteractor
+import com.ringer.interactive.interactor.screen.ScreensInteractor
+import com.ringer.interactive.ui.base.BaseActivity
+import com.ringer.interactive.ui.dialpad.DialpadViewState
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
@@ -51,6 +51,7 @@ class CallActivity : BaseActivity<CallViewState>() {
 
 
             imageRes.observe(this@CallActivity, binding.callImage::setImageResource)
+//            imageRes.observe(this@CallActivity, binding.callImage1::setImageResource)
 
 
 
@@ -63,11 +64,21 @@ class CallActivity : BaseActivity<CallViewState>() {
             imageURI.observe(this@CallActivity) {
                 if (it != null){
 
+                    binding.callImage.setScaleType(ImageView.ScaleType.FIT_XY)
                     binding.callImage.setImageURI(it)
+
+//                    binding.callImage1.setImageURI(it)
                 }else{
-                    binding.callImage.layoutParams.height = 400
-                    binding.callImage.layoutParams.width = 400
+                    binding.callImage.layoutParams.height = 10
+                    binding.callImage.layoutParams.width = 10
+
+
+
                     binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))
+
+/*                    binding.callImage1.layoutParams.height = 400
+                    binding.callImage1.layoutParams.width = 400
+                    binding.callImage1.setImageDrawable(resources.getDrawable(R.drawable.download))*/
                 }
 
 
@@ -109,15 +120,15 @@ class CallActivity : BaseActivity<CallViewState>() {
 
             uiState.observe(this@CallActivity) {
                 when (it) {
-                    UIState.MULTI -> {
+                    CallViewState.UIState.MULTI -> {
                         showActiveLayout()
                         binding.callActions.showMultiCallUI()
                     }
-                    UIState.ACTIVE -> {
+                    CallViewState.UIState.ACTIVE -> {
                         showActiveLayout()
                         binding.callActions.showSingleCallUI()
                     }
-                    UIState.INCOMING -> {
+                    CallViewState.UIState.INCOMING -> {
                         transitionLayoutTo(R.id.constraint_set_incoming_call)
                     }
                 }
@@ -131,9 +142,9 @@ class CallActivity : BaseActivity<CallViewState>() {
                 binding.callActions.isMuteEnabled = it
             }
 
-            isSwapEnabled.observe(this@CallActivity) {
+         /*   isSwapEnabled.observe(this@CallActivity) {
                 binding.callActions.isSwapEnabled = it
-            }
+            }*/
 
             isMergeEnabled.observe(this@CallActivity) {
                 binding.callActions.isMergeEnabled = it

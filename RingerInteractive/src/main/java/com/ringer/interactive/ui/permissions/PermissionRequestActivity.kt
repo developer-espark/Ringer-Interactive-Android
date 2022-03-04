@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.ui.base.BaseViewState
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.ui.base.BaseActivity
+import com.ringer.interactive.ui.base.BaseViewState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

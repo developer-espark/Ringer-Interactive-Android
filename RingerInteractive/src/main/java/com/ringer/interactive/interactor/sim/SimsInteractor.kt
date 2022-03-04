@@ -2,8 +2,8 @@ package com.ringer.interactive.interactor.sim
 
 import android.telecom.PhoneAccount
 import android.telephony.SubscriptionInfo
-import com.chooloo.www.chooloolib.model.SimAccount
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.ringer.interactive.interactor.base.BaseInteractor
+import com.ringer.interactive.model.SimAccount
 
 interface SimsInteractor : BaseInteractor<SimsInteractor.Listener> {
     interface Listener

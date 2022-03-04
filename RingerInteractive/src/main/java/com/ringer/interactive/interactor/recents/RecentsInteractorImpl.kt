@@ -4,10 +4,10 @@ import android.Manifest.permission.WRITE_CALL_LOG
 import android.content.Context
 import android.provider.CallLog
 import androidx.annotation.RequiresPermission
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.contentresolver.RecentsContentResolver
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import com.chooloo.www.chooloolib.model.RecentAccount
+import com.ringer.interactive.R
+import com.ringer.interactive.contentresolver.RecentsContentResolver
+import com.ringer.interactive.interactor.base.BaseInteractorImpl
+import com.ringer.interactive.model.RecentAccount
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

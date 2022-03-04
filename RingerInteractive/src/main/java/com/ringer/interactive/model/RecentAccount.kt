@@ -2,7 +2,7 @@ package com.ringer.interactive.model
 
 import android.provider.CallLog
 import androidx.annotation.IntDef
-import com.chooloo.www.chooloolib.util.getTimeAgo
+import com.ringer.interactive.util.getTimeAgo
 import java.io.Serializable
 import java.util.*
 

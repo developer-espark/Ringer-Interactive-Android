@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.contacts
 
-import com.chooloo.www.chooloolib.model.ContactAccount
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.ringer.interactive.interactor.base.BaseInteractor
+import com.ringer.interactive.model.ContactAccount
 
 interface ContactsInteractor : BaseInteractor<ContactsInteractor.Listener> {
     interface Listener

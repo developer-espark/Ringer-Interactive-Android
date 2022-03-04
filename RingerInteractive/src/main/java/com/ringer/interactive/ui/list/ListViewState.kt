@@ -2,8 +2,8 @@ package com.ringer.interactive.ui.list
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.ui.base.BaseViewState
-import com.chooloo.www.chooloolib.util.DataLiveEvent
+import com.ringer.interactive.ui.base.BaseViewState
+import com.ringer.interactive.util.DataLiveEvent
 
 abstract class ListViewState<ItemType> : BaseViewState() {
     val filter = MutableLiveData<String>()

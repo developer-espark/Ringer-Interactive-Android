@@ -1,9 +1,9 @@
 package com.ringer.interactive.repository.contacts
 
 import androidx.lifecycle.LiveData
-import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
-import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
-import com.chooloo.www.chooloolib.model.ContactAccount
+import com.ringer.interactive.di.factory.contentresolver.ContentResolverFactory
+import com.ringer.interactive.di.factory.livedata.LiveDataFactory
+import com.ringer.interactive.model.ContactAccount
 import javax.inject.Inject
 import javax.inject.Singleton
 

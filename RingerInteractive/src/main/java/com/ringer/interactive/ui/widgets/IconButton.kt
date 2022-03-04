@@ -28,7 +28,7 @@ class IconButton : FloatingActionButton {
     private val dimenSizeMini by lazy { ViewUtils.dpToPx(context, 10).toInt() }
     private val dimenSizeDefault by lazy { ViewUtils.dpToPx(context, 60).toInt() }
     private val dimenCornerSize by lazy { context.resources.getDimension(R.dimen.corner_radius) }
-    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
+    private val colorOnSecondary by lazy { context.getColor(R.color.gray) }
     var iconDefault: Int?
         get() = _iconDefault
         set(value) {

@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.motion.widget.MotionLayout
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.databinding.CallActionsBinding
+import com.ringer.interactive.R
+import com.ringer.interactive.databinding.CallActionsBinding
 
 class CallActions : MotionLayout {
     private val _binding: CallActionsBinding
@@ -109,7 +109,7 @@ class CallActions : MotionLayout {
 
     fun showMultiCallUI() {
         transitionLayoutTo(R.id.constraint_set_multi_call)
-        _binding.callActionSwap.visibility = VISIBLE
+        _binding.callActionSwap.visibility = GONE
         _binding.callActionMerge.visibility = VISIBLE
     }
 

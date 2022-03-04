@@ -1,9 +1,9 @@
 package com.ringer.interactive.ui.dialpad
 
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseViewState
+import com.ringer.interactive.interactor.audio.AudiosInteractor
+import com.ringer.interactive.interactor.preferences.PreferencesInteractor
+import com.ringer.interactive.ui.base.BaseViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

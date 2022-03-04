@@ -1,8 +1,8 @@
 package com.ringer.interactive.interactor.preferences
 
 import androidx.appcompat.app.AppCompatDelegate.*
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
+import com.ringer.interactive.R
+import com.ringer.interactive.interactor.base.BaseInteractor
 
 interface PreferencesInteractor : BaseInteractor<PreferencesInteractor.Listener> {
     interface Listener

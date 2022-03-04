@@ -1,11 +1,11 @@
 package com.ringer.interactive.interactor.phoneaccounts
 
 import android.content.Context
-import com.chooloo.www.chooloolib.contentresolver.PhoneLookupContentResolver
-import com.chooloo.www.chooloolib.contentresolver.PhonesContentResolver
-import com.chooloo.www.chooloolib.model.PhoneAccount
-import com.chooloo.www.chooloolib.model.PhoneLookupAccount
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
+import com.ringer.interactive.contentresolver.PhoneLookupContentResolver
+import com.ringer.interactive.contentresolver.PhonesContentResolver
+import com.ringer.interactive.interactor.base.BaseInteractorImpl
+import com.ringer.interactive.model.PhoneAccount
+import com.ringer.interactive.model.PhoneLookupAccount
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.exceptions.OnErrorNotImplementedException
 import javax.inject.Inject

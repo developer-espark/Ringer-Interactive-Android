@@ -3,14 +3,14 @@ package com.ringer.interactive.ui.recent
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.databinding.RecentBinding
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
-import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.recents.RecentsHistoryViewState
+import com.ringer.interactive.R
+import com.ringer.interactive.databinding.RecentBinding
+import com.ringer.interactive.di.factory.fragment.FragmentFactory
+import com.ringer.interactive.interactor.call.CallNavigationsInteractor
+import com.ringer.interactive.interactor.dialog.DialogsInteractor
+import com.ringer.interactive.interactor.prompt.PromptsInteractor
+import com.ringer.interactive.ui.base.BaseFragment
+import com.ringer.interactive.ui.recents.RecentsHistoryViewState
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

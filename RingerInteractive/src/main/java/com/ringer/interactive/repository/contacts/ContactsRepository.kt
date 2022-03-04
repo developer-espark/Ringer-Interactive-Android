@@ -1,7 +1,7 @@
 package com.ringer.interactive.repository.contacts
 
 import androidx.lifecycle.LiveData
-import com.chooloo.www.chooloolib.model.ContactAccount
+import com.ringer.interactive.model.ContactAccount
 
 interface ContactsRepository {
     fun getContacts(): LiveData<List<ContactAccount>>

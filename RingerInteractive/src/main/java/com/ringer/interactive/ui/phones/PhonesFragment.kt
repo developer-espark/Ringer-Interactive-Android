@@ -3,11 +3,11 @@ package com.ringer.interactive.ui.phones
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.adapter.PhonesAdapter
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
-import com.chooloo.www.chooloolib.model.PhoneAccount
-import com.chooloo.www.chooloolib.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
-import com.chooloo.www.chooloolib.ui.list.ListFragment
+import com.ringer.interactive.adapter.PhonesAdapter
+import com.ringer.interactive.interactor.call.CallNavigationsInteractor
+import com.ringer.interactive.model.PhoneAccount
+import com.ringer.interactive.ui.briefcontact.BriefContactFragment.Companion.ARG_CONTACT_ID
+import com.ringer.interactive.ui.list.ListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

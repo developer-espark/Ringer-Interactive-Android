@@ -6,8 +6,8 @@ import android.telecom.TelecomManager
 import android.telephony.SubscriptionInfo
 import android.telephony.SubscriptionManager
 import androidx.annotation.RequiresPermission
-import com.chooloo.www.chooloolib.model.SimAccount
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.model.SimAccount
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import javax.inject.Inject
 import javax.inject.Singleton
 

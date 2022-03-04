@@ -8,10 +8,10 @@ import android.net.Uri
 import android.provider.ContactsContract
 import android.telecom.TelecomManager
 import android.telephony.PhoneNumberUtils
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.R
+import com.ringer.interactive.interactor.string.StringsInteractor
+import com.ringer.interactive.ui.base.BaseActivity
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

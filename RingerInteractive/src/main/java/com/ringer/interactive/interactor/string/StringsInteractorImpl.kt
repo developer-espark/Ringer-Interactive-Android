@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.string
 
 import android.content.Context
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

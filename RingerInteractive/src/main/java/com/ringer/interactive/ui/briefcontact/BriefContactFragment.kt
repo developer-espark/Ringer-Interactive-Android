@@ -3,13 +3,12 @@ package com.ringer.interactive.ui.briefcontact
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.databinding.BriefContactBinding
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
-import com.chooloo.www.chooloolib.interactor.dialog.DialogsInteractor
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.ringer.interactive.R
+import com.ringer.interactive.di.factory.fragment.FragmentFactory
+import com.ringer.interactive.interactor.call.CallNavigationsInteractor
+import com.ringer.interactive.interactor.dialog.DialogsInteractor
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,7 +17,7 @@ open class BriefContactFragment @Inject constructor() : BaseFragment<BriefContac
     override val contentView by lazy { binding.root }
     override val viewState: BriefContactViewState by viewModels()
 
-    protected val binding by lazy { BriefContactBinding.inflate(layoutInflater) }
+    protected val binding by lazy { com.ringer.interactive.databinding.BriefContactBinding.inflate(layoutInflater) }
     private val phonesFragment by lazy { fragmentFactory.getPhonesFragment(viewState.contactId.value) }
 
     @Inject lateinit var callNavigations: CallNavigationsInteractor

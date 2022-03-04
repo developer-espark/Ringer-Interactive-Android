@@ -1,8 +1,8 @@
 package com.ringer.interactive.repository.recents
 
-import com.chooloo.www.chooloolib.di.factory.contentresolver.ContentResolverFactory
-import com.chooloo.www.chooloolib.di.factory.livedata.LiveDataFactory
-import com.chooloo.www.chooloolib.model.RecentAccount
+import com.ringer.interactive.di.factory.contentresolver.ContentResolverFactory
+import com.ringer.interactive.di.factory.livedata.LiveDataFactory
+import com.ringer.interactive.model.RecentAccount
 import javax.inject.Inject
 import javax.inject.Singleton
 

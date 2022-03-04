@@ -14,14 +14,14 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
-    <application
-        android:largeHeap="true"
-        android:name=".activity.Ring">
+    <application>
         <activity
             android:name=".activity.RingerScreen"
             android:screenOrientation="portrait"
             android:exported="true" />
-        <activity android:name=".sdkCall.CallActivity"
+
+
+        <activity android:name=".ui.call.CallActivity"
             android:screenOrientation="portrait"
             android:exported="true"/>
 
@@ -36,6 +36,34 @@
         <service android:name=".service.MyForegroundService"/>
 
         <service android:name=".service.OnClearFromRecentService" android:stopWithTask="false" />
+
+        <activity
+            android:name=".ui.permissions.PermissionRequestActivity"
+            android:screenOrientation="fullSensor" />
+        <activity
+            android:name=".ui.permissions.DefaultDialerRequestActivity"
+            android:screenOrientation="fullSensor" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <service
+            android:name=".service.CallService"
+            android:exported="true"
+            android:foregroundServiceType="phoneCall"
+            android:permission="android.permission.BIND_INCALL_SERVICE">
+
+            <meta-data
+                android:name="android.telecom.IN_CALL_SERVICE_UI"
+                android:value="true" />
+
+            <intent-filter>
+                <action android:name="android.telecom.InCallService" />
+            </intent-filter>
+        </service>
+
+        <receiver android:name=".receiver.CallBroadcastReceiver" />
 
 
 

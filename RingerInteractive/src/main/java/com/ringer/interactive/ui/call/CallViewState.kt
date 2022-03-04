@@ -1,35 +1,29 @@
 package com.ringer.interactive.ui.call
 
-import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import android.provider.ContactsContract
 import android.telecom.Call.Details.*
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import android.telecom.TelecomManager
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor
-import com.chooloo.www.chooloolib.interactor.audio.AudiosInteractor.AudioMode.NORMAL
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor.AudioRoute
-import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.proximity.ProximitiesInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.model.Call.State.*
-import com.chooloo.www.chooloolib.model.CantHoldCallException
-import com.chooloo.www.chooloolib.model.CantMergeCallException
-import com.chooloo.www.chooloolib.model.CantSwapCallException
-import com.chooloo.www.chooloolib.service.CallService
-import com.chooloo.www.chooloolib.ui.base.BaseViewState
-import com.chooloo.www.chooloolib.ui.widgets.CallActions
-import com.chooloo.www.chooloolib.util.DataLiveEvent
-import com.chooloo.www.chooloolib.util.LiveEvent
+import com.ringer.interactive.R
+import com.ringer.interactive.interactor.audio.AudiosInteractor
+import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor
+import com.ringer.interactive.interactor.calls.CallsInteractor
+import com.ringer.interactive.interactor.color.ColorsInteractor
+import com.ringer.interactive.interactor.phoneaccounts.PhonesInteractor
+import com.ringer.interactive.interactor.proximity.ProximitiesInteractor
+import com.ringer.interactive.interactor.string.StringsInteractor
+import com.ringer.interactive.model.Call
+import com.ringer.interactive.model.CantHoldCallException
+import com.ringer.interactive.model.CantMergeCallException
+import com.ringer.interactive.model.CantSwapCallException
+import com.ringer.interactive.service.CallService
+import com.ringer.interactive.ui.base.BaseViewState
+import com.ringer.interactive.ui.widgets.CallActions
+import com.ringer.interactive.util.DataLiveEvent
+import com.ringer.interactive.util.LiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -163,7 +157,7 @@ class CallViewState @Inject constructor(
 
     override fun onSpeakerClick() {
         callAudios.apply {
-            if (supportedAudioRoutes.contains(AudioRoute.BLUETOOTH)) {
+            if (supportedAudioRoutes.contains(CallAudiosInteractor.AudioRoute.BLUETOOTH)) {
                 askForRouteEvent.call()
             } else {
                 isSpeakerOn = !isSpeakerActivated.value!!
@@ -177,12 +171,12 @@ class CallViewState @Inject constructor(
 
 
     override fun onNoCalls() {
-        audios.audioMode = NORMAL
+        audios.audioMode = AudiosInteractor.AudioMode.NORMAL
         finishEvent.call()
     }
 
     override fun onCallChanged(call: Call) {
-        if (calls.getFirstState(HOLDING)?.id == _currentCallId) {
+        if (calls.getFirstState(Call.State.HOLDING)?.id == _currentCallId) {
             bannerText.value = null
         } else if (call.isHolding && _currentCallId != call.id && !call.isInConference) {
             phones.lookupAccount(call.number) {
@@ -191,7 +185,7 @@ class CallViewState @Inject constructor(
                     it?.displayString ?: call.number
                 )
             }
-        } else if (calls.getStateCount(HOLDING) == 0) {
+        } else if (calls.getStateCount(Call.State.HOLDING) == 0) {
             bannerText.value = null
         }
     }
@@ -220,7 +214,7 @@ class CallViewState @Inject constructor(
         isManageEnabled.value = call.isConference
         isHoldEnabled.value = call.isCapable(CAPABILITY_HOLD)
         isMuteEnabled.value = call.isCapable(CAPABILITY_MUTE)
-        isSwapEnabled.value = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
+//        isSwapEnabled.value = call.isCapable(CAPABILITY_SWAP_CONFERENCE)
         stateText.value = strings.getString(call.state.stringRes)
 
         when {
@@ -230,13 +224,13 @@ class CallViewState @Inject constructor(
         }
 
         when (call.state) {
-            INCOMING, ACTIVE -> stateTextColor.value =
+            Call.State.INCOMING, Call.State.ACTIVE -> stateTextColor.value =
                 colors.getColor(R.color.green_foreground)
-            HOLDING, DISCONNECTING, DISCONNECTED -> stateTextColor.value =
+            Call.State.HOLDING, Call.State.DISCONNECTING, Call.State.DISCONNECTED -> stateTextColor.value =
                 colors.getColor(R.color.red_foreground)
         }
 
-        if (call.state == SELECT_PHONE_ACCOUNT) {
+        if (call.state == Call.State.SELECT_PHONE_ACCOUNT) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 selectPhoneSuggestionEvent.call(call.suggestedPhoneAccounts)
             } else {
@@ -250,9 +244,9 @@ class CallViewState @Inject constructor(
         isMuteActivated.value = isMuted
     }
 
-    override fun onAudioRouteChanged(audioRoute: AudioRoute) {
-        isSpeakerActivated.value = audioRoute == AudioRoute.SPEAKER
-        isBluetoothActivated.value = audioRoute == AudioRoute.BLUETOOTH
+    override fun onAudioRouteChanged(audioRoute: CallAudiosInteractor.AudioRoute) {
+        isSpeakerActivated.value = audioRoute == CallAudiosInteractor.AudioRoute.SPEAKER
+        isBluetoothActivated.value = audioRoute == CallAudiosInteractor.AudioRoute.BLUETOOTH
     }
 
     private fun displayCallTime() {
@@ -265,7 +259,7 @@ class CallViewState @Inject constructor(
         showCallManagerEvent.call()
     }
 
-    fun onAudioRoutePicked(audioRoute: AudioRoute) {
+    fun onAudioRoutePicked(audioRoute: CallAudiosInteractor.AudioRoute) {
         callAudios.audioRoute = audioRoute
     }
 

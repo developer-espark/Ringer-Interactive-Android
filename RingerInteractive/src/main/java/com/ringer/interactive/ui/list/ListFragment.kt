@@ -1,9 +1,9 @@
 package com.ringer.interactive.ui.list
 
 import androidx.core.view.isVisible
-import com.chooloo.www.chooloolib.adapter.ListAdapter
-import com.chooloo.www.chooloolib.databinding.ItemsBinding
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.ringer.interactive.adapter.ListAdapter
+import com.ringer.interactive.databinding.ItemsBinding
+import com.ringer.interactive.ui.base.BaseFragment
 
 abstract class ListFragment<ItemType, VS : ListViewState<ItemType>> : BaseFragment<VS>() {
 

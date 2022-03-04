@@ -9,8 +9,8 @@ import com.ringer.interactive.R
 import com.ringer.interactive.util.getAttrColor
 
 class ListItemButton : ListItem {
-    private val colorSecondary by lazy { context.getAttrColor(R.attr.colorSecondary) }
-    private val colorOnSecondary by lazy { context.getAttrColor(R.attr.colorOnSecondary) }
+    private val colorSecondary by lazy { context.getColor(R.color.gray) }
+    private val colorOnSecondary by lazy { context.getColor(R.color.gray) }
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)

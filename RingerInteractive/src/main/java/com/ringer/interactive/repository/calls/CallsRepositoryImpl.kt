@@ -2,8 +2,8 @@ package com.ringer.interactive.repository.calls
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.service.CallService
+import com.ringer.interactive.model.Call
+import com.ringer.interactive.service.CallService
 import javax.inject.Inject
 import javax.inject.Singleton
 

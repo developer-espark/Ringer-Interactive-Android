@@ -2,15 +2,13 @@ package com.ringer.interactive.ui.dialer
 
 import android.content.Context
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
-import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.call.CallNavigationsInteractor
-import com.chooloo.www.chooloolib.ui.contacts.ContactsSuggestionsViewState
-import com.chooloo.www.chooloolib.ui.dialpad.DialpadFragment
+import com.ringer.interactive.di.factory.fragment.FragmentFactory
+import com.ringer.interactive.interactor.call.CallNavigationsInteractor
+import com.ringer.interactive.ui.contacts.ContactsSuggestionsViewState
+import com.ringer.interactive.ui.dialpad.DialpadFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -28,7 +26,7 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
     override fun onSetup() {
         super.onSetup()
         binding.apply {
-            dialpadButtonCall.isVisible = true
+            /*dialpadButtonCall.isVisible = true
 
             dialpadButtonDelete.apply {
                 setOnClickListener {
@@ -55,7 +53,7 @@ class DialerFragment @Inject constructor() : DialpadFragment() {
                 isFocusableInTouchMode = true
 
                 addTextChangedListener(PhoneNumberFormattingTextWatcher())
-            }
+            }*/
         }
 
         viewState.apply {

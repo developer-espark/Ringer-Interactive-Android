@@ -8,13 +8,11 @@ import android.content.pm.PackageManager
 import android.telecom.TelecomManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import com.chooloo.www.chooloolib.ui.permissions.DefaultDialerRequestActivity
-import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity
-import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PERMISSIONS_ARGUMENT_KEY
-import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PermissionResult
-import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PermissionState.GRANTED
-import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.REQUEST_CODE_ARGUMENT_KEY
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.ui.permissions.DefaultDialerRequestActivity
+import com.ringer.interactive.ui.permissions.PermissionRequestActivity
+import com.ringer.interactive.ui.permissions.PermissionRequestActivity.Companion.PERMISSIONS_ARGUMENT_KEY
+import com.ringer.interactive.ui.permissions.PermissionRequestActivity.Companion.REQUEST_CODE_ARGUMENT_KEY
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
@@ -32,7 +30,7 @@ class PermissionsInteractorImpl @Inject constructor(
         get() = context.packageName == telecomManager.defaultDialerPackage
 
     private val _onPermissionsResultListeners =
-        ConcurrentHashMap<Int, (List<PermissionResult>) -> Unit>(1)
+        ConcurrentHashMap<Int, (List<PermissionRequestActivity.Companion.PermissionResult>) -> Unit>(1)
 
     private val _onDefaultDialerResultListeners = mutableListOf<(Boolean) -> Unit>()
     private var _requestCode = 255
@@ -42,7 +40,7 @@ class PermissionsInteractorImpl @Inject constructor(
         }
 
     override fun entryPermissionResult(
-        responses: List<PermissionResult>,
+        responses: List<PermissionRequestActivity.Companion.PermissionResult>,
         requestCode: Int
     ) {
         _onPermissionsResultListeners[requestCode]?.invoke(responses)
@@ -74,7 +72,7 @@ class PermissionsInteractorImpl @Inject constructor(
 
     override fun checkPermissions(
         vararg permissions: String,
-        callback: (List<PermissionResult>) -> Unit
+        callback: (List<PermissionRequestActivity.Companion.PermissionResult>) -> Unit
     ) {
         val intent = Intent(context, PermissionRequestActivity::class.java)
             .putExtra(PERMISSIONS_ARGUMENT_KEY, permissions)
@@ -93,7 +91,7 @@ class PermissionsInteractorImpl @Inject constructor(
             grantedCallback.invoke()
         } else {
             checkPermissions(*permissions) {
-                if (it.all { a -> a.state == GRANTED }) {
+                if (it.all { a -> a.state == PermissionRequestActivity.Companion.PermissionState.GRANTED }) {
                     grantedCallback.invoke()
                 } else {
                     deniedCallback?.invoke()

@@ -6,13 +6,12 @@ import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.telecom.CallAudioState
 import android.telecom.InCallService
 import androidx.lifecycle.MutableLiveData
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
-import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
-
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.notification.CallNotification
-import com.chooloo.www.chooloolib.repository.calls.CallsRepository
-import com.chooloo.www.chooloolib.ui.call.CallActivity
+import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor
+import com.ringer.interactive.interactor.calls.CallsInteractor
+import com.ringer.interactive.model.Call
+import com.ringer.interactive.notification.CallNotification
+import com.ringer.interactive.repository.calls.CallsRepository
+import com.ringer.interactive.ui.call.CallActivity
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

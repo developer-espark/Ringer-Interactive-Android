@@ -1,7 +1,7 @@
 package com.ringer.interactive.ui.contacts
 
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.repository.contacts.ContactsRepository
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.repository.contacts.ContactsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

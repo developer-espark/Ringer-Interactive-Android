@@ -13,9 +13,9 @@ import android.telecom.DisconnectCause
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import androidx.annotation.RequiresApi
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.model.Call.State.*
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.R
+import com.ringer.interactive.model.Call.State.*
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
@@ -99,7 +99,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         get() = fromTelecomCalls(_call.conferenceableCalls)
 
     val disconnectCause: DisconnectCause
-        get() = if (state == DISCONNECTED) {
+        get() = if (state == State.DISCONNECTED) {
             details.disconnectCause
         } else {
             DisconnectCause(DisconnectCause.UNKNOWN)
@@ -128,7 +128,7 @@ class Call(telecomCall: android.telecom.Call) : BaseObservable<Call.Listener>() 
         get() = details.intentExtras
 
     val isActive: Boolean
-        get() = state == ACTIVE
+        get() = state == State.ACTIVE
 
     val isStarted: Boolean
         get() = state !in arrayOf(DIALING, INCOMING, CONNECTING, NEW, SELECT_PHONE_ACCOUNT)

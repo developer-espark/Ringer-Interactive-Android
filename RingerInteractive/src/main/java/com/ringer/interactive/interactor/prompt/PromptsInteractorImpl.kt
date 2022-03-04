@@ -1,9 +1,9 @@
 package com.ringer.interactive.interactor.prompt
 
 import androidx.fragment.app.FragmentManager
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractorImpl
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.base.BottomFragment
+import com.ringer.interactive.interactor.base.BaseInteractorImpl
+import com.ringer.interactive.ui.base.BaseFragment
+import com.ringer.interactive.ui.base.BottomFragment
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 

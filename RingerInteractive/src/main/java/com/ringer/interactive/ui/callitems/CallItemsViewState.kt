@@ -1,9 +1,9 @@
 package com.ringer.interactive.ui.callitems
 
 import androidx.lifecycle.LiveData
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.repository.calls.CallsRepository
-import com.chooloo.www.chooloolib.ui.list.ListViewState
+import com.ringer.interactive.model.Call
+import com.ringer.interactive.repository.calls.CallsRepository
+import com.ringer.interactive.ui.list.ListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

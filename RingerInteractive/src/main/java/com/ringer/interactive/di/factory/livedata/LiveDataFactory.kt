@@ -1,8 +1,9 @@
 package com.ringer.interactive.di.factory.livedata
 
-import com.chooloo.www.chooloolib.livedata.contentprovider.ContactsProviderLiveData
-import com.chooloo.www.chooloolib.livedata.contentprovider.PhonesProviderLiveData
-import com.chooloo.www.chooloolib.livedata.contentprovider.RecentsProviderLiveData
+import com.ringer.interactive.contentprovider.ContactsProviderLiveData
+import com.ringer.interactive.contentprovider.PhonesProviderLiveData
+import com.ringer.interactive.contentprovider.RecentsProviderLiveData
+
 
 interface LiveDataFactory {
     fun getPhonesProviderLiveData(contactId: Long? = null): PhonesProviderLiveData

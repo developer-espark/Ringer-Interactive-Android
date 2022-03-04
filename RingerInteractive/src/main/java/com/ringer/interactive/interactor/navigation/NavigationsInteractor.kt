@@ -1,7 +1,7 @@
 package com.ringer.interactive.interactor.navigation
 
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
+import com.ringer.interactive.interactor.base.BaseInteractor
+import com.ringer.interactive.ui.base.BaseActivity
 
 interface NavigationsInteractor : BaseInteractor<NavigationsInteractor.Listener> {
     interface Listener

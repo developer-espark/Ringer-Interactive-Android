@@ -56,7 +56,7 @@ class SearchBar : TextInputLayout {
             setTextAppearance(R.style.Chooloo_Text_Subtitle2)
             setPadding(spacingSmall, 0, spacingSmall, 0)
             setHintTextColor(ColorStateList.valueOf(colorForeground))
-            setTextColor(context.getAttrColor(R.attr.colorOnSurface))
+            setTextColor(context.getColor(R.color.gray))
 
             addTextChangedListener(
                 afterTextChanged = {},

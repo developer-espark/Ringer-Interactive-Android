@@ -2,7 +2,7 @@ package com.ringer.interactive.interactor.proximity
 
 import android.os.PowerManager
 import android.os.PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import javax.inject.Inject
 import javax.inject.Singleton
 

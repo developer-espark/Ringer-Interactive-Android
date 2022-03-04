@@ -15,22 +15,20 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationChannelCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
-import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
-import com.chooloo.www.chooloolib.interactor.color.ColorsInteractor
-import com.chooloo.www.chooloolib.interactor.phoneaccounts.PhonesInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.Call
-import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTED
-import com.chooloo.www.chooloolib.model.Call.State.DISCONNECTING
-import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver
-import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
-import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE
-import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER
-import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNMUTE
-import com.chooloo.www.chooloolib.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
-import com.chooloo.www.chooloolib.ui.call.CallActivity
+import com.ringer.interactive.R
+import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor
+import com.ringer.interactive.interactor.calls.CallsInteractor
+import com.ringer.interactive.interactor.color.ColorsInteractor
+import com.ringer.interactive.interactor.phoneaccounts.PhonesInteractor
+import com.ringer.interactive.interactor.string.StringsInteractor
+import com.ringer.interactive.model.Call
+import com.ringer.interactive.receiver.CallBroadcastReceiver
+import com.ringer.interactive.receiver.CallBroadcastReceiver.Companion.ACTION_HANGUP
+import com.ringer.interactive.receiver.CallBroadcastReceiver.Companion.ACTION_MUTE
+import com.ringer.interactive.receiver.CallBroadcastReceiver.Companion.ACTION_SPEAKER
+import com.ringer.interactive.receiver.CallBroadcastReceiver.Companion.ACTION_UNMUTE
+import com.ringer.interactive.receiver.CallBroadcastReceiver.Companion.ACTION_UNSPEAKER
+import com.ringer.interactive.ui.call.CallActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -178,14 +176,14 @@ class CallNotification @Inject constructor(
                 .setPriority(PRIORITY)
                 .setOnlyAlertOnce(true)
                 .setContentTitle(it?.displayString ?: call.number)
-                .setSmallIcon(R.drawable.icon_full_144)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentIntent(_contentPendingIntent)
-                .setColor(colors.getAttrColor(R.attr.colorSecondary))
+                .setColor(colors.getColor(R.color.gray))
                 .setContentText(strings.getString(call.state.stringRes))
             if (call.isIncoming) {
                 builder.addAction(_answerAction)
             }
-            if (call.state !in arrayOf(DISCONNECTED, DISCONNECTING)) {
+            if (call.state !in arrayOf(Call.State.DISCONNECTED, Call.State.DISCONNECTING)) {
                 builder.addAction(_hangupAction)
             }
             callAudios.isMuted?.let { isMuted ->

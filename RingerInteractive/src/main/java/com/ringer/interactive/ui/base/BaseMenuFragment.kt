@@ -6,8 +6,8 @@ import android.view.MenuItem
 import androidx.appcompat.view.menu.MenuBuilder
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.adapter.MenuAdapter
-import com.chooloo.www.chooloolib.databinding.MenuBinding
+
+import com.ringer.interactive.adapter.MenuAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ open class BaseMenuFragment @Inject constructor() : BaseFragment<BaseViewState>(
     override val viewState: BaseViewState by viewModels()
 
     private var _onMenuItemClickListener: (MenuItem) -> Unit = {}
-    private val binding by lazy { MenuBinding.inflate(layoutInflater) }
+    private val binding by lazy { com.ringer.interactive.databinding.MenuBinding.inflate(layoutInflater) }
 
     protected open val title by lazy { getString(args.getInt(ARG_TITLE_RES)) }
     protected open val subtitle by lazy {

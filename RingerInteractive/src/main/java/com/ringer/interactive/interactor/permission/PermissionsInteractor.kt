@@ -1,8 +1,8 @@
 package com.ringer.interactive.interactor.permission
 
 import androidx.annotation.StringRes
-import com.chooloo.www.chooloolib.interactor.base.BaseInteractor
-import com.chooloo.www.chooloolib.ui.permissions.PermissionRequestActivity.Companion.PermissionResult
+import com.ringer.interactive.interactor.base.BaseInteractor
+import com.ringer.interactive.ui.permissions.PermissionRequestActivity
 
 interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener> {
     interface Listener
@@ -11,7 +11,7 @@ interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener>
 
 
     fun entryDefaultDialerResult(granted: Boolean)
-    fun entryPermissionResult(responses: List<PermissionResult>, requestCode: Int)
+    fun entryPermissionResult(responses: List<PermissionRequestActivity.Companion.PermissionResult>, requestCode: Int)
 
     fun hasSelfPermission(permission: String): Boolean
     fun hasSelfPermissions(permissions: Array<String>): Boolean
@@ -19,7 +19,7 @@ interface PermissionsInteractor : BaseInteractor<PermissionsInteractor.Listener>
     fun checkDefaultDialer(callback: (Boolean) -> Unit)
     fun checkPermissions(
         vararg permissions: String,
-        callback: (List<PermissionResult>) -> Unit
+        callback: (List<PermissionRequestActivity.Companion.PermissionResult>) -> Unit
     )
 
     fun runWithPermissions(

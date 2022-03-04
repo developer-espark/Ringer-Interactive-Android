@@ -3,10 +3,10 @@ package com.ringer.interactive.ui.dialpad
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import com.chooloo.www.chooloolib.databinding.DialpadBinding
-import com.chooloo.www.chooloolib.interactor.animation.AnimationsInteractor
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
-import com.chooloo.www.chooloolib.ui.widgets.DialpadKey
+import com.ringer.interactive.databinding.DialpadBinding
+import com.ringer.interactive.interactor.animation.AnimationsInteractor
+import com.ringer.interactive.ui.base.BaseFragment
+import com.ringer.interactive.ui.widgets.DialpadKey
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

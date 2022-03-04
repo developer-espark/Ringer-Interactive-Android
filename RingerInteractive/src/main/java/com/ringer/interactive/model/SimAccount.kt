@@ -2,8 +2,8 @@ package com.ringer.interactive.model
 
 import android.telecom.PhoneAccount
 import android.telecom.PhoneAccountHandle
-import com.chooloo.www.chooloolib.util.fullAddress
-import com.chooloo.www.chooloolib.util.fullLabel
+import com.ringer.interactive.util.fullAddress
+import com.ringer.interactive.util.fullLabel
 
 data class SimAccount(
     val index: Int,

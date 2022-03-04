@@ -7,18 +7,17 @@ import android.telecom.PhoneAccountSuggestion
 import android.telecom.TelecomManager
 import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
-import com.chooloo.www.chooloolib.R
-import com.chooloo.www.chooloolib.di.factory.fragment.FragmentFactory
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.Page
-import com.chooloo.www.chooloolib.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
-import com.chooloo.www.chooloolib.interactor.prompt.PromptsInteractor
-import com.chooloo.www.chooloolib.interactor.sim.SimsInteractor
-import com.chooloo.www.chooloolib.interactor.string.StringsInteractor
-import com.chooloo.www.chooloolib.model.SimAccount
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
-import com.chooloo.www.chooloolib.util.fullLabel
+import com.ringer.interactive.R
+import com.ringer.interactive.di.factory.fragment.FragmentFactory
+import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor
+import com.ringer.interactive.interactor.preferences.PreferencesInteractor
+import com.ringer.interactive.interactor.prompt.PromptsInteractor
+import com.ringer.interactive.interactor.sim.SimsInteractor
+import com.ringer.interactive.interactor.string.StringsInteractor
+import com.ringer.interactive.model.SimAccount
+import com.ringer.interactive.ui.base.BaseActivity
+import com.ringer.interactive.util.baseobservable.BaseObservable
+import com.ringer.interactive.util.fullLabel
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import dev.sasikanth.colorsheet.ColorSheet
@@ -115,9 +114,9 @@ class DialogsInteractorImpl @Inject constructor(
         }
     }
 
-    override fun askForDefaultPage(callback: (Page) -> Unit) {
+    override fun askForDefaultPage(callback: (PreferencesInteractor.Companion.Page) -> Unit) {
         askForChoice(
-            choices = Page.values().toList(),
+            choices = PreferencesInteractor.Companion.Page.values().toList(),
             titleRes = R.string.hint_default_page,
             choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_default_page,
@@ -125,9 +124,9 @@ class DialogsInteractorImpl @Inject constructor(
         )
     }
 
-    override fun askForThemeMode(callback: (ThemeMode) -> Unit) {
+    override fun askForThemeMode(callback: (PreferencesInteractor.Companion.ThemeMode) -> Unit) {
         askForChoice(
-            choices = ThemeMode.values().toList(),
+            choices = PreferencesInteractor.Companion.ThemeMode.values().toList(),
             titleRes = R.string.hint_theme_mode,
             choiceCallback = callback::invoke,
             subtitleRes = R.string.explain_choose_theme_mode,

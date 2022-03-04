@@ -3,8 +3,8 @@ package com.ringer.interactive.receiver
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.chooloo.www.chooloolib.interactor.callaudio.CallAudiosInteractor
-import com.chooloo.www.chooloolib.interactor.calls.CallsInteractor
+import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor
+import com.ringer.interactive.interactor.calls.CallsInteractor
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

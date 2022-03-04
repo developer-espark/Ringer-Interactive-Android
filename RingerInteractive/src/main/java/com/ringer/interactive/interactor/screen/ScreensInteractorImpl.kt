@@ -8,8 +8,8 @@ import android.view.MotionEvent
 import android.view.WindowManager.LayoutParams.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.chooloo.www.chooloolib.ui.base.BaseActivity
-import com.chooloo.www.chooloolib.util.baseobservable.BaseObservable
+import com.ringer.interactive.ui.base.BaseActivity
+import com.ringer.interactive.util.baseobservable.BaseObservable
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject

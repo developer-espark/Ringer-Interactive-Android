@@ -2,8 +2,8 @@ package com.ringer.interactive.ui.prompt
 
 import android.os.Bundle
 import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.databinding.PromptBinding
-import com.chooloo.www.chooloolib.ui.base.BaseFragment
+import com.ringer.interactive.databinding.PromptBinding
+import com.ringer.interactive.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

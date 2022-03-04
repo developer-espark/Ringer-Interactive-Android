@@ -1,7 +1,7 @@
 package com.ringer.interactive.ui.recents
 
-import com.chooloo.www.chooloolib.interactor.permission.PermissionsInteractor
-import com.chooloo.www.chooloolib.repository.recents.RecentsRepository
+import com.ringer.interactive.interactor.permission.PermissionsInteractor
+import com.ringer.interactive.repository.recents.RecentsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

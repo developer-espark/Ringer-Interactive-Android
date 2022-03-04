@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
-import androidx.fragment.app.viewModels
-import com.chooloo.www.chooloolib.adapter.ChoicesAdapter
-import com.chooloo.www.chooloolib.databinding.MenuBinding
+import com.ringer.interactive.adapter.ChoicesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -16,7 +14,7 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
     override val viewState: BaseViewState by viewModels()
 
     private var _onChoiceClickListener: (String) -> Unit = {}
-    protected open val binding by lazy { MenuBinding.inflate(layoutInflater) }
+    protected open val binding by lazy { com.ringer.interactive.databinding.MenuBinding.inflate(layoutInflater) }
 
     @Inject lateinit var adapter: ChoicesAdapter
 
