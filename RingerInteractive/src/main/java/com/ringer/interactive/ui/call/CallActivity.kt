@@ -150,9 +150,9 @@ class CallActivity : BaseActivity<CallViewState>() {
                 binding.callActions.isMergeEnabled = it
             }
 
-            isManageEnabled.observe(this@CallActivity) {
+        /*    isManageEnabled.observe(this@CallActivity) {
                 binding.callManageButton.isVisible = it
-            }
+            }*/
 
             isSpeakerEnabled.observe(this@CallActivity) {
                 binding.callActions.isSpeakerEnabled = it
@@ -224,10 +224,10 @@ class CallActivity : BaseActivity<CallViewState>() {
             callRejectButton.setOnClickListener {
                 viewState.onRejectClick()
             }
-
+/*
             callManageButton.setOnClickListener {
                 viewState.onManageClick()
-            }
+            }*/
         }
 
         dialpadViewState.char.observe(this@CallActivity, viewState::onCharKey)
