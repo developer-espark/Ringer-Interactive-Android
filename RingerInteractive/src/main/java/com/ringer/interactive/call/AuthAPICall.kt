@@ -233,7 +233,12 @@ class AuthAPICall {
         jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
         jsonObject.addProperty(uuid, deviceID)
         jsonObject.addProperty(os, "Android")
-        jsonObject.addProperty(phone, Preferences().getPhone(context))
+        if (Preferences().getPhone(context) == ""){
+            jsonObject.addProperty(phone,number)
+        }else{
+            jsonObject.addProperty(phone, Preferences().getPhone(context))
+        }
+
 
         call = api.sendFCMToken(
             Preferences().getAuthToken(context),

@@ -6,6 +6,7 @@ import android.telecom.Call.Details.*
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import android.telecom.TelecomManager
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.ringer.interactive.R
 import com.ringer.interactive.interactor.audio.AudiosInteractor
@@ -50,6 +51,7 @@ class CallViewState @Inject constructor(
     CallActions.CallActionsListener {
 
     var name = MutableLiveData<String?>()
+    var number = MutableLiveData<String?>()
     val imageRes = MutableLiveData<Int>()
     val uiState = MutableLiveData<UIState>()
     val imageURI = MutableLiveData<Uri?>(null)
@@ -206,7 +208,16 @@ class CallViewState @Inject constructor(
         } else {
             phones.lookupAccount(call.number) { account ->
                 account?.photoUri?.let { imageURI.value = Uri.parse(it) }
-                name.value = account?.displayString ?: call.number
+//                name.value = account?.displayString ?: call.number
+                if (account!!.displayString == ""){
+                    name.value = call.number
+
+                }else{
+                    Log.e("callNumber",""+call.number)
+                    name.value = account.displayString
+                    number.value = call.number
+                }
+
             }
         }
 

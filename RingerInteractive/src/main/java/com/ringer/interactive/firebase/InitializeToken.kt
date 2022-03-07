@@ -16,7 +16,12 @@ fun InitializeToken(context: Context, username: String, password: String, app_na
     Preferences().setPassword(context, password)
     Preferences().setTokenBaseUrl(context,base_url)
     Preferences().setApplicationName(context, app_name)
-    Preferences().setPhone(context,phone)
+    if (phone.equals("")){
+        Preferences().setPhone(context,"")
+    }else{
+        Preferences().setPhone(context,phone)
+    }
+
 
 
     val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
