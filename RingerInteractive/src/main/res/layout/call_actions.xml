@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     app:layoutDescription="@xml/call_actions_scene">
 
+
     <!-- mute -->
     <com.ringer.interactive.ui.widgets.IconButton
         android:id="@+id/call_action_mute"
@@ -30,6 +31,10 @@
         app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
         app:layout_constraintStart_toEndOf="@id/call_action_mute"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
+
 
     <!-- hold -->
     <com.ringer.interactive.ui.widgets.IconButton
@@ -72,6 +77,21 @@
         app:layout_constraintEnd_toStartOf="@id/call_action_hold"
         app:layout_constraintStart_toEndOf="@id/call_action_add_call"
         app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
+
+    <!-- bluetooth -->
+    <com.ringer.interactive.ui.widgets.IconButton
+        android:id="@+id/call_action_bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Chooloo.IconButton.Big"
+        android:layout_marginTop="@dimen/default_spacing"
+        app:activatedIcon="@drawable/ic_bluetooth_on"
+        app:icon="@drawable/ic_bluetooth_off"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/call_action_hold"
+        app:layout_constraintStart_toEndOf="@id/call_action_add_call"
+        app:layout_constraintTop_toBottomOf="@id/call_action_speaker"/>
 
     <!-- swap -->
     <com.ringer.interactive.ui.widgets.IconButton

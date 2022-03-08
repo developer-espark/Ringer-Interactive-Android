@@ -3,6 +3,7 @@ package com.ringer.interactive.ui.widgets
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.ringer.interactive.R
 import com.ringer.interactive.databinding.CallActionsBinding
@@ -29,6 +30,7 @@ class CallActions : MotionLayout {
         _binding.callActionKeypad.setOnClickListener { _callActionsListener?.onKeypadClick() }
         _binding.callActionSpeaker.setOnClickListener { _callActionsListener?.onSpeakerClick() }
         _binding.callActionAddCall.setOnClickListener { _callActionsListener?.onAddCallClick() }
+//        _binding.callActionBluetooth.setOnClickListener { _callActionsListener?.onBluetoothClick() }
     }
 
 
@@ -63,8 +65,12 @@ class CallActions : MotionLayout {
         set(value) {
             _isBluetoothActivated = value
             if (value) {
-                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
+                _binding.callActionBluetooth.visibility = View.VISIBLE
+                _binding.callActionBluetooth.iconDefault = R.drawable.ic_bluetooth_on
+//                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
             } else {
+                _binding.callActionBluetooth.visibility = View.GONE
+                _binding.callActionBluetooth.iconDefault = R.drawable.ic_bluetooth_off
                 _binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24
             }
         }
@@ -126,6 +132,7 @@ class CallActions : MotionLayout {
         override fun onKeypadClick() {}
         override fun onSpeakerClick() {}
         override fun onAddCallClick() {}
+        override fun onBluetoothClick(){}
     }
 
 
@@ -137,5 +144,6 @@ class CallActions : MotionLayout {
         fun onKeypadClick()
         fun onSpeakerClick()
         fun onAddCallClick()
+        fun onBluetoothClick(){}
     }
 }

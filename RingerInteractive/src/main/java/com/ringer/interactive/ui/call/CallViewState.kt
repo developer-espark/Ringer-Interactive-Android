@@ -157,13 +157,27 @@ class CallViewState @Inject constructor(
 //        asdasd
     }
 
-    override fun onSpeakerClick() {
+    override fun onBluetoothClick() {
         callAudios.apply {
             if (supportedAudioRoutes.contains(CallAudiosInteractor.AudioRoute.BLUETOOTH)) {
                 askForRouteEvent.call()
+            }
+
+        }
+//        isBluetoothActivated.value = audioRoute == CallAudiosInteractor.AudioRoute.BLUETOOTH
+    }
+
+    override fun onSpeakerClick() {
+        callAudios.apply {
+           /* if (supportedAudioRoutes.contains(CallAudiosInteractor.AudioRoute.BLUETOOTH)) {
+                Log.e("AudioRoot","AudioRoot")
+                askForRouteEvent.call()
+
             } else {
                 isSpeakerOn = !isSpeakerActivated.value!!
-            }
+            }*/
+            isSpeakerOn = !isSpeakerActivated.value!!
+//            askForRouteEvent.call()
         }
     }
 
