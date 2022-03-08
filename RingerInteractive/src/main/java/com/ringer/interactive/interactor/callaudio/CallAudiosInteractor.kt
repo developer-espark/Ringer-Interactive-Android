@@ -14,6 +14,7 @@ interface CallAudiosInteractor : BaseInteractor<CallAudiosInteractor.Listener> {
 
     var isMuted: Boolean?
     var isSpeakerOn: Boolean?
+    var isBluetoothOn : Boolean?
     var audioRoute: AudioRoute?
     val supportedAudioRoutes: Array<AudioRoute>
 

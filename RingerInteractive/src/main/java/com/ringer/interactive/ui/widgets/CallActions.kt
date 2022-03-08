@@ -30,7 +30,7 @@ class CallActions : MotionLayout {
         _binding.callActionKeypad.setOnClickListener { _callActionsListener?.onKeypadClick() }
         _binding.callActionSpeaker.setOnClickListener { _callActionsListener?.onSpeakerClick() }
         _binding.callActionAddCall.setOnClickListener { _callActionsListener?.onAddCallClick() }
-//        _binding.callActionBluetooth.setOnClickListener { _callActionsListener?.onBluetoothClick() }
+        _binding.callActionBluetooth.setOnClickListener { _callActionsListener?.onBluetoothClick() }
     }
 
 

@@ -33,7 +33,7 @@ class SimNumberActivity : AppCompatActivity() {
                     Toast.makeText(this, "Please Enter Valid Phone Number", Toast.LENGTH_SHORT).show()
                 }else {
                     PreferencesApp().setContactNumber(this, edtSimNumber.text.toString().trim())
-                    PreferencesApp().setScreenNumber(this, 1);
+                    PreferencesApp().setScreenNumber(this, 1)
                     startActivity(Intent(this, DefaultPhoneActivity::class.java))
                     finish()
                 }

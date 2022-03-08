@@ -2,6 +2,7 @@ package com.ringer.interactive.interactor.callaudio
 
 import android.telecom.CallAudioState
 import android.telecom.CallAudioState.*
+import android.util.Log
 import com.ringer.interactive.service.CallService
 import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor.AudioRoute
 import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor.AudioRoute.*
@@ -29,9 +30,37 @@ open class CallAudiosInteractorImpl @Inject constructor() :
             if (value == true) {
                 audioRoute = SPEAKER
             } else if (value == false && audioRoute != BLUETOOTH) {
+                Log.e("AudioROUTEW",""+value)
                 audioRoute = WIRED_OR_EARPIECE
+            }else{
+                Log.e("AudioROUTEB",""+value)
+                audioRoute = BLUETOOTH
             }
         }
+
+    /*override var isSpeakerOn: Boolean?
+        get() = audioRoute == SPEAKER
+        set(value) {
+            if (value == true) {
+                audioRoute = SPEAKER
+            } else if (value == false) {
+                audioRoute = WIRED_OR_EARPIECE
+            }
+        }*/
+
+    override var isBluetoothOn: Boolean?
+        get() = audioRoute == BLUETOOTH
+        set(value) {
+            if (value == true){
+                audioRoute = BLUETOOTH
+            } else if (value == false && audioRoute != SPEAKER){
+                audioRoute = WIRED_OR_EARPIECE
+            }else{
+                audioRoute = SPEAKER
+            }
+
+        }
+//    callAudios.isSpeakerOn = true
 
     override var audioRoute: AudioRoute?
         get() = Companion.fromRoute(callAudioState?.route)

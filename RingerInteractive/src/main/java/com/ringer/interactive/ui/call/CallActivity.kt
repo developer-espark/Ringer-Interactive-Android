@@ -200,7 +200,10 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
 
             askForRouteEvent.observe(this@CallActivity) {
+                Log.e("Event",""+it)
+
                 it.ifNew?.let { dialogs.askForRoute(viewState::onAudioRoutePicked) }
+
             }
 
             showDialerEvent.observe(this@CallActivity) {
