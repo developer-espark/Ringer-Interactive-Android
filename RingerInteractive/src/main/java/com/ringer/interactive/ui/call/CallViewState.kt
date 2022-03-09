@@ -226,7 +226,7 @@ class CallViewState @Inject constructor(
         } else {
             phones.lookupAccount(call.number) { account ->
                 account?.photoUri?.let { imageURI.value = Uri.parse(it) }
-//                name.value = account?.displayString ?: call.number
+                name.value = account?.displayString ?: call.number
                 if (account!!.displayString == ""){
                     name.value = call.number
 

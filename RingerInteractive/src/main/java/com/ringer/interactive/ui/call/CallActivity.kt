@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.provider.ContactsContract
+import android.text.TextUtils
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
@@ -61,9 +62,21 @@ class CallActivity : BaseActivity<CallViewState>() {
 
             name.observe(this@CallActivity) {
                 Log.e("callNameOb",""+it)
-                binding.callNameText.text = it
+
+                if (TextUtils.isDigitsOnly(it)) {
+                    Log.e("here","here")
+                    var phoneNumberCode = PhoneNumberWithoutCountryCode(it.toString())
+                    var numberCode = "("+phoneNumberCode!!.substring(0,3)+") "+phoneNumberCode.substring(3,6)+"-"+phoneNumberCode.substring(6)
+
+                    binding.callNameText.text = numberCode
+                }else{
+                    binding.callNameText.text = it
+                }
+
+
             }
             number.observe(this@CallActivity){
+                Log.e("call_number","123:->"+it)
                 if (it.equals("")){
                     binding.callNumber.visibility = View.GONE
                 }else{
