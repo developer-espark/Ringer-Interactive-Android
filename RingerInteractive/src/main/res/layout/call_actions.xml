@@ -28,7 +28,6 @@
         android:layout_marginTop="@dimen/default_spacing"
         app:activatedIcon="@drawable/round_volume_up_24"
         app:icon="@drawable/round_volume_down_24"
-        app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
         app:layout_constraintStart_toEndOf="@id/call_action_mute"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -59,12 +58,12 @@
         android:layout_marginBottom="@dimen/default_spacing"
         app:icon="@drawable/round_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/call_action_keypad"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/call_action_mute" />
 
     <!-- keypad -->
-    <com.ringer.interactive.ui.widgets.IconButton
+   <!-- <com.ringer.interactive.ui.widgets.IconButton
         android:id="@+id/call_action_keypad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +75,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/call_action_hold"
         app:layout_constraintStart_toEndOf="@id/call_action_add_call"
-        app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
+        app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />-->
 
     <!-- bluetooth -->
     <com.ringer.interactive.ui.widgets.IconButton
@@ -89,11 +88,10 @@
         app:icon="@drawable/ic_bluetooth_off"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/call_action_hold"
-        app:layout_constraintStart_toEndOf="@id/call_action_add_call"
-        app:layout_constraintTop_toBottomOf="@id/call_action_speaker"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/call_action_add_call"/>
 
-    <!-- swap -->
+  <!--  &lt;!&ndash; swap &ndash;&gt;
     <com.ringer.interactive.ui.widgets.IconButton
         android:id="@+id/call_action_swap"
         style="@style/Chooloo.IconButton.Big"
@@ -102,7 +100,7 @@
         android:visibility="invisible"
         app:icon="@drawable/round_swap_calls_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
     <!-- merge -->
     <com.ringer.interactive.ui.widgets.IconButton
@@ -113,4 +111,16 @@
         app:icon="@drawable/round_call_merge_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- keypad -->
+    <com.ringer.interactive.ui.widgets.IconButton
+        android:id="@+id/call_action_keyboard"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        style="@style/Chooloo.IconButton.Big"
+        app:icon="@drawable/round_dialpad_24"
+        app:layout_constraintStart_toEndOf="@id/call_action_merge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />
 </androidx.constraintlayout.motion.widget.MotionLayout>

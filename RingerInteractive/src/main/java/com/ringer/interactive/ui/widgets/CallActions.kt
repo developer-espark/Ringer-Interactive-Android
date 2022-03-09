@@ -23,11 +23,11 @@ class CallActions : MotionLayout {
         _callActionsListener = getEmptyListener()
 
         _binding = CallActionsBinding.inflate(LayoutInflater.from(context), this, true)
-        _binding.callActionSwap.setOnClickListener { _callActionsListener?.onSwapClick() }
+//        _binding.callActionSwap.setOnClickListener { _callActionsListener?.onSwapClick() }
         _binding.callActionHold.setOnClickListener { _callActionsListener?.onHoldClick() }
         _binding.callActionMute.setOnClickListener { _callActionsListener?.onMuteClick() }
         _binding.callActionMerge.setOnClickListener { _callActionsListener?.onMergeClick() }
-        _binding.callActionKeypad.setOnClickListener { _callActionsListener?.onKeypadClick() }
+//        _binding.callActionKeypad.setOnClickListener { _callActionsListener?.onKeypadClick() }
         _binding.callActionSpeaker.setOnClickListener { _callActionsListener?.onSpeakerClick() }
         _binding.callActionAddCall.setOnClickListener { _callActionsListener?.onAddCallClick() }
         _binding.callActionBluetooth.setOnClickListener { _callActionsListener?.onBluetoothClick() }
@@ -88,11 +88,11 @@ class CallActions : MotionLayout {
             _binding.callActionMute.isEnabled = value
         }
 
-    var isSwapEnabled: Boolean
+ /*   var isSwapEnabled: Boolean
         get() = _binding.callActionSwap.isEnabled
         set(value) {
             _binding.callActionSwap.isEnabled = value
-        }
+        }*/
 
     var isMergeEnabled: Boolean
         get() = _binding.callActionMerge.isEnabled
@@ -109,13 +109,13 @@ class CallActions : MotionLayout {
 
     fun showSingleCallUI() {
         transitionLayoutTo(R.id.constraint_set_single_call)
-        _binding.callActionSwap.visibility = GONE
+//        _binding.callActionSwap.visibility = GONE
         _binding.callActionMerge.visibility = GONE
     }
 
     fun showMultiCallUI() {
         transitionLayoutTo(R.id.constraint_set_multi_call)
-        _binding.callActionSwap.visibility = GONE
+//        _binding.callActionSwap.visibility = GONE
         _binding.callActionMerge.visibility = VISIBLE
     }
 

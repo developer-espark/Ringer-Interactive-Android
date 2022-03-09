@@ -223,6 +223,7 @@ class CallViewState @Inject constructor(
 
         if (call.isConference) {
             name.value = strings.getString(R.string.conference)
+            number.value = ""
         } else {
             phones.lookupAccount(call.number) { account ->
                 account?.photoUri?.let { imageURI.value = Uri.parse(it) }
