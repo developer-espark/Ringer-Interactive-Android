@@ -215,7 +215,7 @@
             android:id="@+id/call_action_bluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginTop="@dimen/default_spacing"
             app:visibilityMode="ignore"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/call_action_hold"
