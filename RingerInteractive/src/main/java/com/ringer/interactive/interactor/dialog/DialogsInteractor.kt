@@ -41,7 +41,7 @@ interface DialogsInteractor : BaseInteractor<DialogsInteractor.Listener> {
         @ColorInt selectedColor: Int? = null
     )
 
-//    @RequiresPermission(READ_PHONE_STATE)
+    @RequiresPermission(READ_PHONE_STATE)
     fun askForSim(callback: (SimAccount?) -> Unit)
     fun askForDefaultPage(callback: (PreferencesInteractor.Companion.Page) -> Unit)
     fun askForThemeMode(callback: (PreferencesInteractor.Companion.ThemeMode) -> Unit)

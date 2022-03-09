@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 
 import com.ringer.interactive.adapter.MenuAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.menu.*
 import javax.inject.Inject
 
 @SuppressLint("RestrictedApi")
@@ -42,7 +43,7 @@ open class BaseMenuFragment @Inject constructor() : BaseFragment<BaseViewState>(
         binding.apply {
             menuTitle.text = title
             menuSubtitle.text = subtitle
-            menuRecyclerView.adapter = adapter
+            menu_Data.adapter = adapter
             menuSubtitle.isVisible = subtitle != null
         }
     }

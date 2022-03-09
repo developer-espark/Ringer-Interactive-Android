@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@id/menu_title" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/menu_recycler_view"
+        android:id="@+id/menu_Data"
         style="@style/Chooloo.ListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

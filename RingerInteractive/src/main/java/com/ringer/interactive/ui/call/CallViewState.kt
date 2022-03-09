@@ -163,7 +163,7 @@ class CallViewState @Inject constructor(
                 isBluetoothOn = !isBluetoothActivated.value!!
                 isSpeakerOn = !isSpeakerActivated.value!!
 
-                askForRouteEvent.call()
+//                askForRouteEvent.call()
 
             }
 

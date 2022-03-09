@@ -5,7 +5,9 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import com.ringer.interactive.adapter.ChoicesAdapter
+import com.ringer.interactive.databinding.MenuBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.menu.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -14,7 +16,7 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
     override val viewState: BaseViewState by viewModels()
 
     private var _onChoiceClickListener: (String) -> Unit = {}
-    protected open val binding by lazy { com.ringer.interactive.databinding.MenuBinding.inflate(layoutInflater) }
+    protected open val binding by lazy { MenuBinding.inflate(layoutInflater) }
 
     @Inject lateinit var adapter: ChoicesAdapter
 
@@ -26,7 +28,7 @@ open class BaseChoicesFragment @Inject constructor() : BaseFragment<BaseViewStat
         }
         
         binding.apply {
-            menuRecyclerView.adapter = adapter
+            menu_Data.adapter = adapter
             menuTitle.text = getString(args.getInt(ARG_TITLE_RES))
 
             val subtitleRes = args.getInt(ARG_SUBTITLE_RES, -1)
