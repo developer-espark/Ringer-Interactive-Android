@@ -61,7 +61,7 @@ class AuthAPICall {
             Log.e("storeTimeDiff", difference.toString())
             Log.e("storeTimeDiff", hours.toString())
             Log.e("FToKEN", "" + Preferences().getFCMToken(context))
-            Log.e("uuid",""+uuid1)
+            Log.e("uuid", "" + uuid1)
 
             if (hours > 8) {
                 Log.e("tokenCondition", "iff");
@@ -161,7 +161,7 @@ class AuthAPICall {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
 
-                        Log.e("Response",""+response)
+                        Log.e("Response", "" + response)
 
                         val total = response.body()!!.get("count").asString
                         if (total == "0") {
@@ -240,9 +240,9 @@ class AuthAPICall {
         jsonObject.addProperty(firebaseToken, Preferences().getFCMToken(context))
         jsonObject.addProperty(uuid, deviceID)
         jsonObject.addProperty(os, "Android")
-        if (Preferences().getPhone(context) == ""){
-            jsonObject.addProperty(phone,number)
-        }else{
+        if (Preferences().getPhone(context) == "") {
+            jsonObject.addProperty(phone, number)
+        } else {
             jsonObject.addProperty(phone, Preferences().getPhone(context))
         }
 
@@ -358,23 +358,22 @@ class AuthAPICall {
 
                                     contactList.add(storeContact)
 
-                                    val matchesContact = Contacts(context).query()
-                                        .where {
-                                            (Phone.Number `in` phoneMultiple)
-                                        }
-                                        .include {
-                                            Fields.all()
-                                        }.find()
+
+                                    val totalContacts = Contacts(context).query().find()
+                                    val matchesContact = Contacts(context).broadQuery().whereAnyContactDataPartiallyMatches(phoneMultiple[0]).find()
+
+                                    Log.e("matchesContact", "" + matchesContact)
+                                    Log.e("totalContacts", "" + totalContacts)
 
                                     if (Preferences().getLocalData(context) != null) {
                                         storeLocalDataArrayList =
                                             Preferences().getLocalData(context)!!
                                         var isFound = false
 
-                                        for (i in 0 until storeLocalDataArrayList.size) {
-                                            if (contactId == storeLocalDataArrayList[i].contactId) {
+                                        for (k in 0 until storeLocalDataArrayList.size) {
+                                            if (contactId == storeLocalDataArrayList[k].contactId) {
                                                 isFound = true
-                                                if (modifyAt != storeLocalDataArrayList[i].modifyAt) {
+                                                if (modifyAt != storeLocalDataArrayList[k].modifyAt) {
 
                                                     if (matchesContact.size > 0) {
                                                         updateContact(
@@ -465,7 +464,7 @@ class AuthAPICall {
 
     private fun updateContact(
         context: Context,
-        matchesContact: Query.Result,
+        matchesContact: BroadQuery.Result,
         storeContact: StoreContact
     ) {
         val mutableContact1 =
@@ -474,15 +473,19 @@ class AuthAPICall {
                     givenName = storeContact.firstName
                     familyName = storeContact.lastName
                 }
-                for (jn in 0 until phoneList().size - 1) {
+                /*for (jn in 0 until phoneList().size - 1) {
                     removePhone(phoneList().get(jn))
-                }
+                }*/
+
                 for (n in 0 until storeContact.phoneList.size) {
-                    addPhone {
-                        number =
-                            storeContact.phoneList[n]
-                        type =
-                            PhoneEntity.Type.MAIN
+                    val contactMat = Contacts(context).broadQuery().whereAnyContactDataPartiallyMatches(storeContact.phoneList[n]).find()
+                    if (contactMat.size == 0) {
+                        addPhone {
+                            number =
+                                storeContact.phoneList[n]
+                            type =
+                                PhoneEntity.Type.MAIN
+                        }
                     }
                 }
                 setOrganization {

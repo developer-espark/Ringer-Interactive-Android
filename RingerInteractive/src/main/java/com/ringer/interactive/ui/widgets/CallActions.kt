@@ -31,6 +31,7 @@ class CallActions : MotionLayout {
         _binding.callActionSpeaker.setOnClickListener { _callActionsListener?.onSpeakerClick() }
         _binding.callActionAddCall.setOnClickListener { _callActionsListener?.onAddCallClick() }
         _binding.callActionBluetooth.setOnClickListener { _callActionsListener?.onBluetoothClick() }
+        _binding.callActionKeyboard.setOnClickListener { _callActionsListener?.onKeyBoardClick() }
     }
 
 
@@ -133,6 +134,7 @@ class CallActions : MotionLayout {
         override fun onSpeakerClick() {}
         override fun onAddCallClick() {}
         override fun onBluetoothClick(){}
+        override fun onKeyBoardClick() {}
     }
 
 
@@ -145,5 +147,7 @@ class CallActions : MotionLayout {
         fun onSpeakerClick()
         fun onAddCallClick()
         fun onBluetoothClick(){}
+        fun onKeyBoardClick()
+
     }
 }

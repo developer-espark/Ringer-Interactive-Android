@@ -2,7 +2,8 @@ package com.ringer.interactive.ui.call
 
 import android.net.Uri
 import android.os.Build
-import android.telecom.Call.Details.*
+import android.telecom.Call.Details.CAPABILITY_HOLD
+import android.telecom.Call.Details.CAPABILITY_MUTE
 import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import android.telecom.TelecomManager
@@ -66,6 +67,9 @@ class CallViewState @Inject constructor(
     val isMergeEnabled = MutableLiveData<Boolean>()
     val isMuteActivated = MutableLiveData<Boolean>()
     val isHoldActivated = MutableLiveData<Boolean>()
+
+    val isKeyPadeEnable = MutableLiveData<Boolean>()
+    val isKeyPadeActivated = MutableLiveData<Boolean>()
     val isManageEnabled = MutableLiveData(false)
     val isSpeakerEnabled = MutableLiveData(true)
     val isSpeakerActivated = MutableLiveData<Boolean>()
@@ -169,6 +173,13 @@ class CallViewState @Inject constructor(
 
         }
     }
+
+    override fun onKeyBoardClick() {
+
+
+
+    }
+
 
     override fun onSpeakerClick() {
         callAudios.apply {
