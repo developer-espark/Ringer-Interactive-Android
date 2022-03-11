@@ -117,7 +117,7 @@
     </LinearLayout>
 
 
-    <!-- conference manage button -->
+    <!-- call bg manage button -->
     <com.ringer.interactive.ui.widgets.IconButton
         android:id="@+id/call"
         android:layout_width="match_parent"
