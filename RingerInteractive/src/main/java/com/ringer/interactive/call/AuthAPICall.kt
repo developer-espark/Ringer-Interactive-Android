@@ -1,9 +1,11 @@
 package com.ringer.interactive.call
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentProviderOperation
 import android.content.Context
 import android.content.Context.TELEPHONY_SERVICE
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -15,6 +17,7 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
+import androidx.core.app.ActivityCompat
 import com.google.gson.JsonObject
 import com.ringer.interactive.api.*
 import com.ringer.interactive.model.*

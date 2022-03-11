@@ -58,6 +58,8 @@ class CallActivity : BaseActivity<CallViewState>() {
         viewState.apply {
 
 
+
+
             imageRes.observe(this@CallActivity, binding.callImage::setImageResource)
 //            imageRes.observe(this@CallActivity, binding.callImage1::setImageResource)
 
@@ -157,9 +159,11 @@ class CallActivity : BaseActivity<CallViewState>() {
             elapsedTime.observe(this@CallActivity) {
                 it?.let {
                     animations.show(binding.callTimeText, true)
+
                     binding.callTimeText.text = DateUtils.formatElapsedTime(it / 1000)
                 } ?: run {
                     animations.hide(binding.callTimeText, ifVisible = true, goneOrInvisible = false)
+
                 }
             }
 
@@ -181,7 +185,12 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
 
             stateText.observe(this@CallActivity) {
+                Log.e("stateText",""+it)
                 val old = binding.callStateText.text.toString()
+                if (!it.equals("Incoming Call")){
+
+                    animations.show(binding.call,true)
+                }
                 binding.callStateText.text = it
                 if (old != it) {
                     animations.focus(binding.callStateText)
