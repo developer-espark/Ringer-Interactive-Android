@@ -61,9 +61,9 @@ public class Constant {
             public void onGroupExpand(int groupPosition) {
                 Log.e("groupPosition", "" + groupPosition);
                 if (groupPosition == 2) {
-                    Intent intent = new Intent(Intent.ACTION_SENDTO);
-                    intent.setData(Uri.parse("mailto:"));
-                    intent.putExtra(Intent.EXTRA_EMAIL, "info@flashappllc.com");
+                    Intent intent = new Intent(Intent.ACTION_SENDTO); // it's not ACTION_SEND
+                    intent.setData(Uri.parse("mailto:info@flashappllc.com")); // or just "mailto:" for blank
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); // this will make such that when user returns to your app, your app is displayed, instead of the email app.
                     mContext.startActivity(intent);
                     popupWindow.dismiss();
                 }

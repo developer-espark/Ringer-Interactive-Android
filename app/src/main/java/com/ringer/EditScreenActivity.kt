@@ -8,13 +8,9 @@ import android.provider.Settings
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import com.ringer.interactive.InitializeToken
-import com.techatmosphere.expandablenavigation.view.ExpandableNavigationListView
 
 
 class EditScreenActivity : AppCompatActivity() {
@@ -66,13 +62,17 @@ class EditScreenActivity : AppCompatActivity() {
         }
         txt_contact_us.setOnClickListener {
 
-            val intent = Intent(Intent.ACTION_SENDTO)
+            /*val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = Uri.parse("mailto:") // only email apps should handle this
 
             intent.putExtra(Intent.EXTRA_EMAIL, "info@flashappllc.com")
             if (intent.resolveActivity(packageManager) != null) {
                 startActivity(intent)
-            }
+            }*/
+            val intent = Intent(Intent.ACTION_SENDTO) // it's not ACTION_SEND
+            intent.data = Uri.parse("mailto:info@flashappllc.com") // or just "mailto:" for blank
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // this will make such that when user returns to your app, your app is displayed, instead of the email app.
+            startActivity(intent)
 
         }
         btn_allow_setting.setOnClickListener {
