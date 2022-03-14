@@ -1,6 +1,7 @@
 package com.ringer.interactive.ui.call
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.ContactsContract
@@ -8,7 +9,10 @@ import android.text.TextUtils
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.TextView.OnEditorActionListener
 import androidx.activity.viewModels
 import com.ringer.interactive.R
 import com.ringer.interactive.databinding.CallBinding
@@ -36,6 +40,8 @@ class CallActivity : BaseActivity<CallViewState>() {
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
+    var isKeyBoard : Boolean = false
+
     @Inject
     lateinit var screens: ScreensInteractor
 
@@ -57,6 +63,43 @@ class CallActivity : BaseActivity<CallViewState>() {
         screens.showWhenLocked()
 
         viewState.apply {
+
+            binding.callActions.call_action_keyboard.setOnClickListener {
+
+                if (!isKeyBoard){
+                    isKeyBoard = true
+                    binding.edtKeypad.visibility = View.VISIBLE
+                    binding.edtKeypad.requestFocus()
+                    val inputMethodManager =
+                        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    inputMethodManager.toggleSoftInputFromWindow(
+                        it.applicationWindowToken,
+                        InputMethodManager.SHOW_FORCED, 0
+                    )
+
+
+                }else{
+                    isKeyBoard = false
+                    binding.edtKeypad.visibility = View.GONE
+                    binding.edtKeypad.clearFocus()
+                    val imm =
+                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(it.windowToken, 0)
+
+                }
+            }
+
+            binding.edtKeypad.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    isKeyBoard = false
+                    binding.edtKeypad.visibility = View.GONE
+                    binding.edtKeypad.clearFocus()
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.edtKeypad.windowToken, 0)
+                    return@OnEditorActionListener true
+                }
+                false
+            })
 
             imageRes.observe(this@CallActivity, binding.callImage::setImageResource)
 //            imageRes.observe(this@CallActivity, binding.callImage1::setImageResource)
@@ -190,6 +233,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                 val old = binding.callStateText.text.toString()
                 if (!it.equals("Incoming Call")){
 
+                    binding.edtKeypad.visibility = View.GONE
                     animations.show(binding.call,true)
                 }
                 binding.callStateText.text = it
