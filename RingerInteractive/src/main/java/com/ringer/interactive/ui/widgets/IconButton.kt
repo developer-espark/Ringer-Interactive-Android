@@ -28,7 +28,7 @@ class IconButton : FloatingActionButton {
     private val dimenSizeMini by lazy { ViewUtils.dpToPx(context, 10).toInt() }
     private val dimenSizeDefault by lazy { ViewUtils.dpToPx(context, 60).toInt() }
     private val dimenCornerSize by lazy { context.resources.getDimension(R.dimen.corner_radius) }
-    private val colorOnSecondary by lazy { context.getColor(R.color.color_text1) }
+    private val colorOnSecondary by lazy { context.getColor(android.R.color.white) }
     var iconDefault: Int?
         get() = _iconDefault
         set(value) {
@@ -85,10 +85,10 @@ class IconButton : FloatingActionButton {
         if (_iconActivated != NO_ID) {
             (if (isActivated) _iconActivated else _iconDefault)?.let { setImageResource(it) }
         }
-        if (_alterActivatedBackground) {
+        /*if (_alterActivatedBackground) {
             imageTintList = if (isActivated) _backgroundTintList else _imageTintList
             backgroundTintList = if (isActivated) _imageTintList else _backgroundTintList
-        }
+        }*/
     }
 
 

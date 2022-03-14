@@ -56,13 +56,13 @@
 
     <!--region warning-->
     <string name="explain_is_on_hold">%s is on hold</string>
-    <string name="explain_choose_theme_mode">Set Koler\'s theme mode, restart the app to see the changes</string>
+    <string name="explain_choose_theme_mode">Set ringer\'s theme mode, restart the app to see the changes</string>
     <string name="explain_choose_sim_account">Call with a different sim</string>
     <string name="explain_choose_audio_route">Route audio to a different source</string>
     <string name="explain_choose_phone_account">Continue the current call using a specific phone account</string>
     <string name="explain_delete_contact">This contact will be deleted permanently</string>
     <string name="explain_delete_recent">This call log will be deleted permanently</string>
-    <string name="explain_choose_default_page">This page will be selected whenever you reopen Koler</string>
+    <string name="explain_choose_default_page">This page will be selected whenever you reopen ringer</string>
     <!--endregion-->
 
     <!--region urls-->
@@ -129,8 +129,8 @@
     <string name="error_no_results_recents">No Recents</string>
     <string name="error_no_results_contacts">No Contacts</string>
     <string name="error_no_results_phones">No phone numbers</string>
-    <string name="error_not_default_dialer_blocked">Set koler as default dialer to see blocked numbers</string>
-    <string name="error_not_default_dialer_call">Set koler as your default dialer to make calls</string>
+    <string name="error_not_default_dialer_blocked">Set ringer as default dialer to see blocked numbers</string>
+    <string name="error_not_default_dialer_call">Set ringer as your default dialer to make calls</string>
 
     <string name="error_no_permissions_edit_call_log">No permission to change call log :)</string>
     <string name="error_no_permissions_make_call">No permissions to make a call :(</string>
