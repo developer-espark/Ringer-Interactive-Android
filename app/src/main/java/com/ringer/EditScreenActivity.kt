@@ -39,7 +39,7 @@ class EditScreenActivity : AppCompatActivity() {
             resources.getString(R.string.ringer_user_name),
             resources.getString(R.string.ringer_password),
             resources.getString(R.string.app_name),
-            ""
+            PreferencesApp().getContactNumber(this)
         )
 
         onClick()

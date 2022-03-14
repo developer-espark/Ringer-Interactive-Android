@@ -22,6 +22,7 @@ import com.ringer.interactive.ui.dialpad.DialpadViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_call.view.*
 import kotlinx.android.synthetic.main.call_actions.*
+import kotlinx.android.synthetic.main.call_actions.view.*
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -57,9 +58,6 @@ class CallActivity : BaseActivity<CallViewState>() {
 
         viewState.apply {
 
-
-
-
             imageRes.observe(this@CallActivity, binding.callImage::setImageResource)
 //            imageRes.observe(this@CallActivity, binding.callImage1::setImageResource)
 
@@ -68,6 +66,9 @@ class CallActivity : BaseActivity<CallViewState>() {
 
             name.observe(this@CallActivity) {
                 Log.e("callNameOb", "" + it)
+
+                binding.callNameText.isSelected = true
+
 
                 if (it!!.contains(resources.getString(R.string.conference))) {
                     Log.e("here","hereConference1")
