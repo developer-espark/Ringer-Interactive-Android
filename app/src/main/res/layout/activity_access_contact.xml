@@ -41,10 +41,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="10dp"
-                android:fontFamily="@font/nexalight"
                 android:layout_marginEnd="10dp"
+                android:fontFamily="@font/nexalight"
                 android:gravity="center"
-                android:text="Lorem ipsum dolor sit amet,consecture adipiscing elit. Aenean ut convails mauris.Suspendisse potenti.Mauris maximus,leo nec congue sollicitudin,nulla dui bibendum metus"
+                android:text="Ringer needs access to your contacts in order to provide full functionality. We do not share your contacts with any 3rd parties, and we do not store your contact in our databases. \n\n Note: Ringer will not function properly if access to contacts is not allowed."
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal" />

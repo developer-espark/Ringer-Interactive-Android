@@ -7,7 +7,6 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -24,8 +23,6 @@ import com.ringer.interactive.interactor.screen.ScreensInteractor
 import com.ringer.interactive.ui.base.BaseActivity
 import com.ringer.interactive.ui.dialpad.DialpadViewState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_call.view.*
-import kotlinx.android.synthetic.main.call_actions.*
 import kotlinx.android.synthetic.main.call_actions.view.*
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -36,6 +33,7 @@ import javax.inject.Inject
 class CallActivity : BaseActivity<CallViewState>() {
     override val contentView by lazy { binding.root }
     override val viewState: CallViewState by viewModels()
+
 
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
@@ -108,18 +106,18 @@ class CallActivity : BaseActivity<CallViewState>() {
             stateTextColor.observe(this@CallActivity, binding.callStateText::setTextColor)
 
             name.observe(this@CallActivity) {
-                Log.e("callNameOb", "" + it)
+
 
                 binding.callNameText.isSelected = true
 
 
                 if (it!!.contains(resources.getString(R.string.conference))) {
-                    Log.e("here","hereConference1")
+
                     binding.callNameText.text = resources.getString(R.string.conference)
                 } else {
-                    Log.e("here","hereConference2")
+
                     if (TextUtils.isDigitsOnly(it)) {
-                        Log.e("here", "here")
+
                         var phoneNumberCode = PhoneNumberWithoutCountryCode(it.toString())
                         var numberCode = "(" + phoneNumberCode!!.substring(
                             0,
@@ -131,7 +129,6 @@ class CallActivity : BaseActivity<CallViewState>() {
 
                         binding.callNameText.text = numberCode
                     } else {
-                        Log.e("here","hereConference3")
 
                         binding.callNameText.text = it
                     }
@@ -142,12 +139,11 @@ class CallActivity : BaseActivity<CallViewState>() {
             number.observe(this@CallActivity) {
 
                 if (binding.callNameText.text.contains(resources.getString(R.string.conference))) {
-                    Log.e("here","hereConference0")
+
                     binding.callNumber.visibility = View.GONE
                 } else {
 
 
-                    Log.e("call_number", "123:->" + it)
                     if (it.equals("")) {
                         binding.callNumber.visibility = View.GONE
                     } else {
@@ -182,21 +178,17 @@ class CallActivity : BaseActivity<CallViewState>() {
 
                     binding.callImage.setScaleType(ImageView.ScaleType.FIT_XY)
                     binding.callImage.setImageURI(it)
+                    binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
+                    binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
 
-//                    binding.callImage1.setImageURI(it)
                 } else {
                     binding.callImage.layoutParams.height = 10
                     binding.callImage.layoutParams.width = 10
 
-
-
                     binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))
-
-/*                    binding.callImage1.layoutParams.height = 400
-                    binding.callImage1.layoutParams.width = 400
-                    binding.callImage1.setImageDrawable(resources.getDrawable(R.drawable.download))*/
+                    binding.callNameText.setTextColor(resources.getColor(android.R.color.black))
+                    binding.callNumber.setTextColor(resources.getColor(android.R.color.black))
                 }
-
 
             }
 
@@ -229,7 +221,6 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
 
             stateText.observe(this@CallActivity) {
-                Log.e("stateText",""+it)
                 val old = binding.callStateText.text.toString()
                 if (!it.equals("Incoming Call")){
 
@@ -299,7 +290,6 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
 
             askForRouteEvent.observe(this@CallActivity) {
-                Log.e("Event", "" + it)
 
                 it.ifNew?.let { dialogs.askForRoute(viewState::onAudioRoutePicked) }
 

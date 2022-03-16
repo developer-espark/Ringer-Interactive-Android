@@ -243,7 +243,7 @@ class CallViewState @Inject constructor(
                     name.value = call.number
 
                 }else{
-                    Log.e("callNumber",""+call.number)
+
                     name.value = account.displayString
                     number.value = call.number
                 }

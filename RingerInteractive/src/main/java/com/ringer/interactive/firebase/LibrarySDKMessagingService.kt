@@ -52,12 +52,12 @@ open class LibrarySDKMessagingService : FirebaseMessagingService() {
         silent = remoteMessage.data["silent"]
         Log.e("remoteMessage", "" + remoteMessage.data["silent"])
 
-        if (message.isNullOrEmpty()) {
+       /* if (message.isNullOrEmpty()) {
             message = remoteMessage.notification!!.body.toString()
         }
         if (title.isNullOrEmpty()) {
             title = remoteMessage.notification!!.title.toString()
-        }
+        }*/
         Log.e("messageNotification", "" + message)
         Log.e("titleNotification", "" + title)
 

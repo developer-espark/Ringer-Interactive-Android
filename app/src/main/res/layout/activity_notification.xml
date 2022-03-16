@@ -44,7 +44,7 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/nexalight"
                 android:gravity="center"
-                android:text="Lorem ipsum dolor sit amet,consecture adipiscing elit. Aenean ut convails mauris.Suspendisse potenti.Mauris maximus,leo nec congue sollicitudin,nulla dui bibendum metus"
+                android:text="Enabling push notifications is required in order to access the full functionality of Ringer. \n\n Note: Ringer will not function properly if notifications are disabled."
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal" />
