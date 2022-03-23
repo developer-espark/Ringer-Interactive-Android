@@ -30,7 +30,7 @@ class PreferencesApp {
 
     fun getScreenNumber(context: Context): Int? {
         preferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-        val isCalled: Int? = preferences.getInt("isScreen", 0)
+        val isCalled: Int? = preferences.getInt("isScreen", 1)
         return isCalled
     }
 

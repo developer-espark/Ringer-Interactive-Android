@@ -1,12 +1,16 @@
 package com.ringer.interactive.ui.call
 
+import android.R.attr.x
+import android.R.attr.y
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.text.format.DateUtils
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -178,6 +182,8 @@ class CallActivity : BaseActivity<CallViewState>() {
 
                     binding.callImage.setScaleType(ImageView.ScaleType.FIT_XY)
                     binding.callImage.setImageURI(it)
+
+
                     binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
                     binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
 
