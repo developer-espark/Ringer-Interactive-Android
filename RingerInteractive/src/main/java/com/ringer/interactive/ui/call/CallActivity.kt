@@ -183,15 +183,18 @@ class CallActivity : BaseActivity<CallViewState>() {
                     binding.callImage.setScaleType(ImageView.ScaleType.FIT_XY)
                     binding.callImage.setImageURI(it)
 
+//                    binding.lun.background = resources.getDrawable(R.drawable.call_bg)
 
                     binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
                     binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
 
                 } else {
-                    binding.callImage.layoutParams.height = 10
+
+                    binding.callImage.background = resources.getDrawable(R.drawable.gradient)
+                  /*  binding.callImage.layoutParams.height = 10
                     binding.callImage.layoutParams.width = 10
 
-                    binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))
+                    binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))*/
                     binding.callNameText.setTextColor(resources.getColor(android.R.color.black))
                     binding.callNumber.setTextColor(resources.getColor(android.R.color.black))
                 }
