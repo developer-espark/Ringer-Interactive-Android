@@ -132,7 +132,7 @@
 
 
     <!-- call bg manage button -->
-    <com.ringer.interactive.ui.widgets.IconButton
+    <com.ringer.interactive.ui.widgets.IconButton1
         android:id="@+id/call"
         style="@style/Chooloo.Image.Profile"
         android:layout_width="match_parent"
@@ -141,6 +141,8 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="50dp"
         android:visibility="invisible"
+        android:scaleType="fitXY"
+        app:backgroundTint="@color/color_text1"
         android:layout_marginTop="@dimen/button_text_height"
         android:backgroundTint="@color/color_text1"
         android:background="@color/color_text1"

@@ -91,6 +91,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                 }
             }
 
+
             binding.edtKeypad.setOnEditorActionListener(OnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     isKeyBoard = false
@@ -118,6 +119,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                 if (it!!.contains(resources.getString(R.string.conference))) {
 
                     binding.callNameText.text = resources.getString(R.string.conference)
+
                 } else {
 
                     if (TextUtils.isDigitsOnly(it)) {
@@ -246,10 +248,12 @@ class CallActivity : BaseActivity<CallViewState>() {
                 when (it) {
                     CallViewState.UIState.MULTI -> {
                         showActiveLayout()
+                        Log.e("merge","nerge")
                         binding.callActions.showMultiCallUI()
                     }
                     CallViewState.UIState.ACTIVE -> {
                         showActiveLayout()
+                        Log.e("single","single")
                         binding.callActions.showSingleCallUI()
                     }
                     CallViewState.UIState.INCOMING -> {
@@ -271,6 +275,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                }*/
 
             isMergeEnabled.observe(this@CallActivity) {
+                Log.e("isMergeEnabled",""+it)
                 binding.callActions.isMergeEnabled = it
             }
 

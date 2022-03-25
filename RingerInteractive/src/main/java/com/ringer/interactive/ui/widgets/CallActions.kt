@@ -2,6 +2,7 @@ package com.ringer.interactive.ui.widgets
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
@@ -49,6 +50,7 @@ class CallActions : MotionLayout {
             _binding.callActionHold.isActivated = value
         }
 
+
     var isMuteActivated: Boolean
         get() = _binding.callActionMute.isActivated
         set(value) {
@@ -74,7 +76,7 @@ class CallActions : MotionLayout {
             } else {
                 _binding.callActionBluetooth.visibility = View.VISIBLE
                 _binding.callActionBluetooth.isClickable = false
-                _binding.callActionBluetooth.iconDefault = R.drawable.img_blue_off
+                _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_svg
                 /*_binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24*/
             }
         }
