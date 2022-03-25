@@ -180,7 +180,7 @@
         android:layout_height="70dp"
         app:backgroundTint="@android:color/transparent"
         android:layout_marginTop="@dimen/default_spacing_big"
-        app:icon="@drawable/img_merge_text"
+        app:icon="@drawable/ic_group_512330__3_"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="70dp" />
