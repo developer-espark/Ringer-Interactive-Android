@@ -92,7 +92,7 @@
         android:layout_height="wrap_content"
         style="@style/Chooloo.IconButton.Big"
         android:layout_marginTop="@dimen/default_spacing"
-        app:activatedIcon="@drawable/ic_bluetooth_on"
+        app:activatedIcon="@drawable/img_blue_off"
         app:backgroundTint="@android:color/transparent"
         app:icon="@drawable/ic_bluetooth_off"
         app:maxImageSize="35dp"

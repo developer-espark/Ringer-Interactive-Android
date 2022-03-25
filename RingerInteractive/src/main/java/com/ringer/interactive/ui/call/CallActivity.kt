@@ -195,8 +195,8 @@ class CallActivity : BaseActivity<CallViewState>() {
                     binding.callImage.layoutParams.width = 10
 
                     binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))*/
-                    binding.callNameText.setTextColor(resources.getColor(android.R.color.black))
-                    binding.callNumber.setTextColor(resources.getColor(android.R.color.black))
+                    binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
+                    binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
                 }
 
             }

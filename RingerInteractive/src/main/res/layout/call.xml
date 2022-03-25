@@ -50,7 +50,7 @@
             android:layout_marginTop="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
+            android:visibility="gone"
             tools:text="@string/call_status_incoming" />
 
         <com.ringer.interactive.ui.widgets.BannerTextView
@@ -58,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:elevation="10dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="10dp"
@@ -70,6 +71,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="invisible"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@+id/call_banner"
             tools:ignore="MissingConstraints" />
         <!-- caller name -->
@@ -130,6 +134,7 @@
     <!-- call bg manage button -->
     <com.ringer.interactive.ui.widgets.IconButton
         android:id="@+id/call"
+        style="@style/Chooloo.Image.Profile"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_marginStart="20dp"
@@ -138,6 +143,7 @@
         android:visibility="invisible"
         android:layout_marginTop="@dimen/button_text_height"
         android:backgroundTint="@color/color_text1"
+        android:background="@color/color_text1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

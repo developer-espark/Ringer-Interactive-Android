@@ -191,8 +191,7 @@
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/call_action_merge"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/call_action_add_call"
             app:layout_constraintTop_toBottomOf="@id/call_action_add_call" />
         <Constraint
             android:id="@+id/call_action_speaker"
@@ -207,7 +206,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing"
-            app:layout_constraintEnd_toStartOf="@id/call_action_bluetooth"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/call_action_speaker"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -215,11 +214,12 @@
             android:id="@+id/call_action_bluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_spacing"
-            app:visibilityMode="ignore"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/call_action_hold"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginEnd="@dimen/default_spacing_big"
+            app:layout_constraintStart_toStartOf="@id/call_action_hold"
+            app:layout_constraintTop_toBottomOf="@id/call_action_hold"
+            />
      <!--   <Constraint
             android:id="@+id/call_action_add_call"
             android:layout_width="wrap_content"
@@ -249,9 +249,9 @@
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginStart="@dimen/default_spacing_big"
-            app:layout_constraintStart_toEndOf="@id/call_action_mute"
-            app:layout_constraintEnd_toEndOf="@+id/call_action_keyboard"
-            app:layout_constraintTop_toBottomOf="@+id/call_action_speaker"
+            app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:visibilityMode="ignore" />
 
 
@@ -259,13 +259,12 @@
             android:id="@+id/call_action_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_spacing_big"
-
             app:visibilityMode="ignore"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/call_action_merge"
-            app:layout_constraintTop_toBottomOf="@+id/call_action_hold"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/call_action_speaker"
+            app:layout_constraintTop_toBottomOf="@id/call_action_speaker"
+            />
 
 
 
@@ -303,8 +302,7 @@
             android:layout_marginTop="@dimen/default_spacing_big"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/call_action_merge"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/call_action_add_call"
             app:layout_constraintTop_toBottomOf="@id/call_action_add_call" />
         <Constraint
             android:id="@+id/call_action_speaker"
@@ -319,7 +317,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing"
-            app:layout_constraintEnd_toStartOf="@id/call_action_bluetooth"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/call_action_speaker"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -328,10 +326,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/default_spacing"
-            app:visibilityMode="ignore"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/call_action_hold"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginEnd="@dimen/default_spacing_big"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/call_action_hold"
+            app:layout_constraintTop_toBottomOf="@id/call_action_hold"/>
 
         <!--   <Constraint
                android:id="@+id/call_action_add_call"
@@ -358,11 +357,12 @@
             android:id="@+id/call_action_merge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/default_spacing_big"
+            android:layout_marginTop="@dimen/default_spacing"
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:visibilityMode="ignore"
-            app:layout_constraintStart_toEndOf="@id/call_action_mute"
-            app:layout_constraintEnd_toEndOf="@+id/call_action_keyboard"
+            app:layout_constraintEnd_toStartOf="@id/call_action_speaker"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
              />
 
@@ -374,9 +374,10 @@
             android:layout_marginBottom="@dimen/default_spacing_big"
             app:visibilityMode="ignore"
             android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/call_action_merge"
-            app:layout_constraintTop_toBottomOf="@+id/call_action_hold"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toStartOf="@id/call_action_speaker"
+            app:layout_constraintTop_toBottomOf="@id/call_action_speaker"/>
         <!-- <Constraint
              android:id="@+id/call_action_swap"
              android:layout_width="wrap_content"
