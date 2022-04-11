@@ -47,6 +47,7 @@ class AuthAPICall {
     var number: String = ""
 
 
+    //APICall Get Token
     fun apiCallAuth(context: Context) {
 
         try {
@@ -134,7 +135,7 @@ class AuthAPICall {
                         Preferences().getTokenBaseUrl(context)
                     )
 
-                    /*apiCallFirebaseToken(
+                   /* apiCallFirebaseToken(
                         context,
                         Preferences().getTokenBaseUrl(context)
                     )*/
@@ -148,6 +149,7 @@ class AuthAPICall {
         }
     }
 
+    //API Call for RegistrationSearch
     private fun apiCallSearchRegistration(context: Context, tokenBaseUrl: String) {
 
         lateinit var call: Call<JsonObject>
@@ -189,6 +191,7 @@ class AuthAPICall {
 
     }
 
+    //Delete Token
     private fun apiCallDeleteToken(
         context: Context,
         tokenBaseUrl: String,
@@ -218,6 +221,7 @@ class AuthAPICall {
 
     }
 
+    //API Call For Firebase
     @SuppressLint("MissingPermission")
     private fun apiCallFirebaseToken(context: Context, tokenBaseUrl: String) {
         val deviceID = getDeviceId(context)
@@ -237,6 +241,7 @@ class AuthAPICall {
         }
 
         Log.e("deviceID", "" + deviceID)
+        Log.e("firebaseToken",""+firebaseToken)
 
 
         var jsonObject = JsonObject();
@@ -289,6 +294,7 @@ class AuthAPICall {
 
     }
 
+    //Searching Contact
     @SuppressLint("Range")
     private fun searchContact(context: Context, tokenBaseUrl: String) {
 
@@ -362,6 +368,7 @@ class AuthAPICall {
                                     contactList.add(storeContact)
 
 
+                                    //Contact Query for same result
                                     val totalContacts = Contacts(context).query().find()
                                     val matchesContact = Contacts(context).broadQuery().whereAnyContactDataPartiallyMatches(phoneMultiple[0]).find()
 
@@ -427,6 +434,7 @@ class AuthAPICall {
         })
     }
 
+    // Create Contact Background
     private fun createContact(context: Context, storeContact: StoreContact) {
         val insertResult = Contacts(context)
             .insert()
@@ -465,6 +473,7 @@ class AuthAPICall {
         }
     }
 
+    //Update Contact Background
     private fun updateContact(
         context: Context,
         matchesContact: BroadQuery.Result,
@@ -510,6 +519,7 @@ class AuthAPICall {
         )
     }
 
+    // Get Contact Image API
     private fun getContactImageNew(
         context: Context, tokenBaseUrl: String, rawContact: RawContact,
         storeContact: StoreContact
@@ -676,6 +686,7 @@ class AuthAPICall {
     }
 
 
+    //Call Detail
     @SuppressLint("MissingPermission")
     fun getCallDetails(context: Context, contactList: ArrayList<StoreContact>) {
         try {
@@ -968,6 +979,7 @@ class AuthAPICall {
         return stream.toByteArray()
     }
 
+    // Get DeviceID
     @SuppressLint("HardwareIds")
     fun getDeviceId(context: Context): String? {
         val deviceId: String

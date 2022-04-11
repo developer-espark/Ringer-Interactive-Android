@@ -22,6 +22,7 @@
 
     <color name="green_background">#E7F4EA</color>
     <color name="green_foreground">#4FA266</color>
+    <color name="green_foreground1">#07B867</color>
 
     <color name="purple_background">#F4E8FE</color>
     <color name="purple_foreground">#AF66EC</color>

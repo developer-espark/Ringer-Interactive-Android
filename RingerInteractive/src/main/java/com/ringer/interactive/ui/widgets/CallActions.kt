@@ -71,12 +71,12 @@ class CallActions : MotionLayout {
 
                 _binding.callActionBluetooth.visibility = View.VISIBLE
                 _binding.callActionBluetooth.isClickable = true
-                _binding.callActionBluetooth.iconDefault = R.drawable.ic_bluetooth_off
+                _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_green
 //                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
             } else {
                 _binding.callActionBluetooth.visibility = View.VISIBLE
                 _binding.callActionBluetooth.isClickable = false
-                _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_svg
+                _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_new
                 /*_binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24*/
             }
         }

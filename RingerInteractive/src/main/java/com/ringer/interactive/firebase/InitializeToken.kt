@@ -9,6 +9,7 @@ import com.ringer.interactive.api.base_url
 import com.ringer.interactive.contact.DeviceData
 import com.ringer.interactive.pref.Preferences
 
+
 fun InitializeToken(context: Context, username: String, password: String, app_name: String,phone:String?) {
 
 
@@ -37,6 +38,17 @@ fun InitializeToken(context: Context, username: String, password: String, app_na
         val token = task.result!!
         Log.e("tFCMoken",""+token)
         Preferences().setFCMToken(context,token)
+
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val intent = Intent()
+            val packageName: String = context.getPackageName()
+            val pm = context.getSystemService(POWER_SERVICE) as PowerManager?
+            if (!pm!!.isIgnoringBatteryOptimizations(packageName)) {
+                intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                intent.data = Uri.parse("package:$packageName")
+                context.startActivity(intent)
+            }
+        }*/
 
 
         //ask contact permission

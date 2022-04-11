@@ -187,8 +187,8 @@ class CallActivity : BaseActivity<CallViewState>() {
 
 //                    binding.lun.background = resources.getDrawable(R.drawable.call_bg)
 
-                    binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
-                    binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
+                    binding.callNameText.setTextColor(resources.getColor(android.R.color.black))
+                    binding.callNumber.setTextColor(resources.getColor(android.R.color.black))
 
                 } else {
 
