@@ -93,7 +93,7 @@ This is required to use the SDK.
 
 ```YourActivity
 
-   InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password),"YOUR APP NAME")
+   InitializeToken(this,resources.getString(R.string.ringer_user_name),resources.getString(R.string.ringer_password),"YOUR APP NAME","Your Number")
 
 ```
 
