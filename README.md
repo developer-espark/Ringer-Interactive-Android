@@ -121,8 +121,10 @@ This step is for the permissions you need granted.
 You need to add Hilt dependency to run this project and extend your application class with BaseApp() and add below line
 
 ```
-
-     @Inject lateinit var callNotification: CallNotification
+    @HiltAndroidApp
+    open class KolerApp : BaseApp() {
+        @Inject lateinit var telecomManager: TelecomManager
+    }
 
 ```
 
