@@ -116,4 +116,14 @@ This step is for the permissions you need granted.
 
 ```
 
+# Step 3.5
+
+You need to add Hilt dependency to run this project and extend your application class with BaseApp() and add below line
+
+```
+
+     @Inject lateinit var callNotification: CallNotification
+
+```
+
 
