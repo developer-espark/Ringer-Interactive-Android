@@ -7,6 +7,7 @@ import com.ringer.interactive.ui.contact.ContactFragment
 import com.ringer.interactive.ui.contacts.ContactsFragment
 import com.ringer.interactive.ui.contacts.ContactsSuggestionsFragment
 import com.ringer.interactive.ui.dialer.DialerFragment
+import com.ringer.interactive.ui.dialer.OnCallDialerFragment
 import com.ringer.interactive.ui.dialpad.DialpadFragment
 import com.ringer.interactive.ui.phones.PhonesFragment
 import com.ringer.interactive.ui.prompt.PromptFragment
@@ -26,6 +27,7 @@ class FragmentFactoryImpl @Inject constructor() : FragmentFactory {
     override fun getCallItemsFragment() = CallItemsFragment()
     override fun getContactsSuggestionsFragment() = ContactsSuggestionsFragment()
     override fun getDialerFragment(text: String?) = DialerFragment.newInstance(text)
+    override fun getOnCallDialerFragment() = OnCallDialerFragment.newInstance()
     override fun getRecentFragment(recentId: Long) = RecentFragment.newInstance(recentId)
     override fun getRecentsFragment(filter: String?) = RecentsFragment.newInstance(filter)
     override fun getPhonesFragment(contactId: Long?) = PhonesFragment.newInstance(contactId)

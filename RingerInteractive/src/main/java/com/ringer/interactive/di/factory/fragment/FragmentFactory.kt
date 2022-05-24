@@ -8,6 +8,7 @@ import com.ringer.interactive.ui.contact.ContactFragment
 import com.ringer.interactive.ui.contacts.ContactsFragment
 import com.ringer.interactive.ui.contacts.ContactsSuggestionsFragment
 import com.ringer.interactive.ui.dialer.DialerFragment
+import com.ringer.interactive.ui.dialer.OnCallDialerFragment
 import com.ringer.interactive.ui.dialpad.DialpadFragment
 import com.ringer.interactive.ui.phones.PhonesFragment
 import com.ringer.interactive.ui.prompt.PromptFragment
@@ -24,6 +25,7 @@ interface FragmentFactory {
     fun getCallItemsFragment(): CallItemsFragment
     fun getRecentFragment(recentId: Long): RecentFragment
     fun getDialerFragment(text: String? = null): DialerFragment
+    fun getOnCallDialerFragment(): OnCallDialerFragment
     fun getPhonesFragment(contactId: Long? = null): PhonesFragment
     fun getRecentsFragment(filter: String? = null): RecentsFragment
     fun getContactsSuggestionsFragment(): ContactsSuggestionsFragment

@@ -1,6 +1,7 @@
 package com.ringer.interactive.ui.widgets
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +10,11 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import com.ringer.interactive.R
 import com.ringer.interactive.databinding.CallActionsBinding
 
+
 class CallActions : MotionLayout {
     private val _binding: CallActionsBinding
     private var _isBluetoothActivated: Boolean = false
+    private var _isDialerActivated: Boolean = false
     private var _callActionsListener: CallActionsListener? = null
 
     constructor(context: Context) : this(context, null)
@@ -62,22 +65,58 @@ class CallActions : MotionLayout {
         set(value) {
             _binding.callActionSpeaker.isActivated = value
         }
-
+/*
     var isBluetoothActivated: Boolean
         get() = _isBluetoothActivated
         set(value) {
             _isBluetoothActivated = value
             if (value) {
-
                 _binding.callActionBluetooth.visibility = View.VISIBLE
                 _binding.callActionBluetooth.isClickable = true
+//                _binding.callActionBluetooth.visibility = View.VISIBLE
+//                _binding.callActionBluetooth.isClickable = true
                 _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_green
-//                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
             } else {
-                _binding.callActionBluetooth.visibility = View.VISIBLE
-                _binding.callActionBluetooth.isClickable = false
-                _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_new
-                /*_binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24*/
+                if (!_isDialerActivated) {
+                    _binding.callActionBluetooth.visibility = View.VISIBLE
+                }
+                _binding.callActionBluetooth.isClickable = false 
+                _binding.callActionBluetooth.iconDefault = R.drawable.img_bluetooth_green
+                *//*_binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24*//*
+            }
+        }*/
+
+    var isBluetoothActivated: Boolean
+        get() = _isBluetoothActivated
+        set(value) {
+            _isBluetoothActivated = value
+            Log.e("_isBluetoothActivated",""+_isBluetoothActivated)
+            if (value) {
+                _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_green))
+            } else {
+                _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_new))
+            }
+        }
+
+    var isDialerActivated: Boolean
+        get() = _isDialerActivated
+        set(value) {
+            _isDialerActivated = value
+            if (value) {
+                _binding.callActionBluetooth.visibility = View.GONE
+            } else {
+                if (_isBluetoothActivated) {
+                    _binding.callActionBluetooth.visibility = View.VISIBLE
+                    _binding.callActionBluetooth.isClickable = true
+                    _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_green))
+//                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
+                } else {
+                    Log.e("speaker","123:->"+isBluetoothActivated)
+                    _binding.callActionBluetooth.visibility = View.VISIBLE
+                    _binding.callActionBluetooth.isClickable = false
+                    _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_new))
+                    /*_binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24*/
+                }
             }
         }
 
@@ -94,11 +133,11 @@ class CallActions : MotionLayout {
             _binding.callActionMute.isEnabled = value
         }
 
- /*   var isSwapEnabled: Boolean
-        get() = _binding.callActionSwap.isEnabled
-        set(value) {
-            _binding.callActionSwap.isEnabled = value
-        }*/
+    /*   var isSwapEnabled: Boolean
+           get() = _binding.callActionSwap.isEnabled
+           set(value) {
+               _binding.callActionSwap.isEnabled = value
+           }*/
 
     var isMergeEnabled: Boolean
         get() = _binding.callActionMerge.isEnabled
@@ -138,7 +177,7 @@ class CallActions : MotionLayout {
         override fun onKeypadClick() {}
         override fun onSpeakerClick() {}
         override fun onAddCallClick() {}
-        override fun onBluetoothClick(){}
+        override fun onBluetoothClick() {}
         override fun onKeyBoardClick() {}
     }
 
@@ -151,7 +190,7 @@ class CallActions : MotionLayout {
         fun onKeypadClick()
         fun onSpeakerClick()
         fun onAddCallClick()
-        fun onBluetoothClick(){}
+        fun onBluetoothClick() {}
         fun onKeyBoardClick()
 
     }

@@ -14,6 +14,7 @@
     <dimen name="default_spacing_big">28dp</dimen>
     <dimen name="default_spacing_half">9dp</dimen>
     <dimen name="default_spacing_small">6dp</dimen>
+    <dimen name="spacing_20dp">20dp</dimen>
     <!--endregion-->
 
     <!--region image size-->
@@ -32,6 +33,7 @@
     <!--region bottom sheet dialog -->
     <dimen name="swipe_indicator_height">2.5dp</dimen>
     <dimen name="swipe_indicator_width">35dp</dimen>
+    <dimen name="dimen_40">40dp</dimen>
     <dimen name="swipe_indicator_margin">8dp</dimen>
     <!--endregion-->
 

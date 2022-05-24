@@ -99,7 +99,7 @@ class CallNotification @Inject constructor(
         NotificationCompat.Action(
             R.drawable.round_call_24,
             strings.getString(R.string.action_answer),
-            getCallPendingIntent(ACTION_ANSWER, 0)
+            getCallPendingIntent(CallBroadcastReceiver.ACTION_ANSWER, 0)
         )
     }
 

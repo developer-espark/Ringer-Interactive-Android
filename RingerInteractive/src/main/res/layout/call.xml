@@ -2,10 +2,11 @@
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layoutDescription="@xml/call_scene"
     android:background="@android:color/white"
+    app:layoutDescription="@xml/call_scene"
     tools:context=".ui.call.CallActivity"
     tools:ignore="MotionLayoutInvalidSceneFileReference">
 
@@ -15,7 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
-
 
 
     <!-- caller image -->
@@ -30,6 +30,10 @@
         android:id="@+id/call_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:visibility="visible" />
 
 
@@ -48,32 +52,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"
             tools:text="@string/call_status_incoming" />
 
         <com.ringer.interactive.ui.widgets.BannerTextView
             android:id="@+id/call_banner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:elevation="10dp"
+            android:textColor="@android:color/white"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="10dp"
-
-            />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <!-- call timer -->
         <TextView
             android:id="@+id/call_time_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
             android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:visibility="invisible"
             app:layout_constraintTop_toBottomOf="@+id/call_banner"
             tools:ignore="MissingConstraints" />
         <!-- caller name -->
@@ -83,12 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:singleLine="true"
             android:ellipsize="marquee"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:scrollHorizontally="true"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/call_time_text"
@@ -109,56 +113,69 @@
             android:id="@+id/edt_keypad"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:inputType="number"
-            android:imeOptions="actionDone"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:textAllCaps="false"
             android:layout_gravity="center"
-            android:gravity="center"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:background="@null"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:textAllCaps="false"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/call_number"
-            android:visibility="gone"/>
-
-
+            app:layout_constraintTop_toBottomOf="@+id/call_number" />
 
 
     </LinearLayout>
 
 
-    <!-- call bg manage button -->
-    <com.ringer.interactive.ui.widgets.IconButton
-        android:id="@+id/call"
-        style="@style/Chooloo.Image.Profile"
-        android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
-        android:visibility="invisible"
-        android:scaleType="fitXY"
-        app:backgroundTint="@color/color_text1"
-        android:layout_marginTop="@dimen/button_text_height"
-        android:backgroundTint="@color/color_text1"
-        android:background="@color/color_text1"
+    <!-- &lt;!&ndash; call bg manage button &ndash;&gt;
+     <com.ringer.interactive.ui.widgets.IconButton
+         android:id="@+id/call"
+         style="@style/Chooloo.Image.Profile"
+         android:layout_width="match_parent"
+         android:layout_height="400dp"
+         android:layout_marginStart="20dp"
+         android:layout_marginTop="@dimen/button_text_height"
+         android:layout_marginEnd="20dp"
+         android:layout_marginBottom="50dp"
+         android:background="@color/color_text1"
+         android:backgroundTint="@color/color_text1"
+         android:scaleType="fitXY"
+         android:tint="@color/color_text1"
+         android:visibility="invisible"
+         app:backgroundTint="@color/color_text1"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+
+         />-->
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mLinearBG"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/default_spacing"
+        android:layout_marginEnd="@dimen/default_spacing"
+        android:background="@drawable/call_actions_bg"
+        app:layout_constraintBottom_toBottomOf="@id/bottomdivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:tint="@color/color_text1"
-
-         />
+        app:layout_constraintTop_toTopOf="@+id/call_actions" />
 
     <!-- call actions -->
     <com.ringer.interactive.ui.widgets.CallActions
         android:id="@+id/call_actions"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints" />
+        app:layoutDescription="@xml/call_actions_scene"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <!-- answer button -->
     <com.ringer.interactive.ui.widgets.IconButton
@@ -166,11 +183,11 @@
         style="@style/Chooloo.Image.Profile"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:backgroundTint="@color/green_foreground"
         android:background="@color/green_foreground"
-        app:backgroundTint="@color/green_foreground"
+        android:backgroundTint="@color/green_foreground"
         android:contentDescription="@string/content_description_answer_button"
         android:scaleType="center"
+        app:backgroundTint="@color/green_foreground"
         app:icon="@drawable/round_call_24"
         tools:ignore="MissingConstraints" />
 
@@ -181,13 +198,21 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="@dimen/default_spacing_big"
-        android:backgroundTint="@color/red_foreground"
         android:background="@color/red_foreground"
+        android:backgroundTint="@color/red_foreground"
         android:contentDescription="@string/content_description_reject_button"
         android:scaleType="center"
         app:backgroundTint="@color/red_foreground"
         app:icon="@drawable/round_call_end_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/bottomdivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.98" />
+
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

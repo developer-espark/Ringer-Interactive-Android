@@ -1,9 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.pushtorefresh.storio3:content-resolver:3.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/4538b1bc8dc97949d4a8c1424e745326/transformed/jetified-content-resolver-3.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4538b1bc8dc97949d4a8c1424e745326/transformed/jetified-content-resolver-3.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/4538b1bc8dc97949d4a8c1424e745326/transformed/jetified-content-resolver-3.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0f1370812725a5109c99987e6fad6ccb/transformed/jetified-content-resolver-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0f1370812725a5109c99987e6fad6ccb/transformed/jetified-content-resolver-3.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0f1370812725a5109c99987e6fad6ccb/transformed/jetified-content-resolver-3.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/fe8a444b72577e6d6cd121026cd040ae/transformed/jetified-content-resolver-3.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fe8a444b72577e6d6cd121026cd040ae/transformed/jetified-content-resolver-3.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fe8a444b72577e6d6cd121026cd040ae/transformed/jetified-content-resolver-3.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.pushtorefresh.storio3/content-resolver/3.0.0/9b3f97d5d28d89268fc385baa75db0c96535c89d/content-resolver-3.0.0-javadoc.jar!/" />

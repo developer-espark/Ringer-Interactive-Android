@@ -15,11 +15,11 @@ open class DialpadViewState @Inject constructor(
     BaseViewState() {
 
     val text = MutableLiveData("")
-    val char = MutableLiveData<Char>()
+    val chars = MutableLiveData("")
 
 
     open fun onCharClick(char: Char) {
-        this.char.value = char
+        this.chars.value = char.toString()
         if (preferences.isDialpadTones) audios.playToneByChar(char)
         if (preferences.isDialpadVibrate) audios.vibrate(AudiosInteractor.SHORT_VIBRATE_LENGTH)
         onTextChanged((text.value ?: "") + char)

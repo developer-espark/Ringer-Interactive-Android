@@ -8,6 +8,7 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.setPadding
 import com.ringer.interactive.R
@@ -16,7 +17,7 @@ import com.ringer.interactive.util.getSizeInDp
 
 
 @SuppressLint("Recycle", "CustomViewStyleable")
-class DialpadKey : LinearLayout {
+class DialpadWhiteKey : LinearLayout {
     private var _char: Char = '0'
     private var _digitTextView: TextView
     private var _lettersTextView: TextView
@@ -36,6 +37,7 @@ class DialpadKey : LinearLayout {
             setTextAppearance(R.style.Chooloo_Text_Headline2)
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_bold)
         }.also {
+            it.setTextColor(ContextCompat.getColor(context, R.color.blue_background))
             addView(it)
         }
 
@@ -46,6 +48,7 @@ class DialpadKey : LinearLayout {
             setTextAppearance(R.style.Chooloo_Text_Caption_New)
             typeface = ResourcesCompat.getFont(context, R.font.google_sans_medium)
         }.also {
+            it.setTextColor(ContextCompat.getColor(context, R.color.blue_background))
             addView(it)
         }
 

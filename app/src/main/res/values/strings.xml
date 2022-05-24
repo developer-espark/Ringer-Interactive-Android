@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Ringer</string>
-    <string name="ringer_user_name">XXXXXXXXXXXXX</string>
-    <string name="ringer_password">XXXXXXXXXXXXXX</string>
+    <string name="ringer_user_name">tim@basalsmartsolutions.com</string>
+    <string name="ringer_password">Ringc##1234</string>
     <string name="ringerinteractive"><b>Ringer</b>Interactive</string>
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="accept_the_terms_and_conditions">Accept the terms and conditions.</string>

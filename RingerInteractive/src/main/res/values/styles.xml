@@ -5,7 +5,7 @@
     <!--region text -->
     <style name="Chooloo.Text" parent="android:TextAppearance">
         <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/color_text</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="Chooloo.Text.Headline2">
@@ -36,6 +36,10 @@
         <item name="android:textSize">@dimen/caption_1</item>
         <item name="android:textColor">?colorTextDisabled</item>
         <item name="android:fontFamily">@font/google_sans_medium</item>
+    </style>
+
+    <style name="Chooloo.Text.Caption_New">
+        <item name="android:textSize">@dimen/caption_1</item>
     </style>
 
     <!--endregion-->

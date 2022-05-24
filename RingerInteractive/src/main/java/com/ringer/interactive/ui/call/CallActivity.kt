@@ -1,11 +1,7 @@
 package com.ringer.interactive.ui.call
 
-import android.R.attr.x
-import android.R.attr.y
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.os.Build
 import android.provider.ContactsContract
 import android.text.TextUtils
@@ -17,6 +13,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView.OnEditorActionListener
 import androidx.activity.viewModels
+import androidx.constraintlayout.motion.widget.MotionLayout
 import com.ringer.interactive.R
 import com.ringer.interactive.databinding.CallBinding
 import com.ringer.interactive.di.factory.fragment.FragmentFactory
@@ -25,6 +22,7 @@ import com.ringer.interactive.interactor.dialog.DialogsInteractor
 import com.ringer.interactive.interactor.prompt.PromptsInteractor
 import com.ringer.interactive.interactor.screen.ScreensInteractor
 import com.ringer.interactive.ui.base.BaseActivity
+import com.ringer.interactive.ui.dialer.OnCallDialerFragment
 import com.ringer.interactive.ui.dialpad.DialpadViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.call_actions.view.*
@@ -34,7 +32,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @SuppressLint("ClickableViewAccessibility")
-class CallActivity : BaseActivity<CallViewState>() {
+class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListener {
     override val contentView by lazy { binding.root }
     override val viewState: CallViewState by viewModels()
 
@@ -42,7 +40,7 @@ class CallActivity : BaseActivity<CallViewState>() {
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
 
-    var isKeyBoard : Boolean = false
+    var isKeyBoard: Boolean = false
 
     @Inject
     lateinit var screens: ScreensInteractor
@@ -60,35 +58,65 @@ class CallActivity : BaseActivity<CallViewState>() {
     lateinit var fragmentFactory: FragmentFactory
 
 
+    var isKeypadVisible = false
+
+    lateinit var onscreenDialogFragment: OnCallDialerFragment
+
+
     @SuppressLint("Range")
     override fun onSetup() {
+        setUpMotionLayoutListener()
+        onscreenDialogFragment = fragmentFactory.getOnCallDialerFragment()
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_up,
+                R.anim.slide_out_up
+            )
+            .add(
+                binding.callActions.mDialerArea.id,
+                onscreenDialogFragment
+            )
+            .commitNow()
         screens.showWhenLocked()
-
         viewState.apply {
-
             binding.callActions.call_action_keyboard.setOnClickListener {
-
-                if (!isKeyBoard){
-                    isKeyBoard = true
-                    binding.edtKeypad.visibility = View.VISIBLE
-                    binding.edtKeypad.requestFocus()
-                    val inputMethodManager =
-                        getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                    inputMethodManager.toggleSoftInputFromWindow(
-                        it.applicationWindowToken,
-                        InputMethodManager.SHOW_FORCED, 0
-                    )
-
-
-                }else{
-                    isKeyBoard = false
-                    binding.edtKeypad.visibility = View.GONE
-                    binding.edtKeypad.clearFocus()
-                    val imm =
-                        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                    imm.hideSoftInputFromWindow(it.windowToken, 0)
-
+                //prompts.showFragment(fragmentFactory.getOnCallDialerFragment())
+                if (isKeypadVisible) {
+                    binding.callActions.call_action_add_call.visibility = View.VISIBLE
+                    binding.callActions.call_action_bluetooth.visibility = View.VISIBLE
+                    binding.callActions.txt_bluetooth.visibility = View.VISIBLE
+                    binding.callActions.txt_hold.visibility = View.VISIBLE
+                    binding.callActions.call_action_hold.visibility = View.VISIBLE
+                    isKeypadVisible = false
+                    supportFragmentManager
+                        .beginTransaction()
+                        .remove(
+                            onscreenDialogFragment
+                        )
+                        .commitNow()
+                    viewState.isDialerActivated.value = false
+                } else {
+                    binding.callActions.call_action_add_call.visibility = View.GONE
+                    binding.callActions.call_action_bluetooth.visibility = View.GONE
+                    binding.callActions.txt_bluetooth.visibility = View.GONE
+                    binding.callActions.txt_hold.visibility = View.GONE
+                    binding.callActions.call_action_hold.visibility = View.GONE
+                    isKeypadVisible = true
+                    supportFragmentManager
+                        .beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.slide_in_up,
+                            R.anim.slide_out_up
+                        )
+                        .add(
+                            binding.callActions.mDialerArea.id,
+                            onscreenDialogFragment
+                        )
+                        .commitNow()
+                    viewState.isDialerActivated.value = true
                 }
+
             }
 
 
@@ -125,6 +153,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                     if (TextUtils.isDigitsOnly(it)) {
 
                         var phoneNumberCode = PhoneNumberWithoutCountryCode(it.toString())
+                        Log.e("phoneNumberCode",""+phoneNumberCode)
                         var numberCode = "(" + phoneNumberCode!!.substring(
                             0,
                             3
@@ -182,21 +211,21 @@ class CallActivity : BaseActivity<CallViewState>() {
             imageURI.observe(this@CallActivity) {
                 if (it != null) {
 
-                    binding.callImage.setScaleType(ImageView.ScaleType.FIT_XY)
+                    binding.callImage.scaleType = ImageView.ScaleType.FIT_XY
                     binding.callImage.setImageURI(it)
 
 //                    binding.lun.background = resources.getDrawable(R.drawable.call_bg)
 
-                    binding.callNameText.setTextColor(resources.getColor(android.R.color.black))
-                    binding.callNumber.setTextColor(resources.getColor(android.R.color.black))
+                    binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
+                    binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
 
                 } else {
 
                     binding.callImage.background = resources.getDrawable(R.drawable.gradient)
-                  /*  binding.callImage.layoutParams.height = 10
-                    binding.callImage.layoutParams.width = 10
+                    /*  binding.callImage.layoutParams.height = 10
+                      binding.callImage.layoutParams.width = 10
 
-                    binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))*/
+                      binding.callImage.setImageDrawable(resources.getDrawable(R.drawable.download))*/
                     binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
                     binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
                 }
@@ -233,12 +262,13 @@ class CallActivity : BaseActivity<CallViewState>() {
 
             stateText.observe(this@CallActivity) {
                 val old = binding.callStateText.text.toString()
-                if (!it.equals("Incoming Call")){
+                if (!it.equals("Incoming Call")) {
 
                     binding.edtKeypad.visibility = View.GONE
-                    animations.show(binding.call,true)
+//                    animations.show(binding.call, true)
                 }
                 binding.callStateText.text = it
+                Log.e("binding.callStateText",""+binding.callStateText.text)
                 if (old != it) {
                     animations.focus(binding.callStateText)
                 }
@@ -248,12 +278,12 @@ class CallActivity : BaseActivity<CallViewState>() {
                 when (it) {
                     CallViewState.UIState.MULTI -> {
                         showActiveLayout()
-                        Log.e("merge","nerge")
+                        Log.e("merge", "nerge")
                         binding.callActions.showMultiCallUI()
                     }
                     CallViewState.UIState.ACTIVE -> {
                         showActiveLayout()
-                        Log.e("single","single")
+                        Log.e("single", "single")
                         binding.callActions.showSingleCallUI()
                     }
                     CallViewState.UIState.INCOMING -> {
@@ -275,7 +305,7 @@ class CallActivity : BaseActivity<CallViewState>() {
                }*/
 
             isMergeEnabled.observe(this@CallActivity) {
-                Log.e("isMergeEnabled",""+it)
+                Log.e("isMergeEnabled", "" + it)
                 binding.callActions.isMergeEnabled = it
             }
 
@@ -301,6 +331,10 @@ class CallActivity : BaseActivity<CallViewState>() {
 
             isBluetoothActivated.observe(this@CallActivity) {
                 binding.callActions.isBluetoothActivated = it
+            }
+
+            isDialerActivated.observe(this@CallActivity) {
+                binding.callActions.isDialerActivated = it
             }
 
             askForRouteEvent.observe(this@CallActivity) {
@@ -344,6 +378,16 @@ class CallActivity : BaseActivity<CallViewState>() {
             }
         }
 
+        dialpadViewState.apply {
+            chars.observe(this@CallActivity) {
+                if (!it.isNullOrEmpty()) {
+                    viewState.onCharKey(it[0])
+                }
+            }
+        }
+
+
+
 
         binding.apply {
             callActions.setCallActionsListener(viewState)
@@ -360,10 +404,22 @@ class CallActivity : BaseActivity<CallViewState>() {
                 viewState.onManageClick()
             }*/
         }
-
-        dialpadViewState.char.observe(this@CallActivity, viewState::onCharKey)
+        removeFragment()
     }
 
+    private fun removeFragment() {
+        supportFragmentManager
+            .beginTransaction()
+            .remove(
+                onscreenDialogFragment
+            )
+            .commitNow()
+    }
+
+    private fun setUpMotionLayoutListener() = with(binding) {
+        rootContainer.setTransitionListener(this@CallActivity)
+        callActions.setTransitionListener(this@CallActivity)
+    }
 
     private fun showActiveLayout() {
         transitionLayoutTo(R.id.constraint_set_active_call)
@@ -385,6 +441,40 @@ class CallActivity : BaseActivity<CallViewState>() {
         )
 
         return phoneNumberWithCountryCode.replace(compile.pattern().toRegex(), "")
+    }
+
+    override fun onTransitionStarted(motionLayout: MotionLayout?, startId: Int, endId: Int) {
+        updateNestedMotionLayout(motionLayout)
+    }
+
+    override fun onTransitionChange(
+        motionLayout: MotionLayout?,
+        startId: Int,
+        endId: Int,
+        progress: Float
+    ) {
+        updateNestedMotionLayout(motionLayout)
+    }
+
+    override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+        updateNestedMotionLayout(motionLayout)
+    }
+
+    override fun onTransitionTrigger(
+        motionLayout: MotionLayout?,
+        triggerId: Int,
+        positive: Boolean,
+        progress: Float
+    ) {
+        updateNestedMotionLayout(motionLayout)
+    }
+
+    private fun updateNestedMotionLayout(motionLayout: MotionLayout?) = motionLayout?.let {
+        with(binding) {
+            if (it.id == rootContainer.id) {
+                callActions.progress = it.progress
+            }
+        }
     }
 
 }

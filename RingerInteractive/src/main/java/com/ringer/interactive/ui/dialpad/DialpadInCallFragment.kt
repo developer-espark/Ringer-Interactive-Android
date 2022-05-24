@@ -1,27 +1,30 @@
 package com.ringer.interactive.ui.dialpad
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import com.ringer.interactive.databinding.DialpadBinding
+import com.ringer.interactive.databinding.DialpadInCallBinding
 import com.ringer.interactive.interactor.animation.AnimationsInteractor
 import com.ringer.interactive.ui.base.BaseFragment
-import com.ringer.interactive.ui.widgets.DialpadKey
+import com.ringer.interactive.ui.widgets.DialpadWhiteKey
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState>() {
+open class DialpadInCallFragment @Inject constructor() : BaseFragment<DialpadViewState>() {
     override val contentView by lazy { binding.root }
     override val viewState: DialpadViewState by activityViewModels()
 
-    @Inject lateinit var animationsInteractor: AnimationsInteractor
+    @Inject
+    lateinit var animationsInteractor: AnimationsInteractor
 
-    protected val binding by lazy { DialpadBinding.inflate(layoutInflater) }
-
+    protected val binding by lazy { DialpadInCallBinding.inflate(layoutInflater) }
+    private var keypadPressed = ""
     override fun onSetup() {
         binding.apply {
-            dialpadButtonCall.isVisible = false
+
             dialpadButtonDelete.isVisible = false
 
             dialpadEditText.apply {
@@ -31,8 +34,43 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
                 isFocusableInTouchMode = false
             }
 
+            dialpadEditText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (dialpadEditText.text != null && !dialpadEditText.text.toString()
+                            .isNullOrEmpty()
+                    ) {
+                        dialpadEditText.visibility = View.VISIBLE
+                        dialpadButtonDelete.visibility = View.VISIBLE
+                    } else {
+                        dialpadEditText.visibility = View.GONE
+                        dialpadButtonDelete.visibility = View.GONE
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+
+                }
+
+            })
+
+            dialpadButtonDelete.setOnClickListener {
+                keypadPressed = keypadPressed.dropLast(1)
+                dialpadEditText.setText(keypadPressed)
+            }
+
             View.OnClickListener {
-                viewState.onCharClick((it as DialpadKey).char)
+                viewState.onCharClick((it as DialpadWhiteKey).char)
+                keypadPressed += it.char
+                dialpadEditText.setText(keypadPressed)
             }
                 .also {
                     key0.setOnClickListener(it)
@@ -50,7 +88,7 @@ open class DialpadFragment @Inject constructor() : BaseFragment<DialpadViewState
                 }
 
             View.OnLongClickListener {
-                viewState.onLongKeyClick((it as DialpadKey).char)
+                viewState.onLongKeyClick((it as DialpadWhiteKey).char)
             }
                 .also {
                     key0.setOnLongClickListener(it)
