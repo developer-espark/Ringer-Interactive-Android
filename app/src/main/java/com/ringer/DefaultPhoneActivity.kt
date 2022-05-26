@@ -1,14 +1,18 @@
 package com.ringer
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ringer.interactive.askSDK.offerReplacingDefaultDialer
@@ -89,8 +93,32 @@ class DefaultPhoneActivity : AppCompatActivity() {
             } else {
                 Log.e("defaultApp", "no");
                 askCallLogPermission();
+                askBluetoothPermission()
             }
 
+        }
+        if (requestCode == 5){
+            if (resultCode == RESULT_OK){
+                PreferencesApp().setScreenNumber(this, 2)
+                startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+                finish()
+            }
+        }
+    }
+
+    private fun askBluetoothPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.BLUETOOTH_CONNECT
+            ) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.BLUETOOTH_CONNECT),
+                5)
+        }else{
+            startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+            finish()
         }
     }
 
@@ -126,8 +154,9 @@ class DefaultPhoneActivity : AppCompatActivity() {
                 PERMISSIONS_REQUEST_CALL_LOG
             )
         } else {
-            startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
-            finish()
+            askBluetoothPermission()
+            /*startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+            finish()*/
         }
     }
 }

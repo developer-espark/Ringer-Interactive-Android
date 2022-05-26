@@ -1,12 +1,19 @@
 package com.ringer.interactive.ui.widgets
 
+import android.Manifest
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothDevice
 import android.content.Context
-import android.content.res.ColorStateList
+import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.Toast
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.app.ActivityCompat
+import com.ringer.interactive.BluetoothBroadcastReceiver
 import com.ringer.interactive.R
 import com.ringer.interactive.databinding.CallActionsBinding
 
@@ -34,7 +41,59 @@ class CallActions : MotionLayout {
 //        _binding.callActionKeypad.setOnClickListener { _callActionsListener?.onKeypadClick() }
         _binding.callActionSpeaker.setOnClickListener { _callActionsListener?.onSpeakerClick() }
         _binding.callActionAddCall.setOnClickListener { _callActionsListener?.onAddCallClick() }
-        _binding.callActionBluetooth.setOnClickListener { _callActionsListener?.onBluetoothClick() }
+        _binding.mLinearActionBluetooth.setOnClickListener {
+
+
+            Log.v("ererrrre","ererererererere")
+
+            try {
+                val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+                if (mBluetoothAdapter.isEnabled) {
+                    if (ActivityCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.BLUETOOTH_CONNECT
+                        ) != PackageManager.PERMISSION_GRANTED
+                    ) {
+                    }
+
+                    mBluetoothAdapter.disable()
+                    _isBluetoothActivated = false
+                    if (_isBluetoothActivated) {
+                        _binding.callActionBluetooth.visibility = View.VISIBLE
+                        _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_green))
+//                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
+                    } else {
+                        _binding.callActionBluetooth.visibility = View.VISIBLE
+
+                        _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_new))
+                        _binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24
+                    }
+
+                }else{
+                    mBluetoothAdapter.enable()
+                    _isBluetoothActivated = true
+                    if (_isBluetoothActivated) {
+                        _binding.callActionBluetooth.visibility = View.VISIBLE
+                        _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_green))
+//                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
+                    } else {
+                        _binding.callActionBluetooth.visibility = View.VISIBLE
+                        _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_new))
+                        _binding.callActionSpeaker.iconDefault = R.drawable.round_volume_down_24
+                    }
+
+                }
+            }catch (e : Exception){
+                Log.e("errorBlueTooth",""+e.message)
+                Toast.makeText(context,"Please give access of bluetooth from app setting",Toast.LENGTH_SHORT).show()
+            }
+
+
+            _callActionsListener?.onBluetoothClick()
+            val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+            filter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED)
+            context.registerReceiver(BluetoothBroadcastReceiver(), filter)
+        }
         _binding.callActionKeyboard.setOnClickListener { _callActionsListener?.onKeyBoardClick() }
     }
 
@@ -90,7 +149,9 @@ class CallActions : MotionLayout {
         get() = _isBluetoothActivated
         set(value) {
             _isBluetoothActivated = value
-            Log.e("_isBluetoothActivated",""+_isBluetoothActivated)
+            Log.e("_isBluetoothActivated1",""+_isBluetoothActivated)
+
+
             if (value) {
                 _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_green))
             } else {

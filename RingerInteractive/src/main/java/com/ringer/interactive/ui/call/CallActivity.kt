@@ -1,8 +1,11 @@
 package com.ringer.interactive.ui.call
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
+import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.text.format.DateUtils
@@ -14,6 +17,8 @@ import android.widget.ImageView
 import android.widget.TextView.OnEditorActionListener
 import androidx.activity.viewModels
 import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.ringer.interactive.R
 import com.ringer.interactive.databinding.CallBinding
 import com.ringer.interactive.di.factory.fragment.FragmentFactory

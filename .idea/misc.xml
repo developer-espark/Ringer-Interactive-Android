@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/call_actions.xml" value="0.32037037037037036" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="RingerInteractive/src/main/res/drawable-anydpi/notification_banner_background.xml" value="0.2025" />
         <entry key="RingerInteractive/src/main/res/drawable-anydpi/round_bluetooth_audio_24.xml" value="0.2025" />
         <entry key="RingerInteractive/src/main/res/drawable/call_actions_bg.xml" value="0.2025" />

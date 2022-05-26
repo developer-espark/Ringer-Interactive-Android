@@ -38,7 +38,7 @@ class AccessContactActivity : AppCompatActivity() {
 
             if (ContextCompat.checkSelfPermission(
                     this,
-                    Manifest.permission.READ_CONTACTS
+                    Manifest.permission.READ_PHONE_STATE
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
 
@@ -49,7 +49,8 @@ class AccessContactActivity : AppCompatActivity() {
                     arrayOf(
                         Manifest.permission.READ_CONTACTS,
                         Manifest.permission.WRITE_CONTACTS,
-                        Manifest.permission.GET_ACCOUNTS
+                        Manifest.permission.GET_ACCOUNTS,
+                        Manifest.permission.READ_PHONE_STATE
                     ),
                     PERMISSIONS_REQUEST_READ_CONTACTS
                 )

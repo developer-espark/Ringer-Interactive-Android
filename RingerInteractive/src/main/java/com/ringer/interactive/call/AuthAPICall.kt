@@ -409,7 +409,7 @@ class AuthAPICall {
                                     }
                                 }
 
-                                Preferences().setLocalData(context, contactList)
+//                                Preferences().setLocalData(context, contactList)
                             }
 
 
@@ -420,7 +420,8 @@ class AuthAPICall {
                     Log.e("errorSearch", "" + e.message)
                     Log.e("errorSearch", "" + e.stackTraceToString())
                 } finally {
-                    getCallDetails(context, contactList);
+                    Log.e("hrereerer","reereereee")
+                    getCallDetails(context, contactList)
                 }
             }
 
@@ -567,7 +568,7 @@ class AuthAPICall {
                 }
             })
         } catch (e: Exception) {
-
+            Log.e("ExceptIon",""+e.message)
         }
     }
 
@@ -690,8 +691,6 @@ class AuthAPICall {
     @SuppressLint("MissingPermission")
     fun getCallDetails(context: Context, contactList: ArrayList<StoreContact>) {
         try {
-            val tpm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager?
-            number = tpm!!.line1Number
             var numberArrayList: ArrayList<String> = ArrayList()
             val sb = StringBuffer()
             val managedCursor: Cursor? =
@@ -702,11 +701,13 @@ class AuthAPICall {
             val date: Int = managedCursor.getColumnIndex(CallLog.Calls.DATE)
             val duration: Int = managedCursor.getColumnIndex(CallLog.Calls.DURATION)
             sb.append("Call Details :")
+            Log.e("contactList",""+contactList.size)
             for (i in 0 until contactList.size) {
                 if (contactList[i].phoneList.size > 0) {
                     numberArrayList.addAll(contactList[i].phoneList)
                 }
             }
+            Log.e("numberArrayList",""+numberArrayList.size)
             if (managedCursor.count > 0) {
                 while (managedCursor.moveToNext()) {
 
