@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/child_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutDescription="@xml/call_actions_scene">
+
+
+    <!-- add call -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mLinear_action_add_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_20dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/mLinear_action_bluetooth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.ringer.interactive.ui.widgets.IconButton
+            android:id="@+id/call_action_add_call"
+            style="@style/Chooloo.IconButton.Big"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            app:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/ic_icn_add_call__3_"
+            app:maxImageSize="72dp"
+            app:visibilityMode="ignore" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- bluetooth -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mLinear_action_bluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/mLinear_action_hold"
+        app:layout_constraintStart_toEndOf="@id/mLinear_action_add_call"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/call_action_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            android:scaleType="fitXY"
+            app:backgroundTint="@android:color/transparent"
+            app:maxImageSize="35dp"
+            app:visibilityMode="ignore" />
+
+        <TextView
+            android:id="@+id/txt_bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Bluetooth"
+            android:layout_marginTop="@dimen/spacing_20dp"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="normal"
+            app:visibilityMode="ignore" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <!-- hold -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mLinear_action_hold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mLinear_action_bluetooth"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.ringer.interactive.ui.widgets.IconButton
+            android:id="@+id/call_action_hold"
+            style="@style/Chooloo.IconButton.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:activatedIcon="@drawable/img_hold_green"
+            app:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/img_hold_green"
+            app:maxImageSize="35dp"
+            app:visibilityMode="ignore" />
+
+        <TextView
+            android:id="@+id/txt_hold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Hold"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="normal"
+            app:visibilityMode="ignore" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <!-- <TextView
+         android:id="@+id/txt_add"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="Add"
+         android:textColor="@android:color/white"
+         android:textSize="14sp"
+         android:visibility="visible"
+         android:textStyle="bold"
+         app:layout_constraintEnd_toEndOf="@id/call_action_add_call"
+         app:layout_constraintStart_toStartOf="@id/call_action_add_call"
+         app:layout_constraintTop_toBottomOf="@id/call_action_add_call" />-->
+
+    <!-- keypad -->
+    <!-- <com.ringer.interactive.ui.widgets.IconButton
+         android:id="@+id/call_action_keypad"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="@dimen/default_spacing_big"
+         style="@style/Chooloo.IconButton.Big"
+         android:layout_marginBottom="@dimen/default_spacing"
+         app:icon="@drawable/round_dialpad_24"
+         android:visibility="invisible"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toStartOf="@id/call_action_hold"
+         app:layout_constraintStart_toEndOf="@id/call_action_add_call"
+         app:layout_constraintTop_toBottomOf="@id/call_action_speaker" />-->
+
+
+    <!--  &lt;!&ndash; swap &ndash;&gt;
+      <com.ringer.interactive.ui.widgets.IconButton
+          android:id="@+id/call_action_swap"
+          style="@style/Chooloo.IconButton.Big"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="invisible"
+          app:icon="@drawable/round_swap_calls_24"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintStart_toStartOf="parent" />-->
+
+    <!-- merge -->
+    <com.ringer.interactive.ui.widgets.IconButton
+        android:id="@+id/call_action_merge"
+        style="@style/Chooloo.IconButton.Big"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="@dimen/default_spacing_big"
+        android:scaleType="fitXY"
+        app:backgroundTint="@android:color/transparent"
+        app:icon="@drawable/ic_group_512330__3_"
+        app:layout_constraintEnd_toStartOf="@+id/mLinear_action_bluetooth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:maxImageSize="70dp" />
+
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mDialerArea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:elevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mLinear_action_add_call" />
+
+
+    <!-- mute -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mLinear_action_mute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing_big"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/mLinear_action_keyboard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mDialerArea">
+
+        <com.ringer.interactive.ui.widgets.IconButton
+            android:id="@+id/call_action_mute"
+            style="@style/Chooloo.IconButton.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:activatedIcon="@drawable/img_unmute_green"
+            app:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/round_mic_24"
+            app:maxImageSize="35dp" />
+
+        <TextView
+            android:id="@+id/txt_mute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="@font/google_sans_regular"
+            android:text="Mute"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <!-- keypad -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mLinear_action_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing_big"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/mLinear_action_speaker"
+        app:layout_constraintStart_toEndOf="@id/mLinear_action_mute"
+        app:layout_constraintTop_toBottomOf="@id/mDialerArea">
+
+        <com.ringer.interactive.ui.widgets.IconButton
+            android:id="@+id/call_action_keyboard"
+            style="@style/Chooloo.IconButton.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/round_dialpad_24"
+            app:maxImageSize="35dp" />
+
+        <TextView
+            android:id="@+id/txt_keypade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Keypad"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="normal" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <!-- speaker -->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/mLinear_action_speaker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing_big"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/mLinear_action_keyboard"
+        app:layout_constraintTop_toBottomOf="@id/mDialerArea">
+
+        <com.ringer.interactive.ui.widgets.IconButton
+            android:id="@+id/call_action_speaker"
+            style="@style/Chooloo.IconButton.Big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            app:activatedIcon="@drawable/img_speaker_on_green"
+            app:backgroundTint="@android:color/transparent"
+            app:icon="@drawable/round_volume_down_24"
+            app:maxImageSize="35dp"
+            app:visibilityMode="ignore" />
+
+        <TextView
+            android:id="@+id/txt_speaker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Speaker"
+            android:textColor="@android:color/white"
+            android:textSize="11sp"
+            android:textStyle="normal"
+            app:visibilityMode="ignore" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

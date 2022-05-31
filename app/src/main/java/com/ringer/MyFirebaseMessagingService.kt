@@ -24,23 +24,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
 
-        Log.e("From : ", "" + remoteMessage.from)
-        Log.e("Message : ", remoteMessage.data.toString())
-
-        Log.e("NotificationTitle : ", "" + remoteMessage.notification!!.title)
-
-        val title = remoteMessage.notification!!.title
         try {
-            if (title.equals("asd", false)) {
+            Log.e("asdads", "adsadsa")
 
-                LibrarySDKMessagingService().sendNotification(this,remoteMessage)
+            LibrarySDKMessagingService().sendNotification(this, remoteMessage)
 
-            }else{
-                sendNotification(remoteMessage)
-            }
 
         } catch (e: Exception) {
             e.printStackTrace()
+            Log.e("errorSDK",""+e.message)
+            sendNotification(remoteMessage)
 
         }
     }
@@ -57,13 +50,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         message = remoteMessage.data["body"]
         title = remoteMessage.data["title"]
 
-        val notificationTitle = remoteMessage.notification!!.title
-        val notificationMessage = remoteMessage.notification!!.body
-        val imageUrl = remoteMessage.notification!!.imageUrl
-
-
-
-
+        Log.e("NORMAL","NORMAL")
 
         val intent = Intent(this, MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -116,7 +103,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             System.currentTimeMillis().toInt() /* ID of notification */,
             notificationBuilder.build()
         )
-
 
     }
 

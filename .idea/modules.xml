@@ -4,7 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Ringer.iml" filepath="$PROJECT_DIR$/.idea/modules/Ringer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.iml" filepath="$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.main.iml" filepath="$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/RingerInteractive/Ringer.RingerInteractive.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ringer.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ringer.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ringer.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ringer.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ringer.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ringer.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Ringer.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Ringer.app.unitTest.iml" />
     </modules>
   </component>
 </project>
