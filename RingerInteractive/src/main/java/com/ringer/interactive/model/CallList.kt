@@ -1,7 +1,5 @@
 package com.ringer.interactive.model
 
-import java.util.*
-
 class CallList {
     private var _callsById: HashMap<String, Call> = HashMap()
 

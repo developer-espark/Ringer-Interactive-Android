@@ -12,7 +12,6 @@ import android.provider.ContactsContract
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.ringer.interactive.R
-import com.ringer.interactive.call.AuthAPICall
 import com.ringer.interactive.model.PhoneNumber
 import com.ringer.interactive.pref.Preferences
 import java.io.ByteArrayOutputStream

@@ -1,16 +1,8 @@
 package com.ringer.interactive.service
 
+import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import androidx.core.app.NotificationCompat
-
-import android.os.Build
-
-import android.app.*
-import android.content.Context
-
-
-
 
 
 class MyForegroundService : Service() {

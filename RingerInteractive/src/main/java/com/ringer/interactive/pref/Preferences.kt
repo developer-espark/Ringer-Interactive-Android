@@ -9,8 +9,6 @@ import com.google.gson.reflect.TypeToken
 import com.ringer.interactive.model.CallLogDetail
 import com.ringer.interactive.model.CallLogMatchDetail
 import com.ringer.interactive.model.StoreContact
-import java.util.*
-import kotlin.collections.ArrayList
 
 
 class Preferences {

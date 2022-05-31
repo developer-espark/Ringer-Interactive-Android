@@ -2,8 +2,6 @@ package com.ringer.interactive.api
 
 import android.content.Context
 import com.google.gson.GsonBuilder
-import com.ringer.interactive.R
-import com.ringer.interactive.pref.Preferences
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

@@ -11,7 +11,6 @@ import android.provider.Settings
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.ringer.interactive.activity.RingerScreen
-import com.ringer.interactive.call.AuthAPICall
 
 class RingerCallLogDetail {
     fun onRequestPermissionsResult(

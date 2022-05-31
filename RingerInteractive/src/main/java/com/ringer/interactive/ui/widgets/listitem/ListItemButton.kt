@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import com.ringer.interactive.R
-import com.ringer.interactive.util.getAttrColor
 
 class ListItemButton : ListItem {
     private val colorSecondary by lazy { context.getColor(R.color.gray) }

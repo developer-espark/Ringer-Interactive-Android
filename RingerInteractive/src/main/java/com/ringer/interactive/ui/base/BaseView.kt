@@ -1,7 +1,6 @@
 package com.ringer.interactive.ui.base
 
 import androidx.annotation.StringRes
-import androidx.lifecycle.Lifecycle
 
 interface BaseView<out VM : BaseViewState> {
     val viewState: VM?

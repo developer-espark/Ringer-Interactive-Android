@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.ringer.interactive.R
-import com.ringer.interactive.util.getAttrColor
 
 class TextButton : AppCompatButton {
     private var _textDefault: String?

@@ -6,12 +6,10 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.util.Log
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat.getDrawable
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.internal.ViewUtils
 import com.ringer.interactive.R
-import com.ringer.interactive.util.getAttrColor
 
 @SuppressLint("CustomViewStyleable", "WrongConstant", "RestrictedApi")
 class IconButton : FloatingActionButton {

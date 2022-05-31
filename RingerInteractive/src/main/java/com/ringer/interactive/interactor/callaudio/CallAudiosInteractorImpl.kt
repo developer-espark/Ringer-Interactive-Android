@@ -1,11 +1,10 @@
 package com.ringer.interactive.interactor.callaudio
 
 import android.telecom.CallAudioState
-import android.telecom.CallAudioState.*
 import android.util.Log
-import com.ringer.interactive.service.CallService
 import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor.AudioRoute
 import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor.AudioRoute.*
+import com.ringer.interactive.service.CallService
 import com.ringer.interactive.util.baseobservable.BaseObservable
 import javax.inject.Inject
 import javax.inject.Singleton

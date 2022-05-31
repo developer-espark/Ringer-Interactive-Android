@@ -2,15 +2,10 @@ package com.ringer.interactive.sdkCall;
 
 import android.annotation.SuppressLint;
 import android.os.Trace;
-import android.telecom.Call;
 import android.telecom.DisconnectCause;
-import android.util.Log;
-import android.widget.Toast;
-
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
-
 
 import java.util.Collections;
 import java.util.HashMap;

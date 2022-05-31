@@ -3,9 +3,9 @@ package com.ringer.interactive
 import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.AUDIO_SERVICE
 import android.content.Intent
 import android.media.AudioManager
-import android.content.Context.AUDIO_SERVICE
 import android.media.AudioManager.MODE_IN_CALL
 import android.media.AudioManager.MODE_NORMAL
 

@@ -1,7 +1,6 @@
 package com.ringer.interactive.util.baseobservable
 
 import java.util.*
-import kotlin.collections.HashSet
 
 open class BaseObservable<Listener> : IBaseObservable<Listener> {
     private val _listeners by lazy { HashSet<Listener>() }

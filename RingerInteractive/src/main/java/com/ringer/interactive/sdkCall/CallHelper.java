@@ -4,7 +4,6 @@ import android.hardware.camera2.CameraCharacteristics;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Trace;
-import android.telecom.Call;
 import android.telecom.Connection;
 import android.telecom.DisconnectCause;
 import android.telecom.GatewayInfo;
@@ -13,8 +12,6 @@ import android.telecom.PhoneAccountHandle;
 import android.telecom.VideoProfile;
 import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
-
-import com.ringer.interactive.sdkCall.CallList;
 
 import java.util.ArrayList;
 import java.util.List;

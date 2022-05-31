@@ -3,7 +3,6 @@ package com.ringer.interactive.contact
 import android.content.Context
 import android.os.Build
 import android.util.Log
-import java.lang.Exception
 import java.util.*
 
 fun DeviceData(context: Context) {

@@ -2,12 +2,12 @@ package com.ringer.interactive.ui.settings
 
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
-import com.ringer.interactive.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
-import com.ringer.interactive.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
 import com.ringer.interactive.R
 import com.ringer.interactive.interactor.color.ColorsInteractor
 import com.ringer.interactive.interactor.navigation.NavigationsInteractor
 import com.ringer.interactive.interactor.preferences.PreferencesInteractor
+import com.ringer.interactive.interactor.preferences.PreferencesInteractor.Companion.AccentTheme.*
+import com.ringer.interactive.interactor.preferences.PreferencesInteractor.Companion.ThemeMode
 import com.ringer.interactive.ui.base.BaseViewState
 import com.ringer.interactive.util.DataLiveEvent
 import com.ringer.interactive.util.LiveEvent

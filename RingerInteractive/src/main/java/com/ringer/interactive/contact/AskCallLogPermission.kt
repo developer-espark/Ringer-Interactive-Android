@@ -7,7 +7,6 @@ import android.content.pm.PackageManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.ringer.interactive.call.AuthAPICall
 
 fun CallLog(context: Context){
 

@@ -1,7 +1,6 @@
 package com.ringer.interactive.interactor.base
 
 import java.util.*
-import kotlin.collections.HashSet
 
 
 abstract class BaseInteractorImpl<Listener> : BaseInteractor<Listener> {

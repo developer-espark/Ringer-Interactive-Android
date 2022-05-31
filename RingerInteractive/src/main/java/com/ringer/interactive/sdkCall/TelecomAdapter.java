@@ -1,10 +1,7 @@
 package com.ringer.interactive.sdkCall;
 
 import android.annotation.SuppressLint;
-import android.os.Looper;
 import android.telecom.Call;
-
-import androidx.core.util.Preconditions;
 
 import java.util.List;
 

@@ -4,7 +4,6 @@ import com.google.gson.JsonObject
 import com.ringer.interactive.model.CallLogMatchDetail
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.*
 
 interface Api {

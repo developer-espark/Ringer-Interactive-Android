@@ -1,8 +1,6 @@
 package com.ringer.interactive.sdkCall;
 
-import android.content.Context;
 import android.telecom.Call;
-import android.telecom.TelecomManager;
 import android.telecom.VideoProfile;
 
 import org.jetbrains.annotations.Nullable;

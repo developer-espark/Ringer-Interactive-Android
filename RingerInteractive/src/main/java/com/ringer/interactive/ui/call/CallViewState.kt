@@ -1,10 +1,5 @@
 package com.ringer.interactive.ui.call
 
-import android.Manifest
-import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
-import android.content.IntentFilter
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.telecom.Call.Details.CAPABILITY_HOLD
@@ -13,9 +8,7 @@ import android.telecom.PhoneAccountHandle
 import android.telecom.PhoneAccountSuggestion
 import android.telecom.TelecomManager
 import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
-import com.ringer.interactive.BluetoothBroadcastReceiver
 import com.ringer.interactive.R
 import com.ringer.interactive.interactor.audio.AudiosInteractor
 import com.ringer.interactive.interactor.callaudio.CallAudiosInteractor
@@ -33,7 +26,6 @@ import com.ringer.interactive.ui.base.BaseViewState
 import com.ringer.interactive.ui.widgets.CallActions
 import com.ringer.interactive.util.DataLiveEvent
 import com.ringer.interactive.util.LiveEvent
-import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
