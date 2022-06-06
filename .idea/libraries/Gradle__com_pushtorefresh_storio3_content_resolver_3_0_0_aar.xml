@@ -1,9 +1,6 @@
 <component name="libraryTable">
   <library name="Gradle: com.pushtorefresh.storio3:content-resolver:3.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/0f1370812725a5109c99987e6fad6ccb/transformed/jetified-content-resolver-3.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0f1370812725a5109c99987e6fad6ccb/transformed/jetified-content-resolver-3.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/0f1370812725a5109c99987e6fad6ccb/transformed/jetified-content-resolver-3.0.0/AndroidManifest.xml" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/fe8a444b72577e6d6cd121026cd040ae/transformed/jetified-content-resolver-3.0.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fe8a444b72577e6d6cd121026cd040ae/transformed/jetified-content-resolver-3.0.0/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fe8a444b72577e6d6cd121026cd040ae/transformed/jetified-content-resolver-3.0.0/AndroidManifest.xml" />
