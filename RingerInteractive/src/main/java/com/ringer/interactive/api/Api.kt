@@ -65,4 +65,11 @@ interface Api {
     ) : Call<JsonObject>
 
 
+    //getLocation
+    @GET("data/api/rcd/{id}")
+    fun getLocation(
+        @Header(authorization) auth: String,
+        @Path("id") ids : String
+    ) : Call<JsonObject>
+
 }

@@ -14,18 +14,25 @@ import android.widget.ImageView
 import android.widget.TextView.OnEditorActionListener
 import androidx.activity.viewModels
 import androidx.constraintlayout.motion.widget.MotionLayout
+import com.google.gson.JsonObject
 import com.ringer.interactive.R
+import com.ringer.interactive.api.Api
+import com.ringer.interactive.api.Connection
 import com.ringer.interactive.databinding.CallBinding
 import com.ringer.interactive.di.factory.fragment.FragmentFactory
 import com.ringer.interactive.interactor.animation.AnimationsInteractor
 import com.ringer.interactive.interactor.dialog.DialogsInteractor
 import com.ringer.interactive.interactor.prompt.PromptsInteractor
 import com.ringer.interactive.interactor.screen.ScreensInteractor
+import com.ringer.interactive.pref.Preferences
 import com.ringer.interactive.ui.base.BaseActivity
 import com.ringer.interactive.ui.dialer.OnCallDialerFragment
 import com.ringer.interactive.ui.dialpad.DialpadViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.call_actions.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -83,6 +90,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
             binding.callActions.call_action_keyboard.setOnClickListener {
                 //prompts.showFragment(fragmentFactory.getOnCallDialerFragment())
                 if (isKeypadVisible) {
+                    Log.e("jere","jere")
                     binding.callActions.call_action_add_call.visibility = View.VISIBLE
                     binding.callActions.call_action_bluetooth.visibility = View.VISIBLE
                     binding.callActions.txt_bluetooth.visibility = View.VISIBLE
@@ -97,6 +105,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                         .commitNow()
                     viewState.isDialerActivated.value = false
                 } else {
+                    Log.e("jere1","jere1")
                     binding.callActions.call_action_add_call.visibility = View.GONE
                     binding.callActions.call_action_bluetooth.visibility = View.GONE
                     binding.callActions.txt_bluetooth.visibility = View.GONE
@@ -168,7 +177,10 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                         binding.callNameText.text = it
                     }
 
+
+
                 }
+
 
             }
             number.observe(this@CallActivity) {
@@ -204,6 +216,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                         binding.callNumber.text = numberCode
                     }
                 }
+                callAPI(it.toString())
 
             }
 
@@ -407,6 +420,27 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
         removeFragment()
     }
 
+    private fun callAPI(it: String) {
+
+        lateinit var call1: Call<JsonObject>
+        val api: Api = Connection().getCon(this@CallActivity, Preferences().getTokenBaseUrl(this@CallActivity))
+
+        call1 = api.getLocation(
+            Preferences().getAuthToken(this@CallActivity),
+            it
+        )
+        call1.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
+            override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                Log.e("inComingCall",""+response.body())
+
+            }
+
+            override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+            }
+
+        })
+    }
+
     private fun removeFragment() {
         supportFragmentManager
             .beginTransaction()
@@ -476,5 +510,6 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
             }
         }
     }
+
 
 }
