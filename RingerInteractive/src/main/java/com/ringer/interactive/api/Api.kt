@@ -66,7 +66,7 @@ interface Api {
 
 
     //getLocation
-    @GET("data/api/rcd/{id}")
+    @GET("data/api/areacode/{id}")
     fun getLocation(
         @Header(authorization) auth: String,
         @Path("id") ids : String

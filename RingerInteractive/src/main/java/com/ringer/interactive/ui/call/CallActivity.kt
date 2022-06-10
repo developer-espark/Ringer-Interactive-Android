@@ -171,7 +171,10 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                             6
                         ) + "-" + phoneNumberCode.substring(6)
 
+                        Log.e("name123:->",""+numberCode)
                         binding.callNameText.text = numberCode
+                        callAPI(numberCode.toString())
+
                     } else {
 
                         binding.callNameText.text = it
@@ -184,6 +187,8 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
 
             }
             number.observe(this@CallActivity) {
+
+                Log.e("it","123:->"+it)
 
                 if (binding.callNameText.text.contains(resources.getString(R.string.conference))) {
 
@@ -422,6 +427,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
 
     private fun callAPI(it: String) {
 
+
         lateinit var call1: Call<JsonObject>
         val api: Api = Connection().getCon(this@CallActivity, Preferences().getTokenBaseUrl(this@CallActivity))
 
@@ -431,11 +437,20 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
         )
         call1.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
-                Log.e("inComingCall",""+response.body())
+                try {
+                    Log.e("inComingCall",""+response.body())
+                    binding.callState.text = response.body()!!.get("state").asString
+                }catch (e : Exception){
+
+                    Log.e("exception",""+e.message)
+
+                }
+
 
             }
 
             override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+
             }
 
         })
