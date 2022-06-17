@@ -38,13 +38,11 @@ class CallActions : MotionLayout {
         _binding.callActionHold.setOnClickListener { _callActionsListener?.onHoldClick() }
         _binding.callActionMute.setOnClickListener { _callActionsListener?.onMuteClick() }
         _binding.callActionMerge.setOnClickListener { _callActionsListener?.onMergeClick() }
-//        _binding.callActionKeypad.setOnClickListener { _callActionsListener?.onKeypadClick() }
         _binding.callActionSpeaker.setOnClickListener { _callActionsListener?.onSpeakerClick() }
         _binding.callActionAddCall.setOnClickListener { _callActionsListener?.onAddCallClick() }
         _binding.mLinearActionBluetooth.setOnClickListener {
 
 
-            Log.v("ererrrre","ererererererere")
 
             try {
                 val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -84,8 +82,7 @@ class CallActions : MotionLayout {
 
                 }
             }catch (e : Exception){
-                Log.e("errorBlueTooth",""+e.message)
-                Toast.makeText(context,"Please give access of bluetooth from app setting",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"Enable Bluetooth > Edit Settings > Allow Nearby Devices",Toast.LENGTH_SHORT).show()
             }
 
 
@@ -149,7 +146,7 @@ class CallActions : MotionLayout {
         get() = _isBluetoothActivated
         set(value) {
             _isBluetoothActivated = value
-            Log.e("_isBluetoothActivated1",""+_isBluetoothActivated)
+
 
 
             if (value) {
@@ -172,7 +169,7 @@ class CallActions : MotionLayout {
                     _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_green))
 //                _binding.callActionSpeaker.iconDefault = R.drawable.round_bluetooth_audio_24
                 } else {
-                    Log.e("speaker","123:->"+isBluetoothActivated)
+
                     _binding.callActionBluetooth.visibility = View.VISIBLE
                     _binding.callActionBluetooth.isClickable = false
                     _binding.callActionBluetooth.setImageDrawable(resources.getDrawable(R.drawable.img_bluetooth_new))

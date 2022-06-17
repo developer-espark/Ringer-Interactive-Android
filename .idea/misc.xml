@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/call_actions.xml" value="0.32037037037037036" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable-anydpi/round_dialpad_24.xml" value="0.19" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable-anydpi/swipe_indicator_background.xml" value="0.19" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/bottom_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/call_actions.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/dialpad.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/dialpad_in_call.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />

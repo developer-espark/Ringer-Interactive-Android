@@ -2,6 +2,7 @@ package com.ringer.interactive.ui.base
 
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ringer.interactive.interactor.preferences.PreferencesInteractor
@@ -20,6 +21,8 @@ abstract class BaseActivity<VM : BaseViewState> : AppCompatActivity(), BaseView<
         applicationContext.setTheme(preferences.accentTheme.theme)
         setTheme(preferences.accentTheme.theme)
         contentView?.let { setContentView(it) }
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON or WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED)
         onSetup()
         viewState.apply {
             attach()

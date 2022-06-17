@@ -6,7 +6,6 @@ import android.os.Build
 import android.provider.ContactsContract
 import android.text.TextUtils
 import android.text.format.DateUtils
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -26,7 +25,6 @@ import com.ringer.interactive.interactor.prompt.PromptsInteractor
 import com.ringer.interactive.interactor.screen.ScreensInteractor
 import com.ringer.interactive.pref.Preferences
 import com.ringer.interactive.ui.base.BaseActivity
-import com.ringer.interactive.ui.dialer.OnCallDialerFragment
 import com.ringer.interactive.ui.dialpad.DialpadViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.call_actions.view.*
@@ -42,7 +40,6 @@ import javax.inject.Inject
 class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListener {
     override val contentView by lazy { binding.root }
     override val viewState: CallViewState by viewModels()
-
 
     private val dialpadViewState: DialpadViewState by viewModels()
     private val binding by lazy { CallBinding.inflate(layoutInflater) }
@@ -67,64 +64,16 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
 
     var isKeypadVisible = false
 
-    lateinit var onscreenDialogFragment: OnCallDialerFragment
+//    lateinit var onscreenDialogFragment: OnCallDialerFragment
 
 
     @SuppressLint("Range")
     override fun onSetup() {
-        setUpMotionLayoutListener()
-        onscreenDialogFragment = fragmentFactory.getOnCallDialerFragment()
-        supportFragmentManager
-            .beginTransaction()
-            .setCustomAnimations(
-                R.anim.slide_in_up,
-                R.anim.slide_out_up
-            )
-            .add(
-                binding.callActions.mDialerArea.id,
-                onscreenDialogFragment
-            )
-            .commitNow()
-        screens.showWhenLocked()
+
         viewState.apply {
             binding.callActions.call_action_keyboard.setOnClickListener {
-                //prompts.showFragment(fragmentFactory.getOnCallDialerFragment())
-                if (isKeypadVisible) {
-                    Log.e("jere","jere")
-                    binding.callActions.call_action_add_call.visibility = View.VISIBLE
-                    binding.callActions.call_action_bluetooth.visibility = View.VISIBLE
-                    binding.callActions.txt_bluetooth.visibility = View.VISIBLE
-                    binding.callActions.txt_hold.visibility = View.VISIBLE
-                    binding.callActions.call_action_hold.visibility = View.VISIBLE
-                    isKeypadVisible = false
-                    supportFragmentManager
-                        .beginTransaction()
-                        .remove(
-                            onscreenDialogFragment
-                        )
-                        .commitNow()
-                    viewState.isDialerActivated.value = false
-                } else {
-                    Log.e("jere1","jere1")
-                    binding.callActions.call_action_add_call.visibility = View.GONE
-                    binding.callActions.call_action_bluetooth.visibility = View.GONE
-                    binding.callActions.txt_bluetooth.visibility = View.GONE
-                    binding.callActions.txt_hold.visibility = View.GONE
-                    binding.callActions.call_action_hold.visibility = View.GONE
-                    isKeypadVisible = true
-                    supportFragmentManager
-                        .beginTransaction()
-                        .setCustomAnimations(
-                            R.anim.slide_in_up,
-                            R.anim.slide_out_up
-                        )
-                        .add(
-                            binding.callActions.mDialerArea.id,
-                            onscreenDialogFragment
-                        )
-                        .commitNow()
-                    viewState.isDialerActivated.value = true
-                }
+
+                prompts.showFragment(fragmentFactory.getOnCallDialerFragment())
 
             }
 
@@ -150,6 +99,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
             name.observe(this@CallActivity) {
 
 
+
                 binding.callNameText.isSelected = true
 
 
@@ -162,7 +112,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                     if (TextUtils.isDigitsOnly(it)) {
 
                         var phoneNumberCode = PhoneNumberWithoutCountryCode(it.toString())
-                        Log.e("phoneNumberCode",""+phoneNumberCode)
+
                         var numberCode = "(" + phoneNumberCode!!.substring(
                             0,
                             3
@@ -171,13 +121,19 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                             6
                         ) + "-" + phoneNumberCode.substring(6)
 
-                        Log.e("name123:->",""+numberCode)
+
                         binding.callNameText.text = numberCode
                         callAPI(numberCode.toString())
 
                     } else {
 
+
+                        val phNo = it.replace("[()\\s-]+".toRegex(), "")
+
+
+                        callAPI(phNo.toString())
                         binding.callNameText.text = it
+
                     }
 
 
@@ -188,7 +144,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
             }
             number.observe(this@CallActivity) {
 
-                Log.e("it","123:->"+it)
+
 
                 if (binding.callNameText.text.contains(resources.getString(R.string.conference))) {
 
@@ -232,7 +188,6 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                     binding.callImage.scaleType = ImageView.ScaleType.FIT_XY
                     binding.callImage.setImageURI(it)
 
-//                    binding.lun.background = resources.getDrawable(R.drawable.call_bg)
 
                     binding.callNameText.setTextColor(resources.getColor(android.R.color.white))
                     binding.callNumber.setTextColor(resources.getColor(android.R.color.white))
@@ -286,7 +241,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
 //                    animations.show(binding.call, true)
                 }
                 binding.callStateText.text = it
-                Log.e("binding.callStateText",""+binding.callStateText.text)
+
                 if (old != it) {
                     animations.focus(binding.callStateText)
                 }
@@ -296,12 +251,12 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                 when (it) {
                     CallViewState.UIState.MULTI -> {
                         showActiveLayout()
-                        Log.e("merge", "nerge")
+
                         binding.callActions.showMultiCallUI()
                     }
                     CallViewState.UIState.ACTIVE -> {
                         showActiveLayout()
-                        Log.e("single", "single")
+
                         binding.callActions.showSingleCallUI()
                     }
                     CallViewState.UIState.INCOMING -> {
@@ -323,7 +278,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                }*/
 
             isMergeEnabled.observe(this@CallActivity) {
-                Log.e("isMergeEnabled", "" + it)
+
                 binding.callActions.isMergeEnabled = it
             }
 
@@ -422,7 +377,7 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
                 viewState.onManageClick()
             }*/
         }
-        removeFragment()
+//        removeFragment()
     }
 
     private fun callAPI(it: String) {
@@ -438,11 +393,11 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
         call1.enqueue(object : javax.security.auth.callback.Callback, Callback<JsonObject> {
             override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                 try {
-                    Log.e("inComingCall",""+response.body())
+
                     binding.callState.text = response.body()!!.get("state").asString
                 }catch (e : Exception){
 
-                    Log.e("exception",""+e.message)
+
 
                 }
 
@@ -456,14 +411,14 @@ class CallActivity : BaseActivity<CallViewState>(), MotionLayout.TransitionListe
         })
     }
 
-    private fun removeFragment() {
+    /*private fun removeFragment() {
         supportFragmentManager
             .beginTransaction()
             .remove(
                 onscreenDialogFragment
             )
             .commitNow()
-    }
+    }*/
 
     private fun setUpMotionLayoutListener() = with(binding) {
         rootContainer.setTransitionListener(this@CallActivity)

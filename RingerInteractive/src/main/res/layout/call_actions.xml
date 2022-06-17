@@ -247,6 +247,18 @@
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
+    <TextView
+        android:id="@+id/txt_keyboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_spacing_big"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@+id/mLinear_action_speaker"
+        app:layout_constraintStart_toEndOf="@id/mLinear_action_mute"
+        app:layout_constraintTop_toBottomOf="@id/mDialerArea"/>
+
+
     <!-- speaker -->
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/mLinear_action_speaker"

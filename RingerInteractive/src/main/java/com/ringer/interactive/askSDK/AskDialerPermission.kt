@@ -27,7 +27,7 @@ fun offerReplacingDefaultDialer(
             val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_DIALER)
             startActivityForResult(context as Activity, intent, REQUEST_CODE_SDK, null)
         } catch (e: Exception) {
-            Log.e("error", "" + e.message)
+
         }
 
     }
@@ -35,7 +35,6 @@ fun offerReplacingDefaultDialer(
     //Below Android Below 10
     else {
 
-        Log.e("below10","below10")
         val telecomManager =
             context.getSystemService(AppCompatActivity.TELECOM_SERVICE) as TelecomManager
         if (packageName != telecomManager.defaultDialerPackage) {

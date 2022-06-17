@@ -66,15 +66,10 @@ class AuthAPICall {
             val difference = currentTime - storeTime
             val hours = (difference / (1000 * 60 * 60))
             val uuid1: String = getDeviceId(context).toString()
-            Log.e("storeTimeDiff", currentTime.toString())
-            Log.e("storeTimeDiff", storeTime.toString())
-            Log.e("storeTimeDiff", difference.toString())
-            Log.e("storeTimeDiff", hours.toString())
-            Log.e("FToKEN", "" + Preferences().getFCMToken(context))
-            Log.e("uuid", "" + uuid1)
+
 
             if (hours > 8) {
-                Log.e("tokenCondition", "iff");
+
                 call = api.getTokenWithAuth(
                     basic_auth,
                     Preferences().getEmailAddress(context),
@@ -106,7 +101,6 @@ class AuthAPICall {
 
 
                                 //api call to send fcm token
-                                Log.e("apiFirebase", Preferences().getIsCalled(context).toString())
                                 if (Preferences().getIsCalled(context)!!) {
                                     searchContact(context, Preferences().getTokenBaseUrl(context))
                                 } else {
@@ -126,13 +120,13 @@ class AuthAPICall {
 
                     override fun onFailure(call: Call<JsonObject>, t: Throwable) {
 
-                        Log.e("failure", "" + t.message)
+
 
                     }
 
                 })
             } else {
-                Log.e("tokenCondition", "else");
+
                 if (Preferences().getIsCalled(context)!!) {
                     searchContact(context, Preferences().getTokenBaseUrl(context))
                 } else {
@@ -150,7 +144,7 @@ class AuthAPICall {
 
         } catch (e: Exception) {
 
-            Log.e("errorToken", "" + e.message)
+
 
         }
     }
@@ -172,7 +166,7 @@ class AuthAPICall {
                 if (response.isSuccessful) {
                     if (response.body() != null) {
 
-                        Log.e("Response", "" + response)
+
 
                         val total = response.body()!!.get("count").asString
                         if (total == "0") {
@@ -236,11 +230,11 @@ class AuthAPICall {
 
 
 
-        Log.e("FToKEN", "" + Preferences().getPhone(context))
+
         try {
             val tpm = context.getSystemService(TELEPHONY_SERVICE) as TelephonyManager?
             number = tpm!!.line1Number
-            Log.e("DeviceNumber", "" + number)
+
         } catch (e: Exception) {
 
             number = ""
@@ -426,7 +420,7 @@ class AuthAPICall {
                     Log.e("errorSearch", "" + e.message)
                     Log.e("errorSearch", "" + e.stackTraceToString())
                 } finally {
-                    Log.e("hrereerer","reereereee")
+                    Log.e("errorSearch","reereereee")
                     getCallDetails(context, contactList)
                 }
             }

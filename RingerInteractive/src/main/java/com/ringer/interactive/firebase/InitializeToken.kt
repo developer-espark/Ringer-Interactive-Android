@@ -13,6 +13,8 @@ import com.ringer.interactive.pref.Preferences
 fun InitializeToken(context: Context, username: String, password: String, app_name: String,phone:String?) {
 
 
+    Log.e("username",""+username)
+    Log.e("password",""+password)
     Preferences().setEmailAddress(context, username)
     Preferences().setPassword(context, password)
     Preferences().setTokenBaseUrl(context,base_url)

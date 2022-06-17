@@ -156,7 +156,7 @@ class CallViewState @Inject constructor(
     }
 
     override fun onKeypadClick() {
-        showDialpadEvent.call()
+        showDialerEvent.call()
     }
 
     override fun onAddCallClick() {
@@ -257,7 +257,7 @@ class CallViewState @Inject constructor(
                 account?.photoUri?.let { imageURI.value = Uri.parse(it) }
 
                 var phoneNumberCode = PhoneNumberWithoutCountryCode(call.number.toString())
-                Log.e("phoneNumberCode",""+phoneNumberCode)
+                Log.e("phoneNumberCode123",""+phoneNumberCode)
                 var numberCode = "(" + phoneNumberCode!!.substring(
                     0,
                     3

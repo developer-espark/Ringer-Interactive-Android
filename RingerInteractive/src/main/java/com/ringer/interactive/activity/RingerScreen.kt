@@ -235,7 +235,7 @@ class RingerScreen : AppCompatActivity() {
             context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("error",""+e.message)
+
 //            Toast.makeText(this, "Exception: " + e.message, Toast.LENGTH_SHORT).show()
         }
     }
@@ -290,7 +290,7 @@ class RingerScreen : AppCompatActivity() {
                 .build())
 
         } catch (e: Exception) {
-            Log.e("error",""+e.message)
+
             e.printStackTrace()
         }
         context.contentResolver.applyBatch(ContactsContract.AUTHORITY, ops)
