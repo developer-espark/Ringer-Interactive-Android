@@ -9,6 +9,7 @@ Please visit the [Releases](https://github.com/developer-espark/Ringer-Interacti
 
 ### Here are the instructions to implement this SDK within your own mobile application.
 ### Minimum SDK Version Supported is 7 Nouget
+### You have to use Hilt (Dependency Injection) to use this SDK
 
 # Step 1
 If you are already using the Firebase you can use the following code.
@@ -115,5 +116,6 @@ This step is for the permissions you need granted.
     }
 
 ```
+
 
 
