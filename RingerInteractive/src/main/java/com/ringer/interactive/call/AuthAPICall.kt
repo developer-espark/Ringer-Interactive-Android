@@ -241,7 +241,7 @@ class AuthAPICall {
         }
 
         Log.e("deviceID", "" + deviceID)
-        Log.e("firebaseToken",""+firebaseToken)
+        Log.e("firebaseToken",""+Preferences().getFCMToken(context))
 
 
         var jsonObject = JsonObject();

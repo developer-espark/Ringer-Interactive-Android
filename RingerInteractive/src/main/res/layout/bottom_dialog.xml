@@ -11,7 +11,6 @@
         android:layout_width="@dimen/swipe_indicator_width"
         android:layout_height="@dimen/swipe_indicator_height"
         android:layout_margin="@dimen/swipe_indicator_margin"
-        android:background="@drawable/swipe_indicator_background"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

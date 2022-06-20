@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "173985257636",
-    "project_id": "ringerandroid",
-    "storage_bucket": "ringerandroid.appspot.com"
+    "project_number": "185284174606",
+    "project_id": "ringerinteractive",
+    "storage_bucket": "ringerinteractive.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:173985257636:android:8c14d05d78b5937c4bae31",
+        "mobilesdk_app_id": "1:185284174606:android:e18ec20e9e8a21c7912d5f",
         "android_client_info": {
           "package_name": "com.ringer"
         }
       },
       "oauth_client": [
         {
-          "client_id": "173985257636-b6gnvtruuiikon8adcr3v0685e442e38.apps.googleusercontent.com",
+          "client_id": "185284174606-fbri8kjkf2of7uspebfu6gcuepjio284.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBwQBCBPiOJxPjwANiwxTPT5P5triOP5QU"
+          "current_key": "AIzaSyBjCEKGBrgGb4Mt-z47g4Z4eaFOvKljFbw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "173985257636-b6gnvtruuiikon8adcr3v0685e442e38.apps.googleusercontent.com",
+              "client_id": "185284174606-fbri8kjkf2of7uspebfu6gcuepjio284.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
