@@ -7,12 +7,15 @@
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable-anydpi/swipe_indicator_background.xml" value="0.19" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/drawable/call_actions_bg.xml" value="0.19" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/activity_call.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/activity_ringer_screen.xml" value="0.18802083333333333" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/bottom_dialog.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/call_actions.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/dialpad.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/RingerInteractive/src/main/res/layout/dialpad_in_call.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/app/src/main/res/layout/activity_access_contact.xml" value="0.36666666666666664" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/app/src/main/res/layout/activity_appear_on_top.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
+        <entry key="..\:/AndroidStudioProjects/Ringer-Interactive-Android/Ringer-Interactive-Android/app/src/main/res/layout/activity_notification.xml" value="0.25" />
         <entry key="RingerInteractive/src/main/res/drawable-anydpi/notification_banner_background.xml" value="0.2025" />
         <entry key="RingerInteractive/src/main/res/drawable-anydpi/round_bluetooth_audio_24.xml" value="0.2025" />
         <entry key="RingerInteractive/src/main/res/drawable/call_actions_bg.xml" value="0.2025" />

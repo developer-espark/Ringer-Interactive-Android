@@ -92,7 +92,9 @@ class DefaultPhoneActivity : AppCompatActivity() {
                 finish()
             } else {
                 Log.e("defaultApp", "no");
-                askCallLogPermission();
+//                askCallLogPermission();
+                startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+                finish()
                 askBluetoothPermission()
             }
 
@@ -122,7 +124,7 @@ class DefaultPhoneActivity : AppCompatActivity() {
         }
     }
 
-    private fun askCallLogPermission() {
+   /* private fun askCallLogPermission() {
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.READ_CALL_LOG
@@ -155,8 +157,8 @@ class DefaultPhoneActivity : AppCompatActivity() {
             )
         } else {
             askBluetoothPermission()
-            /*startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
-            finish()*/
+            *//*startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+            finish()*//*
         }
-    }
+    }*/
 }

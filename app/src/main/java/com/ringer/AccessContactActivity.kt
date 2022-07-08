@@ -38,7 +38,7 @@ class AccessContactActivity : AppCompatActivity() {
 
             if (ContextCompat.checkSelfPermission(
                     this,
-                    Manifest.permission.READ_PHONE_STATE
+                    Manifest.permission.READ_CONTACTS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
 
@@ -48,9 +48,7 @@ class AccessContactActivity : AppCompatActivity() {
                     this,
                     arrayOf(
                         Manifest.permission.READ_CONTACTS,
-                        Manifest.permission.WRITE_CONTACTS,
-                        Manifest.permission.GET_ACCOUNTS,
-                        Manifest.permission.READ_PHONE_STATE
+                        Manifest.permission.WRITE_CONTACTS
                     ),
                     PERMISSIONS_REQUEST_READ_CONTACTS
                 )
@@ -118,7 +116,7 @@ class AccessContactActivity : AppCompatActivity() {
         RingerInteractive().onRequestPermissionsResult(requestCode, permissions, grantResults, this)
         if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
 
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[2] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                 PreferencesApp().setScreenNumber(this, 5)
 
