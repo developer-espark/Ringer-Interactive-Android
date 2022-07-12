@@ -19,7 +19,9 @@ class AccessContactActivity : AppCompatActivity() {
 
     lateinit var btn_allow_contact: Button
     lateinit var txt_privacy1: TextView
+    lateinit var txt_privacy2: TextView
     lateinit var txt_terms_condition: TextView
+    lateinit var btn_no: Button
 
     val PERMISSIONS_REQUEST_READ_CONTACTS = 100
 
@@ -54,11 +56,11 @@ class AccessContactActivity : AppCompatActivity() {
                 )
 
             } else {
-                PreferencesApp().setScreenNumber(this, 5)
+                PreferencesApp().setScreenNumber(this, 2)
                 startActivity(
                     Intent(
                         this@AccessContactActivity,
-                        EditScreenActivity::class.java
+                        AppearOnTopActivity::class.java
                     )
                 )
                 finish()
@@ -79,12 +81,19 @@ class AccessContactActivity : AppCompatActivity() {
                 Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
             startActivity(browserIntent)
         }
+        txt_privacy2.setOnClickListener {
+            val browserIntent =
+                Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(R.string.privacy_url)))
+            startActivity(browserIntent)
+        }
     }
 
     private fun initialize() {
         btn_allow_contact = findViewById(R.id.btn_allow_contact)
         txt_privacy1 = findViewById(R.id.txt_privacy1)
+        txt_privacy2 = findViewById(R.id.txt_privacy2)
         txt_terms_condition = findViewById(R.id.txt_terms_condition)
+        btn_no = findViewById(R.id.btn_no)
     }
 
 
@@ -118,12 +127,12 @@ class AccessContactActivity : AppCompatActivity() {
 
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                PreferencesApp().setScreenNumber(this, 5)
+                PreferencesApp().setScreenNumber(this, 2)
 
                 startActivity(
                     Intent(
                         this@AccessContactActivity,
-                        EditScreenActivity::class.java
+                        AppearOnTopActivity::class.java
                     )
                 )
                 finish()

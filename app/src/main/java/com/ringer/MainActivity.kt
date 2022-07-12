@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
             override fun onFinish() {
                 // 0 = Get Contact Number
                 // 1 = Default Dialer Set
-                // 2 = Allow on Top
-                // 3 = notification
-                // 4 = contact
+                // 2 = contact
+                // 3 = Allow On Top
+                // 4 = Notification
                 // 5 = editscreen
                 val screenNumber = PreferencesApp().getScreenNumber(this@MainActivity);
                 Log.e("screenNumber", screenNumber.toString())
@@ -67,19 +67,19 @@ class MainActivity : AppCompatActivity() {
                     2 -> startActivity(
                         Intent(
                             this@MainActivity,
-                            AppearOnTopActivity::class.java
+                            AccessContactActivity::class.java
                         )
                     )
                     3 -> startActivity(
                         Intent(
                             this@MainActivity,
-                            NotificationActivity::class.java
+                            AppearOnTopActivity::class.java
                         )
                     )
                     4 -> startActivity(
                         Intent(
                             this@MainActivity,
-                            AccessContactActivity::class.java
+                            NotificationActivity::class.java
                         )
                     )
                     5 -> startActivity(

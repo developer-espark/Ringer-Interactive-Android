@@ -33,6 +33,8 @@ class EditScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_screen)
 
+        PreferencesApp().setScreenNumber(this, 5)
+
         initialize()
         InitializeToken(
             this,

@@ -84,16 +84,16 @@ class DefaultPhoneActivity : AppCompatActivity() {
                     resources.getString(R.string.ringer_password),
                     resources.getString(R.string.app_name)
                 )*/
-                startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+                startActivity(Intent(this@DefaultPhoneActivity, AccessContactActivity::class.java))
                 finish()
             } else if (requestCode == PERMISSIONS_REQUEST_CALL_LOG) {
                 PreferencesApp().setScreenNumber(this, 2)
-                startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+                startActivity(Intent(this@DefaultPhoneActivity, AccessContactActivity::class.java))
                 finish()
             } else {
                 Log.e("defaultApp", "no");
 //                askCallLogPermission();
-                startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+                startActivity(Intent(this@DefaultPhoneActivity, AccessContactActivity::class.java))
                 finish()
                 askBluetoothPermission()
             }
@@ -102,7 +102,7 @@ class DefaultPhoneActivity : AppCompatActivity() {
         if (requestCode == 5){
             if (resultCode == RESULT_OK){
                 PreferencesApp().setScreenNumber(this, 2)
-                startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+                startActivity(Intent(this@DefaultPhoneActivity, AccessContactActivity::class.java))
                 finish()
             }
         }
@@ -119,7 +119,7 @@ class DefaultPhoneActivity : AppCompatActivity() {
                     Manifest.permission.BLUETOOTH_CONNECT),
                 5)
         }else{
-            startActivity(Intent(this@DefaultPhoneActivity, AppearOnTopActivity::class.java))
+            startActivity(Intent(this@DefaultPhoneActivity, AccessContactActivity::class.java))
             finish()
         }
     }

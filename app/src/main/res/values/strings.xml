@@ -41,5 +41,6 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
 
     <string name="by_using_the_ringer_app_you_agree_to_the_the_following_privacy_policy_and_terms_of_service">By using the Ringer app, you agree to the the following</string>
     <string name="ringer_interactive_allows_you_to_receive_personalized_caller_ids_with_images_and_calls_to_action_when_companies_you_do_business_with_call_you_get_a_personalized_display_screen_to_know_who_and_why_they_are_calling_so_you_don_t_miss_important_calls">Ringer Interactive allows you to receive personalized Caller IDs with images and calls to action when companies you do business with call you.Get a personalized display screen to know who and why they are calling so you don\'t miss important calls.</string>
+    <string name="privacy_policy3"><u>Privacy Policy</u></string>
 
 </resources>

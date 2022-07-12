@@ -44,10 +44,24 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/nexalight"
                 android:gravity="center"
-                android:text="Ringer needs access to your contacts in order to provide full functionality. We do not share your contacts with any 3rd parties, and we do not store your contact in our databases. \n\n Note: Ringer will not function properly if access to contacts is not allowed."
+                android:text="Ringer needs permission to access and transfer contacts on your device, which may include personal information such as contact name and phone numbers, to provide our service.  By clicking agree, you agree to the privacy policy, and we have your consent to do so."
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/txt_privacy2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txt_notification_text"
+                android:layout_marginHorizontal="10dp"
+                android:fontFamily="@font/nexalight"
+                android:text="@string/privacy_policy3"
+                android:textColor="@color/light_blue"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_centerInParent="true"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,29 +69,57 @@
                 android:layout_above="@id/txt_notification_text"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
-                android:text="@string/access_to_contacts"
                 android:fontFamily="@font/nexabold"
+                android:text="Allow Ringer Access to Contacts"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="25sp"
+                android:textSize="23sp"
                 android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_allow_contact"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1"
                 android:layout_below="@id/txt_notification_text"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/_background_blue_round_corner"
-                android:fontFamily="@font/nexabold"
-                android:text="Continue"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="14sp"
-                android:textStyle="bold" />
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="20dp">
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_no"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="50dp"
+                    android:background="@drawable/_background_blue_round_corner"
+                    android:fontFamily="@font/nexabold"
+                    android:text="No"
+                    android:layout_marginEnd="5dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_allow_contact"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/_background_blue_round_corner"
+                    android:fontFamily="@font/nexabold"
+                    android:text="Agree"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
 
             <TextView
                 android:layout_width="wrap_content"

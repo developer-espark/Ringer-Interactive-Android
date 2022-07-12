@@ -29,7 +29,7 @@ class NotificationActivity : AppCompatActivity() {
             startActivity(
                     Intent(
                         this@NotificationActivity,
-                        AccessContactActivity::class.java
+                        EditScreenActivity::class.java
                     )
                 )
                 finish()

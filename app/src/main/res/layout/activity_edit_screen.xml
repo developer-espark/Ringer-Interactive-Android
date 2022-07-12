@@ -97,7 +97,7 @@
                         android:layout_marginEnd="10dp"
                         android:fontFamily="@font/nexalight"
                         android:gravity="center"
-                        android:text="@string/ringer_interactive_allows_you_to_receive_personalized_caller_ids_with_images_and_calls_to_action_when_companies_you_do_business_with_call_you_get_a_personalized_display_screen_to_know_who_and_why_they_are_calling_so_you_don_t_miss_important_calls"
+                        android:text="Ringer Interactive full-screen caller ID helps you identify who is calling. Ringer allows your device to display personalized caller ID graphics directly from who is calling you."
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 

@@ -44,7 +44,8 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/nexalight"
                 android:gravity="center"
-                android:text="Ringer needs to be your device's default phone app in order to provide full functionality. \n\n Note: Ringer will not function properly if it is not set as the default app."
+                android:text="Ringer needs to be set as the default phone app to be able to utilize our full screen caller ID capabilities.  Ringer will not function if it is not set as the default phone app.
+"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal" />
@@ -56,24 +57,37 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/nexabold"
-                android:text="Default Phone App"
+                android:text="Set Default Phone App"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:textStyle="bold" />
 
+
+            <TextView
+                android:id="@+id/txt_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/txt_notification_text"
+                android:text="Click her to set as default phone app" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_default"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@id/txt_notification_text"
+                android:layout_below="@id/txt_default"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/_background_blue_round_corner"
                 android:fontFamily="@font/nexabold"
-                android:text="Set Default Phone App"
+                android:text="Set Default"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="14sp"
