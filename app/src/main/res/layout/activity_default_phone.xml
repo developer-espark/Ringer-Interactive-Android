@@ -44,8 +44,7 @@
                 android:layout_marginEnd="10dp"
                 android:fontFamily="@font/nexalight"
                 android:gravity="center"
-                android:text="Ringer needs to be set as the default phone app to be able to utilize our full screen caller ID capabilities.  Ringer will not function if it is not set as the default phone app.
-"
+                android:text="Ringer needs to be set as the default phone app to access call logs for non-personal analytical data and utilize our full-screen caller ID capabilities. Ringer does not store any personal data. Ringer will not function properly if it is not set as the default phone app."
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="normal" />
