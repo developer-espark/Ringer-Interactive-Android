@@ -743,7 +743,7 @@ class AuthAPICall {
                                     "Call Name:--- "
 
                             var callLogMatchDetail = CallLogMatchDetail()
-                            callLogMatchDetail.toAddress = phNumber
+                            callLogMatchDetail.toAddress = phonumerb.toString()
                             callLogMatchDetail.fromAddress = number.toString()
                             if (dir == "OUTGOING") {
                                 callLogMatchDetail.callType = "Outbound"
